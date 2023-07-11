@@ -1,2 +1,2 @@
 # devcloud
-base golang development cloud platform
+development cloud platform

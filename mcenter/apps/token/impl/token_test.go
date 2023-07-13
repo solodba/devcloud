@@ -17,3 +17,12 @@ func TestIssueToken(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(tk))
 }
+
+func TestValidateToken(t *testing.T) {
+	req := token.NewValidateTokenRequest("cinv113jrq66s110li70")
+	tk, err := svc.ValidateToken(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(tk))
+}

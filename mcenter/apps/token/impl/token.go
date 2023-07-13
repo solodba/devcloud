@@ -5,6 +5,7 @@ import (
 
 	"github.com/solodba/devcloud/tree/main/mcenter/apps/token"
 	"github.com/solodba/devcloud/tree/main/mcenter/apps/token/provider"
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 // 颁发令牌
@@ -23,5 +24,19 @@ func (i *impl) IssueToken(ctx context.Context, in *token.IssueTokenRequest) (*to
 
 // 令牌校验
 func (i *impl) ValidateToken(ctx context.Context, in *token.ValidateTokenRequest) (*token.Token, error) {
-	return nil, nil
+	if err := in.Validate(); err != nil {
+		return nil, err
+	}
+	filter := bson.M{}
+	filter["_id"] = in.AccessToken
+	tk := token.NewToken()
+	err := i.col.FindOne(ctx, filter).Decode(tk)
+	if err != nil {
+		return nil, err
+	}
+	err = tk.ValidateToken()
+	if err != nil {
+		return nil, err
+	}
+	return tk, nil
 }

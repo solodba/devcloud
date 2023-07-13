@@ -30,3 +30,15 @@ func NewIssueTokenRequest() *IssueTokenRequest {
 		GrantType: GRANT_TYPE_PASSWORD,
 	}
 }
+
+// ValidateTokenRequest添加校验方法
+func (req *ValidateTokenRequest) Validate() error {
+	return validator.V().Struct(req)
+}
+
+// ValidateTokenRequest初始化函数
+func NewValidateTokenRequest(ak string) *ValidateTokenRequest {
+	return &ValidateTokenRequest{
+		AccessToken: ak,
+	}
+}

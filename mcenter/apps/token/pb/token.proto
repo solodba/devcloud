@@ -6,7 +6,7 @@ option go_package = "github.com/solodba/devcloud/tree/main/mcenter/apps/token";
 
 // 令牌结构体
 message Token {
-    // @gotags: bson:"access_token" json:"access_token"
+    // @gotags: bson:"_id" json:"access_token"
     string access_token = 1;
     // @gotags: bson:"refresh_token" json:"refresh_token"
     string refresh_token = 2;

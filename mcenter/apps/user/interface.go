@@ -3,6 +3,7 @@ package user
 import (
 	context "context"
 
+	"github.com/solodba/devcloud/tree/main/mcenter/apps/domain"
 	"github.com/solodba/devcloud/tree/main/mcenter/common/validator"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -26,6 +27,9 @@ type Service interface {
 
 // CreateUserRequest结构体必要参数校验
 func (req *CreateUserRequest) Validate() error {
+	if req.Domain == "" {
+		req.Domain = domain.DEFAULT_DOMAIN
+	}
 	return validator.V().Struct(req)
 }
 
@@ -37,4 +41,9 @@ func (req *CreateUserRequest) HashPassword() error {
 	}
 	req.Password = string(hp)
 	return nil
+}
+
+// CreateUserRequest初始化函数
+func NewCreateUserRequest() *CreateUserRequest {
+	return &CreateUserRequest{}
 }

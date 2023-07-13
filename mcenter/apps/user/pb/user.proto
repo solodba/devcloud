@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package codehorse.mcenter.user;
+
+option go_package = "github.com/solodba/devcloud/tree/main/mcenter/apps/user";
+
+import "common/pb/meta/meta.proto";
+
+// 创建用户请求
+message CreateUserRequest {
+    // @gotags: bson:"domain" json:"domain"
+    string domain = 1;
+    // @gotags: bson:"username" json:"username"
+    string username = 2;
+    // @gotags: bson:"password" json:"password"
+    string password = 3;
+}
+
+// 用户结构体
+message User {
+    // @gotags: bson:",inline" json:"meta"
+    meta.Meta meta = 1;
+    // @gotags: bson:",inline" json:"spec"
+    CreateUserRequest spec = 2;
+}
+
+// 用户列表结构体
+message UserSet {
+    // @gotags: bson:"total" json:"total"
+    int64 total = 1;
+    // @gotags: bson:"items" json:"items"
+    repeated User items = 2;
+}

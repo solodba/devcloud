@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package codehorse.mcenter.page;
+
+option go_package = "github.com/solodba/devcloud/tree/main/mcenter/common/pb/page";
+
+message PageRequest {
+    // @gotags: bson:"page_number" json:"page_number"
+    int64 page_number = 1;
+    // @gotags: bson:"page_size" json:"page_size"
+    int64 page_size = 2;
+    // @gotags: bson:"offset" json:"offset"
+    int64 offset = 3;
+}

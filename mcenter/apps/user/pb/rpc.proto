@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package codehorse.mcenter.user;
+
+option go_package = "github.com/solodba/devcloud/tree/main/mcenter/apps/user";
+
+import "apps/user/pb/user.proto";
+import "common/pb/page/page.proto";
+
+service RPC {
+    // 创建用户
+    rpc CreateUser(CreateUserRequest) returns(User);
+    // 删除用户
+    rpc DeleteUser(DeleteUserRequest) returns(User);
+    // 更新用户
+    rpc UpdateUser(UpdateUserRequest) returns(User);
+    // 查询用户
+    rpc Queryuser(QueryUserRequest) returns(UserSet);
+    // 查询用户详情
+    rpc DescribeUser(DescribeUserRequest) returns(User);
+}
+
+// 删除用户
+message DeleteUserRequest {
+    // @gotags: bson:"username" json:"username"
+    string username = 1;
+}
+
+// 更新用户
+message UpdateUserRequest {
+    // @gotags: bson:"username" json:"username"
+    string username = 1;
+    // @gotags: bson:"password" json:"password"
+    string password = 2;
+}
+
+// 查询用户
+message QueryUserRequest {
+    // @gotags: bson:",inline" json:"page"
+    page.PageRequest page = 1;
+    // @gotags: bson:"keywords" json:"keywords"
+    string keywords = 2;
+}
+
+// 查询用户详情
+message DescribeUserRequest {
+    // @gotags: bson:"username" json:"username"
+    string username = 1;
+}

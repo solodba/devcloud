@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/solodba/devcloud/tree/main/mcenter/apps/user"
+	"github.com/solodba/devcloud/tree/main/mcenter/test/tools"
 )
 
 func TestCreateUser(t *testing.T) {
@@ -14,5 +15,5 @@ func TestCreateUser(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Log(userIns)
+	t.Log(tools.MustToJson(userIns))
 }

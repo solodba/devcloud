@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package codehorse.mcenter.token;
+
+option go_package = "github.com/solodba/devcloud/tree/main/mcenter/apps/token";
+
+// 令牌结构体
+message Token {
+    // @gotags: bson:"access_token" json:"access_token"
+    string access_token = 1;
+    // @gotags: bson:"refresh_token" json:"refresh_token"
+    string refresh_token = 2;
+    // @gotags: bson:"issue_at" json:"issue_at"
+    int64 issue_at = 3;
+    // @gotags: bson:"access_expired_at" json:"access_expired_at"
+    int64 access_expired_at = 4;
+    // @gotags: bson:"refresh_expired_at" json:"refresh_expired_at"
+    int64 refresh_expired_at = 5;
+    // @gotags: bson:"grant_type" json:"grant_type"
+    GRANT_TYPE grant_type = 6;
+    // @gotags: bson:"username" json:"username"
+    string username = 7;
+    // @gotags: bson:"user_id" json:"user_id"
+    string user_id = 8;
+    // @gotags: bson:"type" json:"type"
+    TOKEN_TYPE type = 9;
+    // @gotags: bson:",inline" json:"status"
+    Status status = 10;
+    // @gotags: bson:"meta" json:"meta"
+    map<string,string> meta = 11;
+
+}
+
+// 颁发令牌类型
+enum GRANT_TYPE {
+    PASSWORD = 0;
+    LDAP = 1;
+    FEISHU = 2;
+    DINGDING = 3;
+}
+
+// 令牌类型
+enum TOKEN_TYPE {
+    BEARER = 0;
+    MAC = 1;
+    JWT = 2;
+}
+
+// 令牌状态
+message Status {
+    // @gotags: bson:"is_block" json:"is_block"
+    bool is_block = 1;
+    // @gotags: bson:"block_type" json:"block_type"
+    BLOCK_TYPE block_type = 2;
+    // @gotags: bson:"block_at" json:"block_at"
+    int64 block_at = 3;
+    // @gotags: bson:"block_reason" json:"block_reason"
+    string block_reason = 4;
+}
+
+// 令牌阻塞类型
+enum BLOCK_TYPE {
+    REFRESH_TOKEN_EXPIRED = 0;
+    OTHER_PLACE_LOGGED_IN = 1;
+    OTHER_IP_LOGGED_IN = 2;
+}

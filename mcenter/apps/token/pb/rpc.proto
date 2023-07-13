@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package codehorse.mcenter.token;
+
+option go_package = "github.com/solodba/devcloud/tree/main/mcenter/apps/token";
+
+import "apps/token/pb/token.proto";
+
+// Token业务功能接口
+service RPC {
+    // 颁发令牌
+    rpc IssueToken(IssueTokenRequest) returns(Token);
+    // 校验令牌
+    rpc ValidateToken(ValidateTokenRequest) returns(Token);
+}
+
+// 颁发令牌请求
+message IssueTokenRequest {
+    // @gotags: bson:"grant_type" json:"grant_type"
+    GRANT_TYPE grant_type = 1;
+    // @gotags: bson:"username" json:"username"
+    string username = 2;
+    // @gotags: bson:"password" json:"password"
+    string password = 3;
+}
+
+// 校验令牌请求
+message ValidateTokenRequest {
+    // @gotags: bson:"access_token" json:"access_token"
+    string access_token = 1;
+}
+

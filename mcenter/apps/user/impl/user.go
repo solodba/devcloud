@@ -42,7 +42,27 @@ func (i *impl) DeleteUser(ctx context.Context, in *user.DeleteUserRequest) (*use
 
 // 更新用户
 func (i *impl) UpdateUser(ctx context.Context, in *user.UpdateUserRequest) (*user.User, error) {
-	return nil, nil
+	if err := in.Validate(); err != nil {
+		return nil, err
+	}
+	req := user.NewDescribeUserRequest()
+	req.DescribeValue = in.Username
+	userIns, err := i.DescribeUser(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	err = in.HashPassword()
+	if err != nil {
+		return nil, err
+	}
+	userIns.Spec.Password = in.Password
+	filter := bson.M{"username": userIns.Spec.Username}
+	updateSet := bson.M{"$set": userIns}
+	_, err = i.col.UpdateOne(ctx, filter, updateSet)
+	if err != nil {
+		return nil, err
+	}
+	return userIns, nil
 }
 
 // 查询用户

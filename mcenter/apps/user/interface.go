@@ -72,3 +72,23 @@ func (req *DeleteUserRequest) Validate() error {
 func NewDeleteUserRequest() *DeleteUserRequest {
 	return &DeleteUserRequest{}
 }
+
+// UpdateUserRequest结构体添加校验方法
+func (req *UpdateUserRequest) Validate() error {
+	return validator.V().Struct(req)
+}
+
+// UpdateUserRequest结构体密码加密方法
+func (req *UpdateUserRequest) HashPassword() error {
+	hp, err := bcrypt.GenerateFromPassword([]byte(req.Password), 10)
+	if err != nil {
+		return err
+	}
+	req.Password = string(hp)
+	return nil
+}
+
+// UpdateUserRequest结构体初始化方法
+func NewUpdateUserRequest() *UpdateUserRequest {
+	return &UpdateUserRequest{}
+}

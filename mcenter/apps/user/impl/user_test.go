@@ -53,3 +53,20 @@ func TestDeleteUser(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(userIns))
 }
+
+func TestUpdateUser(t *testing.T) {
+	req := user.NewUpdateUserRequest()
+	req.Username = "test2"
+	req.Password = "123456"
+	userIns, err := svc.UpdateUser(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(userIns))
+
+	// 密码校验
+	err = userIns.CheckPassword("123456")
+	if err != nil {
+		t.Fatal(err)
+	}
+}

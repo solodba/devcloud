@@ -1,6 +1,7 @@
 package protocol
 
 import (
+	"fmt"
 	"net"
 
 	"github.com/solodba/devcloud/tree/main/mcenter/apps"
@@ -41,8 +42,7 @@ func (s *GrpcService) Start() error {
 		if err == grpc.ErrServerStopped {
 			logger.L().Info().Msgf("grpc service is stopped")
 		}
-		logger.L().Info().Msgf("start grpc service error, err: %s", err.Error())
-		return err
+		return fmt.Errorf("start grpc service error, err: %s", err.Error())
 	}
 	return nil
 }

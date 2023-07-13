@@ -28,10 +28,10 @@ type IssueTokenRequest struct {
 
 	// @gotags: bson:"grant_type" json:"grant_type"
 	GrantType GRANT_TYPE `protobuf:"varint,1,opt,name=grant_type,json=grantType,proto3,enum=codehorse.mcenter.token.GRANT_TYPE" json:"grant_type" bson:"grant_type"`
-	// @gotags: bson:"username" json:"username"
-	Username string `protobuf:"bytes,2,opt,name=username,proto3" json:"username" bson:"username"`
-	// @gotags: bson:"password" json:"password"
-	Password string `protobuf:"bytes,3,opt,name=password,proto3" json:"password" bson:"password"`
+	// @gotags: bson:"username" json:"username" validate:"required"
+	Username string `protobuf:"bytes,2,opt,name=username,proto3" json:"username" bson:"username" validate:"required"`
+	// @gotags: bson:"password" json:"password" validate:"required"
+	Password string `protobuf:"bytes,3,opt,name=password,proto3" json:"password" bson:"password" validate:"required"`
 }
 
 func (x *IssueTokenRequest) Reset() {
@@ -93,8 +93,8 @@ type ValidateTokenRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// @gotags: bson:"access_token" json:"access_token"
-	AccessToken string `protobuf:"bytes,1,opt,name=access_token,json=accessToken,proto3" json:"access_token" bson:"access_token"`
+	// @gotags: bson:"access_token" json:"access_token" validate:"required"
+	AccessToken string `protobuf:"bytes,1,opt,name=access_token,json=accessToken,proto3" json:"access_token" bson:"access_token" validate:"required"`
 }
 
 func (x *ValidateTokenRequest) Reset() {

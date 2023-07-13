@@ -3,6 +3,8 @@ package impl
 import (
 	"github.com/solodba/devcloud/tree/main/mcenter/apps"
 	"github.com/solodba/devcloud/tree/main/mcenter/apps/token"
+	"github.com/solodba/devcloud/tree/main/mcenter/apps/token/provider"
+	_ "github.com/solodba/devcloud/tree/main/mcenter/apps/token/provider/all"
 	"github.com/solodba/devcloud/tree/main/mcenter/conf"
 	"go.mongodb.org/mongo-driver/mongo"
 	"google.golang.org/grpc"
@@ -30,7 +32,7 @@ func (i *impl) Conf() error {
 		return err
 	}
 	i.col = db.Collection("tokens")
-	return nil
+	return provider.Init()
 }
 
 // 实现Ioc中心RegistryHandler方法

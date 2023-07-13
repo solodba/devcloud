@@ -18,15 +18,15 @@ service RPC {
 message IssueTokenRequest {
     // @gotags: bson:"grant_type" json:"grant_type"
     GRANT_TYPE grant_type = 1;
-    // @gotags: bson:"username" json:"username"
+    // @gotags: bson:"username" json:"username" validate:"required"
     string username = 2;
-    // @gotags: bson:"password" json:"password"
+    // @gotags: bson:"password" json:"password" validate:"required"
     string password = 3;
 }
 
 // 校验令牌请求
 message ValidateTokenRequest {
-    // @gotags: bson:"access_token" json:"access_token"
+    // @gotags: bson:"access_token" json:"access_token" validate:"required"
     string access_token = 1;
 }
 

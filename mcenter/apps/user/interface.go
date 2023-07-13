@@ -55,3 +55,10 @@ func NewQueryUserRequest() *QueryUserRequest {
 		Page: page.NewPageRequest(),
 	}
 }
+
+// DescribeUserRequest结构体
+func NewDescribeUserRequest() *DescribeUserRequest {
+	return &DescribeUserRequest{
+		DescribeType: DESCRIBE_BY_USERNAME,
+	}
+}

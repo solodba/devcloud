@@ -52,6 +52,7 @@ func (i *impl) Queryuser(ctx context.Context, in *user.QueryUserRequest) (*user.
 		if err != nil {
 			return nil, err
 		}
+		userIns.Desense()
 		userSet.AddItems(userIns)
 	}
 	userSet.Total, err = i.col.CountDocuments(ctx, filter)
@@ -63,5 +64,17 @@ func (i *impl) Queryuser(ctx context.Context, in *user.QueryUserRequest) (*user.
 
 // 查询用户详情
 func (i *impl) DescribeUser(ctx context.Context, in *user.DescribeUserRequest) (*user.User, error) {
-	return nil, nil
+	filter := bson.M{}
+	switch in.DescribeType {
+	case user.DESCRIBE_BY_USERNAME:
+		filter["username"] = in.DescribeValue
+	case user.DESCRIBE_BY_USER_ID:
+		filter["_id"] = in.DescribeValue
+	}
+	userIns := user.NewDefaultUser()
+	err := i.col.FindOne(ctx, filter).Decode(userIns)
+	if err != nil {
+		return nil, err
+	}
+	return userIns, nil
 }

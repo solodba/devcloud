@@ -42,8 +42,16 @@ message QueryUserRequest {
     string keywords = 2;
 }
 
+// 定义查询用户详情方式枚举类型
+enum DESCRIBE_BY {
+    USERNAME = 0;
+    USER_ID = 1;
+}
+
 // 查询用户详情
 message DescribeUserRequest {
-    // @gotags: bson:"username" json:"username" validate:"required"
-    string username = 1;
+    // @gotags: bson:"describe_type" json:"describe_type"
+    DESCRIBE_BY describe_type = 1;
+    // @gotags: bson:"describe_value" json:"describe_value"
+    string describe_value = 2;
 }

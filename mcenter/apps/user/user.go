@@ -52,3 +52,8 @@ func NewUserSet() *UserSet {
 func (u *UserSet) AddItems(items ...*User) {
 	u.Items = append(u.Items, items...)
 }
+
+// User结构体密码脱敏方法
+func (u *User) Desense() {
+	u.Spec.Password = "******"
+}

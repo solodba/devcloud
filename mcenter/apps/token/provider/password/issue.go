@@ -40,7 +40,7 @@ func (i *issue) IssueToken(ctx context.Context, in *token.IssueTokenRequest) (*t
 	tk := token.NewToken()
 	tk.AccessToken = xid.New().String()
 	tk.RefreshToken = xid.New().String()
-	return nil, nil
+	return tk, nil
 }
 
 // 注册实例类

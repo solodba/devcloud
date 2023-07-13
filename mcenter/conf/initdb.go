@@ -8,6 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+// 获取MongDB Client
 func (m *MongoDB) GetClient() (*mongo.Client, error) {
 	opts := &options.ClientOptions{
 		Hosts: m.Endpoints,
@@ -38,6 +39,7 @@ func (m *MongoDB) GetClient() (*mongo.Client, error) {
 	return client, nil
 }
 
+// MongDB Client初始化
 func (m *MongoDB) Client() (*mongo.Client, error) {
 	m.lock.Lock()
 	defer m.lock.Unlock()
@@ -51,6 +53,7 @@ func (m *MongoDB) Client() (*mongo.Client, error) {
 	return m.client, nil
 }
 
+// MongoDB初始化数据库
 func (m *MongoDB) GetDB() (*mongo.Database, error) {
 	client, err := m.Client()
 	if err != nil {

@@ -10,6 +10,7 @@ import (
 	"github.com/rs/zerolog"
 )
 
+// 全局日志参数
 var (
 	logger *zerolog.Logger
 )
@@ -21,6 +22,7 @@ func L() *zerolog.Logger {
 	return logger
 }
 
+// 初始化全局日志方法
 func init() {
 	output := zerolog.ConsoleWriter{Out: os.Stdout, TimeFormat: time.RFC3339}
 	output.FormatLevel = func(i interface{}) string {

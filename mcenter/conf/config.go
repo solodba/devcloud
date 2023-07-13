@@ -8,6 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+// 全局配置参数
 var (
 	c *Config
 )
@@ -19,22 +20,26 @@ func C() *Config {
 	return c
 }
 
+// Http结构体
 type Http struct {
 	Host string `toml:"host" env:"HTTP_HOST"`
 	Port int    `toml:"port" env:"HTTP_PORT"`
 }
 
+// Grpc结构体
 type Grpc struct {
 	Host string `toml:"host" env:"GRPC_HOST"`
 	Port int    `toml:"port" env:"GRPC_PORT"`
 }
 
+// App结构体
 type App struct {
 	Name string `toml:"name" env:"APP_NAME"`
 	Http *Http  `toml:"http"`
 	Grpc *Grpc  `toml:"grpc"`
 }
 
+// MongoDB结构体
 type MongoDB struct {
 	Username   string   `toml:"username" env:"MONGODB_USERNAME"`
 	Password   string   `toml:"password" env:"MONGODB_PASSWORD"`
@@ -45,11 +50,13 @@ type MongoDB struct {
 	client     *mongo.Client
 }
 
+// 全局配置结构体
 type Config struct {
 	App     *App     `toml:"app"`
 	MongoDB *MongoDB `toml:"mongodb"`
 }
 
+// Http初始化函数
 func NewDefaultHttp() *Http {
 	return &Http{
 		Host: "127.0.0.1",
@@ -57,6 +64,7 @@ func NewDefaultHttp() *Http {
 	}
 }
 
+// Grpc初始化函数
 func NewDefaultGrpc() *Grpc {
 	return &Grpc{
 		Host: "127.0.0.1",
@@ -64,6 +72,7 @@ func NewDefaultGrpc() *Grpc {
 	}
 }
 
+// App初始化函数
 func NewDefaultApp() *App {
 	return &App{
 		Name: "mcenter",
@@ -72,6 +81,7 @@ func NewDefaultApp() *App {
 	}
 }
 
+// MongoDB初始化函数
 func NewDefaultMongoDB() *MongoDB {
 	return &MongoDB{
 		Endpoints:  []string{"127.0.0.1:27017"},
@@ -80,6 +90,7 @@ func NewDefaultMongoDB() *MongoDB {
 	}
 }
 
+// Config初始化函数
 func NewDefaultConfig() *Config {
 	return &Config{
 		App:     NewDefaultApp(),

@@ -19,7 +19,6 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	RPC_IssueToken_FullMethodName    = "/codehorse.mcenter.token.RPC/IssueToken"
 	RPC_ValidateToken_FullMethodName = "/codehorse.mcenter.token.RPC/ValidateToken"
 )
 
@@ -28,7 +27,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RPCClient interface {
 	// 颁发令牌
-	IssueToken(ctx context.Context, in *IssueTokenRequest, opts ...grpc.CallOption) (*Token, error)
+	// rpc IssueToken(IssueTokenRequest) returns(Token);
 	// 校验令牌
 	ValidateToken(ctx context.Context, in *ValidateTokenRequest, opts ...grpc.CallOption) (*Token, error)
 }
@@ -39,15 +38,6 @@ type rPCClient struct {
 
 func NewRPCClient(cc grpc.ClientConnInterface) RPCClient {
 	return &rPCClient{cc}
-}
-
-func (c *rPCClient) IssueToken(ctx context.Context, in *IssueTokenRequest, opts ...grpc.CallOption) (*Token, error) {
-	out := new(Token)
-	err := c.cc.Invoke(ctx, RPC_IssueToken_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *rPCClient) ValidateToken(ctx context.Context, in *ValidateTokenRequest, opts ...grpc.CallOption) (*Token, error) {
@@ -64,7 +54,7 @@ func (c *rPCClient) ValidateToken(ctx context.Context, in *ValidateTokenRequest,
 // for forward compatibility
 type RPCServer interface {
 	// 颁发令牌
-	IssueToken(context.Context, *IssueTokenRequest) (*Token, error)
+	// rpc IssueToken(IssueTokenRequest) returns(Token);
 	// 校验令牌
 	ValidateToken(context.Context, *ValidateTokenRequest) (*Token, error)
 	mustEmbedUnimplementedRPCServer()
@@ -74,9 +64,6 @@ type RPCServer interface {
 type UnimplementedRPCServer struct {
 }
 
-func (UnimplementedRPCServer) IssueToken(context.Context, *IssueTokenRequest) (*Token, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method IssueToken not implemented")
-}
 func (UnimplementedRPCServer) ValidateToken(context.Context, *ValidateTokenRequest) (*Token, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ValidateToken not implemented")
 }
@@ -91,24 +78,6 @@ type UnsafeRPCServer interface {
 
 func RegisterRPCServer(s grpc.ServiceRegistrar, srv RPCServer) {
 	s.RegisterService(&RPC_ServiceDesc, srv)
-}
-
-func _RPC_IssueToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(IssueTokenRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(RPCServer).IssueToken(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: RPC_IssueToken_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RPCServer).IssueToken(ctx, req.(*IssueTokenRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _RPC_ValidateToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -136,10 +105,6 @@ var RPC_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "codehorse.mcenter.token.RPC",
 	HandlerType: (*RPCServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "IssueToken",
-			Handler:    _RPC_IssueToken_Handler,
-		},
 		{
 			MethodName: "ValidateToken",
 			Handler:    _RPC_ValidateToken_Handler,

@@ -9,7 +9,7 @@ import "apps/token/pb/token.proto";
 // Token业务功能接口
 service RPC {
     // 颁发令牌
-    rpc IssueToken(IssueTokenRequest) returns(Token);
+    // rpc IssueToken(IssueTokenRequest) returns(Token);
     // 校验令牌
     rpc ValidateToken(ValidateTokenRequest) returns(Token);
 }

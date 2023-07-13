@@ -8,7 +8,15 @@ import (
 
 // 创建用户
 func (i *impl) CreateUser(ctx context.Context, in *user.CreateUserRequest) (*user.User, error) {
-	return nil, nil
+	userIns, err := user.NewUser(in)
+	if err != nil {
+		return nil, err
+	}
+	_, err = i.col.InsertOne(ctx, userIns)
+	if err != nil {
+		return nil, err
+	}
+	return userIns, nil
 }
 
 // 删除用户

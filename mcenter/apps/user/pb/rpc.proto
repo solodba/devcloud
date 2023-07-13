@@ -22,15 +22,15 @@ service RPC {
 
 // 删除用户
 message DeleteUserRequest {
-    // @gotags: bson:"username" json:"username"
+    // @gotags: bson:"username" json:"username" validate:"required"
     string username = 1;
 }
 
 // 更新用户
 message UpdateUserRequest {
-    // @gotags: bson:"username" json:"username"
+    // @gotags: bson:"username" json:"username" validate:"required"
     string username = 1;
-    // @gotags: bson:"password" json:"password"
+    // @gotags: bson:"password" json:"password" validate:"required"
     string password = 2;
 }
 
@@ -44,6 +44,6 @@ message QueryUserRequest {
 
 // 查询用户详情
 message DescribeUserRequest {
-    // @gotags: bson:"username" json:"username"
+    // @gotags: bson:"username" json:"username" validate:"required"
     string username = 1;
 }

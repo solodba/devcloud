@@ -29,10 +29,10 @@ type CreateUserRequest struct {
 
 	// @gotags: bson:"domain" json:"domain"
 	Domain string `protobuf:"bytes,1,opt,name=domain,proto3" json:"domain" bson:"domain"`
-	// @gotags: bson:"username" json:"username"
-	Username string `protobuf:"bytes,2,opt,name=username,proto3" json:"username" bson:"username"`
-	// @gotags: bson:"password" json:"password"
-	Password string `protobuf:"bytes,3,opt,name=password,proto3" json:"password" bson:"password"`
+	// @gotags: bson:"username" json:"username" validate:"required"
+	Username string `protobuf:"bytes,2,opt,name=username,proto3" json:"username" bson:"username" validate:"required"`
+	// @gotags: bson:"password" json:"password" validate:"required"
+	Password string `protobuf:"bytes,3,opt,name=password,proto3" json:"password" bson:"password" validate:"required"`
 }
 
 func (x *CreateUserRequest) Reset() {

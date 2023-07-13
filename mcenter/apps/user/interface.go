@@ -1,6 +1,11 @@
 package user
 
-import context "context"
+import (
+	context "context"
+
+	"github.com/solodba/devcloud/tree/main/mcenter/common/validator"
+	"golang.org/x/crypto/bcrypt"
+)
 
 // 业务模块名称
 const (
@@ -17,4 +22,19 @@ type Service interface {
 	UpdateUser(context.Context, *UpdateUserRequest) (*User, error)
 	// GRPC业务接口
 	RPCServer
+}
+
+// CreateUserRequest结构体必要参数校验
+func (req *CreateUserRequest) Validate() error {
+	return validator.V().Struct(req)
+}
+
+// CreateUserRequest结构体中密码加密
+func (req *CreateUserRequest) HashPassword() error {
+	hp, err := bcrypt.GenerateFromPassword([]byte(req.Password), 10)
+	if err != nil {
+		return err
+	}
+	req.Password = string(hp)
+	return nil
 }

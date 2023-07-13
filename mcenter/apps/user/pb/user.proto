@@ -10,9 +10,9 @@ import "common/pb/meta/meta.proto";
 message CreateUserRequest {
     // @gotags: bson:"domain" json:"domain"
     string domain = 1;
-    // @gotags: bson:"username" json:"username"
+    // @gotags: bson:"username" json:"username" validate:"required"
     string username = 2;
-    // @gotags: bson:"password" json:"password"
+    // @gotags: bson:"password" json:"password" validate:"required"
     string password = 3;
 }
 

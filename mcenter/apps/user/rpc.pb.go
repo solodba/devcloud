@@ -27,8 +27,8 @@ type DeleteUserRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// @gotags: bson:"username" json:"username"
-	Username string `protobuf:"bytes,1,opt,name=username,proto3" json:"username" bson:"username"`
+	// @gotags: bson:"username" json:"username" validate:"required"
+	Username string `protobuf:"bytes,1,opt,name=username,proto3" json:"username" bson:"username" validate:"required"`
 }
 
 func (x *DeleteUserRequest) Reset() {
@@ -76,10 +76,10 @@ type UpdateUserRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// @gotags: bson:"username" json:"username"
-	Username string `protobuf:"bytes,1,opt,name=username,proto3" json:"username" bson:"username"`
-	// @gotags: bson:"password" json:"password"
-	Password string `protobuf:"bytes,2,opt,name=password,proto3" json:"password" bson:"password"`
+	// @gotags: bson:"username" json:"username" validate:"required"
+	Username string `protobuf:"bytes,1,opt,name=username,proto3" json:"username" bson:"username" validate:"required"`
+	// @gotags: bson:"password" json:"password" validate:"required"
+	Password string `protobuf:"bytes,2,opt,name=password,proto3" json:"password" bson:"password" validate:"required"`
 }
 
 func (x *UpdateUserRequest) Reset() {
@@ -192,8 +192,8 @@ type DescribeUserRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// @gotags: bson:"username" json:"username"
-	Username string `protobuf:"bytes,1,opt,name=username,proto3" json:"username" bson:"username"`
+	// @gotags: bson:"username" json:"username" validate:"required"
+	Username string `protobuf:"bytes,1,opt,name=username,proto3" json:"username" bson:"username" validate:"required"`
 }
 
 func (x *DescribeUserRequest) Reset() {

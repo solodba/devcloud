@@ -43,3 +43,13 @@ func TestDescribeUser(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestDeleteUser(t *testing.T) {
+	req := user.NewDeleteUserRequest()
+	req.Username = "test1"
+	userIns, err := svc.DeleteUser(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(userIns))
+}

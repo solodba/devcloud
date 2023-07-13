@@ -23,7 +23,21 @@ func (i *impl) CreateUser(ctx context.Context, in *user.CreateUserRequest) (*use
 
 // 删除用户
 func (i *impl) DeleteUser(ctx context.Context, in *user.DeleteUserRequest) (*user.User, error) {
-	return nil, nil
+	if err := in.Validate(); err != nil {
+		return nil, err
+	}
+	req := user.NewDescribeUserRequest()
+	req.DescribeValue = in.Username
+	userIns, err := i.DescribeUser(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	filter := bson.M{"username": userIns.Spec.Username}
+	_, err = i.col.DeleteOne(ctx, filter)
+	if err != nil {
+		return nil, err
+	}
+	return userIns, nil
 }
 
 // 更新用户

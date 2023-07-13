@@ -62,3 +62,13 @@ func NewDescribeUserRequest() *DescribeUserRequest {
 		DescribeType: DESCRIBE_BY_USERNAME,
 	}
 }
+
+// DeleteUserRequest结构体添加校验方法
+func (req *DeleteUserRequest) Validate() error {
+	return validator.V().Struct(req)
+}
+
+// DeleteUserRequest结构体初始化方法
+func NewDeleteUserRequest() *DeleteUserRequest {
+	return &DeleteUserRequest{}
+}

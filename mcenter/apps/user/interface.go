@@ -4,6 +4,7 @@ import (
 	context "context"
 
 	"github.com/solodba/devcloud/tree/main/mcenter/apps/domain"
+	"github.com/solodba/devcloud/tree/main/mcenter/common/pb/page"
 	"github.com/solodba/devcloud/tree/main/mcenter/common/validator"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -46,4 +47,11 @@ func (req *CreateUserRequest) HashPassword() error {
 // CreateUserRequest初始化函数
 func NewCreateUserRequest() *CreateUserRequest {
 	return &CreateUserRequest{}
+}
+
+// QueryUserRequest初始化函数
+func NewQueryUserRequest() *QueryUserRequest {
+	return &QueryUserRequest{
+		Page: page.NewPageRequest(),
+	}
 }

@@ -32,3 +32,23 @@ func (u *User) MarshalJSON() ([]byte, error) {
 	}
 	return json.Marshal(data)
 }
+
+// 默认User结构体初始化函数
+func NewDefaultUser() *User {
+	return &User{
+		Meta: meta.NewMeta(),
+		Spec: NewCreateUserRequest(),
+	}
+}
+
+// UserSet初始换函数
+func NewUserSet() *UserSet {
+	return &UserSet{
+		Items: make([]*User, 0),
+	}
+}
+
+// UserSet添加方法
+func (u *UserSet) AddItems(items ...*User) {
+	u.Items = append(u.Items, items...)
+}

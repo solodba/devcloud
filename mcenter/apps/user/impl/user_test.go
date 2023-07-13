@@ -9,11 +9,20 @@ import (
 
 func TestCreateUser(t *testing.T) {
 	req := user.NewCreateUserRequest()
-	req.Username = "test1"
-	req.Password = "test1"
+	req.Username = "test6"
+	req.Password = "test6"
 	userIns, err := svc.CreateUser(ctx, req)
 	if err != nil {
 		t.Fatal(err)
 	}
 	t.Log(tools.MustToJson(userIns))
+}
+
+func TestQueryUser(t *testing.T) {
+	req := user.NewQueryUserRequest()
+	userSet, err := svc.Queryuser(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(userSet))
 }

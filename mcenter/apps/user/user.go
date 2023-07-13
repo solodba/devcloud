@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 
 	"github.com/solodba/devcloud/tree/main/mcenter/common/pb/meta"
+	"golang.org/x/crypto/bcrypt"
 )
 
 // User结构体初始化函数
@@ -56,4 +57,9 @@ func (u *UserSet) AddItems(items ...*User) {
 // User结构体密码脱敏方法
 func (u *User) Desense() {
 	u.Spec.Password = "******"
+}
+
+// 添加用户密码校验功能
+func (u *User) CheckPassword(password string) error {
+	return bcrypt.CompareHashAndPassword([]byte(u.Spec.Password), []byte(password))
 }

@@ -36,4 +36,10 @@ func TestDescribeUser(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Log(tools.MustToJson(userIns))
+
+	// 用户密码校验
+	err = userIns.CheckPassword("test2")
+	if err != nil {
+		t.Fatal(err)
+	}
 }

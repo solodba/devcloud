@@ -10,15 +10,15 @@ import "apps/pod/pb/pod.proto";
 // Pod相关服务接口
 service RPC {
     // 创建Pod
-    // rpc CreatePod(CreatePodRequest) returns(Pod);
+    rpc CreatePod(CreatePodRequest) returns(Pod);
     // 删除Pod
-    // rpc DeletePod(DeletePodRequest) returns(Pod);
+    rpc DeletePod(DeletePodRequest) returns(Pod);
     // 修改Pod
-    // rpc UpdatePod(UpdatePodRequest) returns(Pod);
+    rpc UpdatePod(UpdatePodRequest) returns(Pod);
     // 查询Pod
-    // rpc QueryPod(QueryPodRequest) returns(PodSet);
+    rpc QueryPod(QueryPodRequest) returns(PodSet);
     // 查询Pod详情
-    // rpc DescribePod(DescribePodRequest) returns(Pod);
+    rpc DescribePod(DescribePodRequest) returns(Pod);
 }
 
 // 删除Pod请求

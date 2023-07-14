@@ -1,0 +1,20 @@
+[app]
+name = "mpaas"
+
+[app.http]
+host = "127.0.0.1"
+port = 8888
+
+[app.grpc]
+host = "127.0.0.1"
+port = 8889
+
+[mongodb]
+username = ""
+password = ""
+endpoints = ["118.195.239.185:27017"]
+database = "mpaas"
+authsource = "mpaas"
+
+[k8s]
+kubeconfig = "test/config"

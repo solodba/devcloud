@@ -8,10 +8,10 @@ import (
 
 	restfulspec "github.com/emicklei/go-restful-openapi/v2"
 	"github.com/emicklei/go-restful/v3"
-	"github.com/solodba/devcloud/tree/main/mcenter/apps"
-	"github.com/solodba/devcloud/tree/main/mcenter/common/logger"
 	"github.com/solodba/devcloud/tree/main/mcenter/conf"
-	"github.com/solodba/devcloud/tree/main/mcenter/swagger"
+	"github.com/solodba/mcube/apps"
+	"github.com/solodba/mcube/logger"
+	"github.com/solodba/mcube/swagger"
 )
 
 // Http服务结构体

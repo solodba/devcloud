@@ -1,10 +1,10 @@
 package tools
 
 import (
-	"github.com/solodba/devcloud/tree/main/mcenter/apps"
 	_ "github.com/solodba/devcloud/tree/main/mcenter/apps/all"
-	"github.com/solodba/devcloud/tree/main/mcenter/common/logger"
 	"github.com/solodba/devcloud/tree/main/mcenter/conf"
+	"github.com/solodba/mcube/apps"
+	"github.com/solodba/mcube/logger"
 )
 
 func DevelopmentSet() {

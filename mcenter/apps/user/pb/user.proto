@@ -4,7 +4,7 @@ package codehorse.mcenter.user;
 
 option go_package = "github.com/solodba/devcloud/tree/main/mcenter/apps/user";
 
-import "common/pb/meta/meta.proto";
+import "common/pb/github.com/solodba/mcube/pb/meta/meta.proto";
 
 // 创建用户请求
 message CreateUserRequest {
@@ -19,7 +19,7 @@ message CreateUserRequest {
 // 用户结构体
 message User {
     // @gotags: bson:",inline" json:"meta"
-    meta.Meta meta = 1;
+    codehorse.mcube.meta.Meta meta = 1;
     // @gotags: bson:",inline" json:"spec"
     CreateUserRequest spec = 2;
 }

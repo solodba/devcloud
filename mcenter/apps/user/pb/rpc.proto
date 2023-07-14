@@ -5,8 +5,9 @@ package codehorse.mcenter.user;
 option go_package = "github.com/solodba/devcloud/tree/main/mcenter/apps/user";
 
 import "apps/user/pb/user.proto";
-import "common/pb/page/page.proto";
+import "common/pb/github.com/solodba/mcube/pb/page/page.proto";
 
+// 用户管理服务接口
 service RPC {
     // 创建用户
     // rpc CreateUser(CreateUserRequest) returns(User);
@@ -37,7 +38,7 @@ message UpdateUserRequest {
 // 查询用户
 message QueryUserRequest {
     // @gotags: bson:",inline" json:"page"
-    page.PageRequest page = 1;
+    codehorse.mcube.page.PageRequest page = 1;
     // @gotags: bson:"keywords" json:"keywords"
     string keywords = 2;
 }

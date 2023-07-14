@@ -3,10 +3,10 @@ package ldap
 import (
 	"context"
 
-	"github.com/solodba/devcloud/tree/main/mcenter/apps"
 	"github.com/solodba/devcloud/tree/main/mcenter/apps/token"
 	"github.com/solodba/devcloud/tree/main/mcenter/apps/token/provider"
 	"github.com/solodba/devcloud/tree/main/mcenter/apps/user"
+	"github.com/solodba/mcube/apps"
 )
 
 // 结构体实现类

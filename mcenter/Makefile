@@ -6,7 +6,7 @@ MOD_DIR := $(shell go env GOPATH)/pkg/mod
 PKG_LIST := $(shell go list ${PKG}/... | grep -v /vendor/ | grep -v redis)
 GO_FILES := $(shell find . -name '*.go' | grep -v /vendor/ | grep -v _test.go)
 
-MCUBE_MODULE := "gitee.com/code-horse-mi/mcube"
+MCUBE_MODULE := "github.com/solodba/mcube"
 MCUBE_VERSION :=$(shell go list -m ${MCUBE_MODULE} | cut -d' ' -f2)
 MCUBE_PKG_PATH := ${MOD_DIR}/${MCUBE_MODULE}@${MCUBE_VERSION}
 
@@ -61,16 +61,15 @@ install: ## Install depence go package
 	@go install github.com/favadi/protoc-go-inject-tag@latest
 
 pb: ## Copy mcube protobuf files to common/pb
-	@mkdir -pv common/pb/gitee.com/code-horse-mi/mcube/pb
-#	@cp -r ${MCUBE_PKG_PATH}/pb/* common/pb/gitee.com/code-horse-mi/mcube/pb
-#	@sudo rm -rf common/pb/gitee.com/code-horse-mi/mcube/pb/*/*.go
+	@mkdir -pv common/pb/github.com/solodba/mcube/pb
+	@cp -r ${MCUBE_PKG_PATH}/pb/* common/pb/github.com/solodba/mcube/pb
+	@sudo rm -rf common/pb/github.com/solodba/mcube/pb/*/*.go
 
 gen: ## Gen Code, mcube generate enum 生成枚举的 Marshal JSON
-	@protoc -I=. -I=common/pb --go_out=. --go_opt=module=${PKG} --go-grpc_out=. --go-grpc_opt=module=${PKG} apps/*/pb/*.proto common/*/*.proto
+	@protoc -I=. -I=common/pb --go_out=. --go_opt=module=${PKG} --go-grpc_out=. --go-grpc_opt=module=${PKG} apps/*/pb/*.proto
 	@go fmt ./...
 
 	@protoc-go-inject-tag -input=apps/*/*.pb.go
-	@protoc-go-inject-tag -input=common/*/*.pb.go
 
 help: ## Display this help screen
 	@grep -h -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'

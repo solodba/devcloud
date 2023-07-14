@@ -3,7 +3,7 @@ package token
 import (
 	context "context"
 
-	"github.com/solodba/devcloud/tree/main/mcenter/common/validator"
+	"github.com/solodba/mcube/validator"
 )
 
 // 定义模块名称

@@ -2,7 +2,7 @@ package provider
 
 import (
 	"github.com/solodba/devcloud/tree/main/mcenter/apps/token"
-	"github.com/solodba/devcloud/tree/main/mcenter/common/logger"
+	"github.com/solodba/mcube/logger"
 )
 
 // 实例映射

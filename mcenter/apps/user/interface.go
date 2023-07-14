@@ -3,9 +3,9 @@ package user
 import (
 	context "context"
 
+	"github.com/infraboard/mcube/validator"
 	"github.com/solodba/devcloud/tree/main/mcenter/apps/domain"
-	"github.com/solodba/devcloud/tree/main/mcenter/common/pb/page"
-	"github.com/solodba/devcloud/tree/main/mcenter/common/validator"
+	"github.com/solodba/mcube/pb/page"
 	"golang.org/x/crypto/bcrypt"
 )
 

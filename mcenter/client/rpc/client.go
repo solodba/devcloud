@@ -3,7 +3,7 @@ package rpc
 import (
 	"github.com/solodba/devcloud/tree/main/mcenter/apps/token"
 	"github.com/solodba/devcloud/tree/main/mcenter/apps/user"
-	"github.com/solodba/devcloud/tree/main/mcenter/common/logger"
+	"github.com/solodba/mcube/logger"
 	"google.golang.org/grpc"
 )
 

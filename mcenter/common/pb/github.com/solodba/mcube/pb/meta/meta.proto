@@ -1,9 +1,10 @@
 syntax = "proto3";
 
-package codehorse.mcenter.meta;
+package codehorse.mcube.meta;
 
-option go_package = "github.com/solodba/devcloud/tree/main/mcenter/common/pb/meta";
+option go_package = "github.com/solodba/mcube/pb/meta";
 
+// 元数据
 message Meta {
     // @gotags: bson:"_id" json:"id"
     string id = 1;

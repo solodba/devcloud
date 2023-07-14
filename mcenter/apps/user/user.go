@@ -3,7 +3,7 @@ package user
 import (
 	"encoding/json"
 
-	"github.com/solodba/devcloud/tree/main/mcenter/common/pb/meta"
+	"github.com/solodba/mcube/pb/meta"
 	"golang.org/x/crypto/bcrypt"
 )
 

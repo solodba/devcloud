@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/solodba/devcloud/tree/main/mcenter/common/logger"
+	"github.com/solodba/mcube/logger"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 

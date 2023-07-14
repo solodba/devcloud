@@ -3,9 +3,9 @@ package impl_test
 import (
 	"context"
 
-	"github.com/solodba/devcloud/tree/main/mcenter/apps"
 	"github.com/solodba/devcloud/tree/main/mcenter/apps/token"
 	"github.com/solodba/devcloud/tree/main/mcenter/test/tools"
+	"github.com/solodba/mcube/apps"
 )
 
 var (

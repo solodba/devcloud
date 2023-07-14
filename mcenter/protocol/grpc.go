@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"net"
 
-	"github.com/solodba/devcloud/tree/main/mcenter/apps"
-	"github.com/solodba/devcloud/tree/main/mcenter/common/logger"
 	"github.com/solodba/devcloud/tree/main/mcenter/conf"
+	"github.com/solodba/mcube/apps"
+	"github.com/solodba/mcube/logger"
 	"google.golang.org/grpc"
 )
 

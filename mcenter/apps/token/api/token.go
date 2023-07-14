@@ -3,7 +3,7 @@ package api
 import (
 	"github.com/emicklei/go-restful/v3"
 	"github.com/solodba/devcloud/tree/main/mcenter/apps/token"
-	"github.com/solodba/devcloud/tree/main/mcenter/common/response"
+	"github.com/solodba/mcube/response"
 )
 
 // 颁发令牌

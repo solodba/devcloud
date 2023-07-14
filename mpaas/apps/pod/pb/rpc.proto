@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package codehorse.mpaas.pod;
+
+option go_package = "github.com/solodba/devcloud/tree/main/mpaas/apps/pod";
+
+// 导入外部包
+import "apps/pod/pb/pod.proto";
+
+// Pod相关服务接口
+service RPC {
+    // 创建Pod
+    // rpc CreatePod(CreatePodRequest) returns(Pod);
+    // 删除Pod
+    // rpc DeletePod(DeletePodRequest) returns(Pod);
+    // 修改Pod
+    // rpc UpdatePod(UpdatePodRequest) returns(Pod);
+    // 查询Pod
+    // rpc QueryPod(QueryPodRequest) returns(PodSet);
+    // 查询Pod详情
+    // rpc DescribePod(DescribePodRequest) returns(Pod);
+}
+
+// 删除Pod请求
+message DeletePodRequest {
+    // @gotags: bson:"name" json:"name"
+    string Name = 1;
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 2;
+}
+
+// 更新Pod请求
+message UpdatePodRequest {
+    // @gotags: bson:"pod" json:"pod"
+    Pod pod = 1;
+}
+
+// 查询Pod请求
+message QueryPodRequest {
+    // @gotags: bson:"nodeName" json:"nodeName"
+    string NodeName = 1;
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 2;
+    // @gotags: bson:"keyword" json:"keyword"
+    string Keyword = 3;
+}
+
+// 查询Pod详情请求
+message DescribePodRequest {
+    // @gotags: bson:"name" json:"name"
+    string Name = 1;
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 2;
+}

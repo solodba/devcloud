@@ -8,6 +8,13 @@ import (
 
 // 创建Pod
 func (i *impl) CreatePod(ctx context.Context, in *pod.CreatePodRequest) (*pod.Pod, error) {
+	// Pod必要参数校验
+	if err := in.Pod.Validate(); err != nil {
+		return nil, err
+	}
+	// Pod结构体转换
+	// Todo
+
 	return nil, nil
 }
 

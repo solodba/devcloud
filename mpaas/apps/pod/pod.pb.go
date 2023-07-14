@@ -246,8 +246,8 @@ type Base struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// @gotags: bson:"name" json:"name"
-	Name string `protobuf:"bytes,1,opt,name=Name,proto3" json:"name" bson:"name"`
+	// @gotags: bson:"name" json:"name" validate:"required"
+	Name string `protobuf:"bytes,1,opt,name=Name,proto3" json:"name" bson:"name" validate:"required"`
 	// @gotags: bson:"namespace" json:"namespace"
 	Namespace string `protobuf:"bytes,2,opt,name=Namespace,proto3" json:"namespace" bson:"namespace"`
 	// @gotags: bson:"labels" json:"labels"
@@ -840,10 +840,10 @@ type Container struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// @gotags: bson:"name" json:"name"
-	Name string `protobuf:"bytes,1,opt,name=Name,proto3" json:"name" bson:"name"`
-	// @gotags: bson:"image" json:"image"
-	Image string `protobuf:"bytes,2,opt,name=Image,proto3" json:"image" bson:"image"`
+	// @gotags: bson:"name" json:"name" validate:"required"
+	Name string `protobuf:"bytes,1,opt,name=Name,proto3" json:"name" bson:"name" validate:"required"`
+	// @gotags: bson:"image" json:"image" validate:"required"
+	Image string `protobuf:"bytes,2,opt,name=Image,proto3" json:"image" bson:"image" validate:"required"`
 	// @gotags: bson:"imagePullPolicy" json:"imagePullPolicy"
 	ImagePullPolicy string `protobuf:"bytes,3,opt,name=ImagePullPolicy,proto3" json:"imagePullPolicy" bson:"imagePullPolicy"`
 	// @gotags: bson:"tty" json:"tty"

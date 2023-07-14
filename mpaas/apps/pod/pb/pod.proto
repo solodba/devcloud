@@ -43,7 +43,7 @@ message ListMapItem {
 
 // Base结构体
 message Base {
-    // @gotags: bson:"name" json:"name"
+    // @gotags: bson:"name" json:"name" validate:"required"
     string Name = 1;
     // @gotags: bson:"namespace" json:"namespace"
     string Namespace = 2;
@@ -131,9 +131,9 @@ message DnsConfig {
 
 // Container结构体
 message Container {
-    // @gotags: bson:"name" json:"name"
+    // @gotags: bson:"name" json:"name" validate:"required"
     string Name = 1;
-    // @gotags: bson:"image" json:"image"
+    // @gotags: bson:"image" json:"image" validate:"required"
     string Image = 2;
     // @gotags: bson:"imagePullPolicy" json:"imagePullPolicy"
     string ImagePullPolicy = 3;

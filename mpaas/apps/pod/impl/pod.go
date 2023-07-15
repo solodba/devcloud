@@ -2,8 +2,10 @@ package impl
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/solodba/devcloud/tree/main/mpaas/apps/pod"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 // 创建Pod
@@ -13,9 +15,16 @@ func (i *impl) CreatePod(ctx context.Context, in *pod.CreatePodRequest) (*pod.Po
 		return nil, err
 	}
 	// Pod结构体转换
-	// Todo
-
-	return nil, nil
+	k8sPod := in.Pod.PodReq2K8s()
+	podApi := i.clientSet.CoreV1().Pods(k8sPod.Namespace)
+	if getPod, err := podApi.Get(ctx, k8sPod.Name, metav1.GetOptions{}); err == nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s]Pod已经存在!", getPod.Namespace, getPod.Name)
+	}
+	_, err := podApi.Create(ctx, k8sPod, metav1.CreateOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s]Pod创建失败!", k8sPod.Namespace, k8sPod.Name)
+	}
+	return in.Pod, nil
 }
 
 // 删除Pod

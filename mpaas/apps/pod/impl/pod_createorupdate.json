@@ -4,8 +4,8 @@
         "namespace": "test",
         "labels": [
             {
-                "key": "app",
-                "value": "test"
+                "key": "hu",
+                "value": "haha"
             }
         ],
         "restartPolicy": "Always"

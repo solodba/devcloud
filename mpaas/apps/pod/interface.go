@@ -34,3 +34,10 @@ func NewDescribePodRequest() *DescribePodRequest {
 func NewDeletePodRequest() *DeletePodRequest {
 	return &DeletePodRequest{}
 }
+
+// UpdatePodRequest初始化函数
+func NewUpdatePodRequest(pod *Pod) *UpdatePodRequest {
+	return &UpdatePodRequest{
+		Pod: pod,
+	}
+}

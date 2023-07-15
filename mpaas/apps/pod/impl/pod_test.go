@@ -59,3 +59,21 @@ func TestDeletePod(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(pod))
 }
+
+func TestUpdatePod(t *testing.T) {
+	createPodReq := pod.NewCreatePodRequest()
+	data, err := ioutil.ReadFile("pod_createorupdate.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	err = json.Unmarshal(data, createPodReq.Pod)
+	if err != nil {
+		t.Fatal(err)
+	}
+	updatePodReq := pod.NewUpdatePodRequest(createPodReq.Pod)
+	pod, err := svc.UpdatePod(ctx, updatePodReq)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(pod))
+}

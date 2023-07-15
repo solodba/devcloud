@@ -6,7 +6,10 @@ import (
 	"strings"
 
 	"github.com/solodba/devcloud/tree/main/mpaas/apps/pod"
+	corev1 "k8s.io/api/core/v1"
+	k8serror "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/watch"
 )
 
 // 创建Pod
@@ -52,6 +55,70 @@ func (i *impl) DeletePod(ctx context.Context, in *pod.DeletePodRequest) (*pod.Po
 
 // 修改Pod
 func (i *impl) UpdatePod(ctx context.Context, in *pod.UpdatePodRequest) (*pod.Pod, error) {
+	// Pod结构体转换
+	k8sPod := i.PodReq2K8s(in.Pod)
+	podApi := i.clientSet.CoreV1().Pods(k8sPod.Namespace)
+	getK8sPod, err := podApi.Get(ctx, k8sPod.Name, metav1.GetOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] pod not exists, err: %s", k8sPod.Namespace, k8sPod.Name, err.Error())
+	}
+	// delete+create方式更新Pod
+	// pod参数校验
+	k8sPodCopy := *k8sPod
+	k8sPodCopy.Name = k8sPod.Name + "-validate"
+	_, err = podApi.Create(ctx, &k8sPodCopy, metav1.CreateOptions{
+		DryRun: []string{metav1.DryRunAll},
+	})
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s,name=%s] pod update failed, err: %s", k8sPod.Namespace, k8sPod.Name, err.Error())
+	}
+	// 删除 强制删除
+	background := metav1.DeletePropagationBackground
+	var gracePeriodSeconds int64 = 0
+	err = podApi.Delete(ctx, k8sPod.Name, metav1.DeleteOptions{
+		GracePeriodSeconds: &gracePeriodSeconds,
+		PropagationPolicy:  &background,
+	})
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s,name=%s] pod update failed, err: %s", k8sPod.Namespace, k8sPod.Name, err.Error())
+	}
+	// Pod处于terminating状态, 监听Pod删除完毕后, 才开始创建Pod
+	var labelSelector []string
+	for k, v := range getK8sPod.Labels {
+		labelSelector = append(labelSelector, fmt.Sprintf("%s=%s", k, v))
+	}
+	watcher, err := podApi.Watch(ctx, metav1.ListOptions{
+		LabelSelector: strings.Join(labelSelector, ","),
+	})
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s,name=%s] pod update failed, detail: %s", k8sPod.Namespace, k8sPod.Name, err.Error())
+	}
+	for event := range watcher.ResultChan() {
+		k8sPodChan := event.Object.(*corev1.Pod)
+		// 查询k8s判断是否已经删除, 那么就不用判断删除事件了
+		if _, err := podApi.Get(ctx, k8sPod.Name, metav1.GetOptions{}); k8serror.IsNotFound(err) {
+			//重新创建Pod
+			_, err := podApi.Create(ctx, k8sPod, metav1.CreateOptions{})
+			if err != nil {
+				return nil, fmt.Errorf("[namespace=%s,name=%s] pod update failed, detail: %s", k8sPod.Namespace, k8sPod.Name, err.Error())
+			} else {
+				return in.Pod, nil
+			}
+		}
+		switch event.Type {
+		case watch.Deleted:
+			if k8sPodChan.Name != k8sPod.Name {
+				continue
+			}
+			//重新创建Pod
+			_, err := podApi.Create(ctx, k8sPod, metav1.CreateOptions{})
+			if err != nil {
+				return nil, fmt.Errorf("[namespace=%s,name=%s] pod update failed, err: %s", k8sPod.Namespace, k8sPod.Name, err.Error())
+			} else {
+				return in.Pod, nil
+			}
+		}
+	}
 	return nil, nil
 }
 

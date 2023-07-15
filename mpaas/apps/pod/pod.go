@@ -3,6 +3,7 @@ package pod
 import (
 	"fmt"
 
+	"github.com/solodba/mcube/pb/meta"
 	"github.com/solodba/mcube/validator"
 )
 
@@ -56,9 +57,10 @@ func (req *Pod) Validate() error {
 	return nil
 }
 
-// Pod初始化函数
-func NewPod() *Pod {
+// Pod默认初始化函数
+func NewDefaultPod() *Pod {
 	return &Pod{
+		Meta:           meta.NewMeta(),
 		Base:           NewBase(),
 		Volumes:        make([]*Volume, 0),
 		NetWorking:     NewNetWorking(),
@@ -67,6 +69,23 @@ func NewPod() *Pod {
 		Tolerations:    make([]*Tolerations, 0),
 		NodeScheduling: NewNodeScheduling(),
 	}
+}
+
+// Pod初始化函数
+func NewPod(in *CreatePodRequest) (*Pod, error) {
+	if err := in.Pod.Validate(); err != nil {
+		return nil, err
+	}
+	return &Pod{
+		Meta:           meta.NewMeta(),
+		Base:           in.Pod.Base,
+		Volumes:        in.Pod.Volumes,
+		NetWorking:     in.Pod.NetWorking,
+		InitContainers: in.Pod.InitContainers,
+		Containers:     in.Pod.Containers,
+		Tolerations:    in.Pod.Tolerations,
+		NodeScheduling: in.Pod.NodeScheduling,
+	}, nil
 }
 
 // Base初始化函数

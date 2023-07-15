@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/solodba/devcloud/tree/main/mpaas/apps/pod"
+	"go.mongodb.org/mongo-driver/bson"
 	corev1 "k8s.io/api/core/v1"
 	k8serror "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -14,8 +15,9 @@ import (
 
 // 创建Pod
 func (i *impl) CreatePod(ctx context.Context, in *pod.CreatePodRequest) (*pod.Pod, error) {
-	// Pod必要参数校验
-	if err := in.Pod.Validate(); err != nil {
+	// Pod结构体初始化
+	pod, err := pod.NewPod(in)
+	if err != nil {
 		return nil, err
 	}
 	// Pod结构体转换
@@ -24,11 +26,16 @@ func (i *impl) CreatePod(ctx context.Context, in *pod.CreatePodRequest) (*pod.Po
 	if getPod, err := podApi.Get(ctx, k8sPod.Name, metav1.GetOptions{}); err == nil {
 		return nil, fmt.Errorf("[namespace=%s, name=%s] pod already exists", getPod.Namespace, getPod.Name)
 	}
-	_, err := podApi.Create(ctx, k8sPod, metav1.CreateOptions{})
+	_, err = podApi.Create(ctx, k8sPod, metav1.CreateOptions{})
 	if err != nil {
 		return nil, fmt.Errorf("[namespace=%s, name=%s] create failed, err: %s", k8sPod.Namespace, k8sPod.Name, err.Error())
 	}
-	return in.Pod, nil
+	// 新增Pod数据入库
+	_, err = i.col.InsertOne(ctx, pod)
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] insert into mongodb failed, err: %s", k8sPod.Namespace, k8sPod.Name, err.Error())
+	}
+	return pod, nil
 }
 
 // 删除Pod
@@ -49,6 +56,12 @@ func (i *impl) DeletePod(ctx context.Context, in *pod.DeletePodRequest) (*pod.Po
 	})
 	if err != nil {
 		return nil, fmt.Errorf("[namespace=%s, name=%s] delete failed, err: %s", pod.Base.Namespace, pod.Base.Name, err.Error())
+	}
+	// 数据库中删除
+	filter := bson.M{"name": pod.Base.Name}
+	_, err = i.col.DeleteOne(ctx, filter)
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] delete from mongodb failed, err: %s", pod.Base.Namespace, pod.Base.Name, err.Error())
 	}
 	return pod, nil
 }
@@ -102,6 +115,11 @@ func (i *impl) UpdatePod(ctx context.Context, in *pod.UpdatePodRequest) (*pod.Po
 			if err != nil {
 				return nil, fmt.Errorf("[namespace=%s,name=%s] pod update failed, detail: %s", k8sPod.Namespace, k8sPod.Name, err.Error())
 			} else {
+				filter := bson.M{"name": k8sPod.Name}
+				_, err = i.col.UpdateOne(ctx, filter, bson.M{"": in.Pod})
+				if err != nil {
+					return nil, fmt.Errorf("[namespace=%s, name=%s] update from mongodb failed, err: %s", k8sPod.Namespace, k8sPod.Name, err.Error())
+				}
 				return in.Pod, nil
 			}
 		}
@@ -115,6 +133,11 @@ func (i *impl) UpdatePod(ctx context.Context, in *pod.UpdatePodRequest) (*pod.Po
 			if err != nil {
 				return nil, fmt.Errorf("[namespace=%s,name=%s] pod update failed, err: %s", k8sPod.Namespace, k8sPod.Name, err.Error())
 			} else {
+				filter := bson.M{"name": k8sPod.Name}
+				_, err = i.col.UpdateOne(ctx, filter, bson.M{"": in.Pod})
+				if err != nil {
+					return nil, fmt.Errorf("[namespace=%s, name=%s] update from mongodb failed, err: %s", k8sPod.Namespace, k8sPod.Name, err.Error())
+				}
 				return in.Pod, nil
 			}
 		}

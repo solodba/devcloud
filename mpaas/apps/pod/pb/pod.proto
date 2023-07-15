@@ -9,28 +9,28 @@ import "common/pb/github.com/solodba/mcube/pb/meta/meta.proto";
 
 // 创建Pod请求
 message CreatePodRequest {
-    // @gotags: bson:"meta" json:"meta"
-    codehorse.mcube.meta.Meta Meta = 1;
-    // @gotags: bson:"pod" json:"pod"
-    Pod Pod = 2;
+    // @gotags: bson:",inline" json:"pod"
+    Pod pod = 1;
 }
 
 // Pod结构体
 message Pod {
+    // @gotags: bson:",inline" json:"meta"
+    codehorse.mcube.meta.Meta Meta = 1;
     // @gotags: bson:",inline" json:"base"
-    Base Base = 1;
-    // @gotags: bson:",inline" json:"volumes"
-    repeated Volume Volumes = 2;
+    Base Base = 2;
+    // @gotags: bson:"volumes" json:"volumes"
+    repeated Volume Volumes = 3;
     // @gotags: bson:",inline" json:"netWorking"
-    NetWorking NetWorking = 3;
-    // @gotags: bson:",inline" json:"initContainers"
-    repeated Container InitContainers = 4;
-    // @gotags: bson:",inline" json:"containers"
-    repeated Container Containers = 5;
+    NetWorking NetWorking = 4;
+    // @gotags: bson:"initContainers" json:"initContainers"
+    repeated Container InitContainers = 5;
+    // @gotags: bson:"containers" json:"containers"
+    repeated Container Containers = 6;
     // @gotags: bson:"tolerations" json:"tolerations"
-    repeated Tolerations Tolerations = 6;
+    repeated Tolerations Tolerations = 7;
     // @gotags: bson:",inline" json:"nodeScheduling"
-    NodeScheduling NodeScheduling = 7;
+    NodeScheduling NodeScheduling = 8;
 }
 
 // Tolerations结构体
@@ -69,15 +69,15 @@ message Volume {
     string Name = 1;
     // @gotags: bson:"type" json:"type" 
     string Type = 2;
-    // @gotags: bson:",inline" json:"configMapRefVolume"
+    // @gotags: bson:"configMapRefVolume" json:"configMapRefVolume"
     ConfigMapRefVolume ConfigMapRefVolume = 3;
-    // @gotags: bson:",inline" json:"secretRefVolume"
+    // @gotags: bson:"secretRefVolume" json:"secretRefVolume"
     SecretRefVolume SecretRefVolume = 4;
-    // @gotags: bson:",inline" json:"hostPathVolume"
+    // @gotags: bson:"hostPathVolume" json:"hostPathVolume"
     HostPathVolume HostPathVolume = 5;
-    // @gotags: bson:",inline" json:"downwardAPIVolume"
+    // @gotags: bson:"downwardAPIVolume" json:"downwardAPIVolume"
     DownwardAPIVolume DownwardAPIVolume = 6;
-    // @gotags: bson:",inline" json:"PVCVolume"
+    // @gotags: bson:"PVCVolume" json:"PVCVolume"
     PVCVolume PVCVolume = 7;
 }
 
@@ -173,11 +173,11 @@ message Container {
     Resources Resources = 12;
     // @gotags: bson:"volumeMounts" json:"volumeMounts"
     repeated VolumeMounts VolumeMounts = 13;
-    // @gotags: bson:",inline" json:"startupProbe"
+    // @gotags: bson:"startupProbe" json:"startupProbe"
     ContainerProbe StartupProbe = 14;
-    // @gotags: bson:",inline" json:"livenessProbe"
+    // @gotags: bson:"livenessProbe" json:"livenessProbe"
     ContainerProbe LivenessProbe  = 15;
-    // @gotags: bson:",inline" json:"readinessProbe"
+    // @gotags: bson:"readinessProbe" json:"readinessProbe"
     ContainerProbe ReadinessProbe = 16;
 }
 
@@ -243,13 +243,13 @@ message ContainerProbe {
     bool Enable = 1;
     // @gotags: bson:"type" json:"type"
     string Type = 2;
-    // @gotags: bson:",inline" json:"httpGet" 
+    // @gotags: bson:"httpGet" json:"httpGet" 
     ProbeHttpGet HttpGet = 3;
-    // @gotags: bson:",inline" json:"exec"
+    // @gotags: bson:"exec" json:"exec"
     ProbeCommand Exec = 4;
-    // @gotags: bson:",inline" json:"tcpSocket"
+    // @gotags: bson:"tcpSocket" json:"tcpSocket"
     ProbeTcpSocket TcpSocket = 5;
-    // @gotags: bson:",inline" json:"probeTime"
+    // @gotags: bson:"probeTime" json:"probeTime"
     ProbeTime ProbeTime = 6;
 }
 

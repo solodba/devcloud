@@ -29,3 +29,8 @@ func NewQueryPodRequest() *QueryPodRequest {
 func NewDescribePodRequest() *DescribePodRequest {
 	return &DescribePodRequest{}
 }
+
+// DeletePodRequest初始化函数
+func NewDeletePodRequest() *DeletePodRequest {
+	return &DeletePodRequest{}
+}

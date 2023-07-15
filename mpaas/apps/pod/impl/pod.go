@@ -30,17 +30,24 @@ func (i *impl) CreatePod(ctx context.Context, in *pod.CreatePodRequest) (*pod.Po
 
 // 删除Pod
 func (i *impl) DeletePod(ctx context.Context, in *pod.DeletePodRequest) (*pod.Pod, error) {
-	// var gracePeriodSeconds int64 = 0
-	// background := metav1.DeletePropagationBackground
-	// podApi := i.clientSet.CoreV1().Pods(in.Namespace)
-	// err := podApi.Delete(ctx, in.Name, metav1.DeleteOptions{
-	// 	GracePeriodSeconds: &gracePeriodSeconds,
-	// 	PropagationPolicy:  &background,
-	// })
-	// if err != nil {
-	// 	return nil, fmt.Errorf("[namespace=%s, name=%s] delete failed, err: %s", err.Error())
-	// }
-	return nil, nil
+	req := pod.NewDescribePodRequest()
+	req.Namespace = in.Namespace
+	req.Name = in.Name
+	pod, err := i.DescribePod(ctx, req)
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] pod not found, err: %s", in.Namespace, in.Name, err.Error())
+	}
+	var gracePeriodSeconds int64 = 0
+	background := metav1.DeletePropagationBackground
+	podApi := i.clientSet.CoreV1().Pods(pod.Base.Namespace)
+	err = podApi.Delete(ctx, pod.Base.Name, metav1.DeleteOptions{
+		GracePeriodSeconds: &gracePeriodSeconds,
+		PropagationPolicy:  &background,
+	})
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] delete failed, err: %s", pod.Base.Namespace, pod.Base.Name, err.Error())
+	}
+	return pod, nil
 }
 
 // 修改Pod

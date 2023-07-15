@@ -48,3 +48,14 @@ func TestDescribePod(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(pod))
 }
+
+func TestDeletePod(t *testing.T) {
+	req := pod.NewDeletePodRequest()
+	req.Namespace = "test"
+	req.Name = "test"
+	pod, err := svc.DeletePod(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(pod))
+}

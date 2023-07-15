@@ -88,3 +88,15 @@ func NewNetWorking() *NetWorking {
 func NewNodeScheduling() *NodeScheduling {
 	return &NodeScheduling{}
 }
+
+// PodSet初始化参数
+func NewPodSet() *PodSet {
+	return &PodSet{
+		PodListItem: make([]*PodListItem, 0),
+	}
+}
+
+// PodSet添加方法
+func (p *PodSet) AddItems(items ...*PodListItem) {
+	p.PodListItem = append(p.PodListItem, items...)
+}

@@ -25,3 +25,15 @@ func TestCreatePod(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(pod))
 }
+
+func TestQueryPod(t *testing.T) {
+	req := pod.NewQueryPodRequest()
+	req.Namespace = "test"
+	req.NodeName = "node1"
+	req.Keyword = "te"
+	podSet, err := svc.QueryPod(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(podSet))
+}

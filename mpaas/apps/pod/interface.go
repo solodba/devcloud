@@ -19,3 +19,8 @@ func NewCreatePodRequest() *CreatePodRequest {
 		Pod:  NewPod(),
 	}
 }
+
+// QueryPodRequest初始化函数
+func NewQueryPodRequest() *QueryPodRequest {
+	return &QueryPodRequest{}
+}

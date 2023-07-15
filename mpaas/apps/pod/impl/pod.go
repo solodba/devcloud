@@ -3,6 +3,7 @@ package impl
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/solodba/devcloud/tree/main/mpaas/apps/pod"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -29,6 +30,16 @@ func (i *impl) CreatePod(ctx context.Context, in *pod.CreatePodRequest) (*pod.Po
 
 // 删除Pod
 func (i *impl) DeletePod(ctx context.Context, in *pod.DeletePodRequest) (*pod.Pod, error) {
+	// var gracePeriodSeconds int64 = 0
+	// background := metav1.DeletePropagationBackground
+	// podApi := i.clientSet.CoreV1().Pods(in.Namespace)
+	// err := podApi.Delete(ctx, in.Name, metav1.DeleteOptions{
+	// 	GracePeriodSeconds: &gracePeriodSeconds,
+	// 	PropagationPolicy:  &background,
+	// })
+	// if err != nil {
+	// 	return nil, fmt.Errorf("[namespace=%s, name=%s] delete failed, err: %s", err.Error())
+	// }
 	return nil, nil
 }
 
@@ -39,7 +50,23 @@ func (i *impl) UpdatePod(ctx context.Context, in *pod.UpdatePodRequest) (*pod.Po
 
 // 查询Pod
 func (i *impl) QueryPod(ctx context.Context, in *pod.QueryPodRequest) (*pod.PodSet, error) {
-	return nil, nil
+	list, err := i.clientSet.CoreV1().Pods(in.Namespace).List(ctx, metav1.ListOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("get pod list error, err: %s", err.Error())
+	}
+	podSet := pod.NewPodSet()
+	for _, item := range list.Items {
+		if in.NodeName != "" && item.Spec.NodeName != in.NodeName {
+			continue
+		}
+		if strings.Contains(item.Name, in.Keyword) {
+			// K8S中Pod转换成自定义Pod
+			podItem := pod.PodK8s2ItemRes(item)
+			podSet.AddItems(podItem)
+		}
+	}
+	podSet.Total = int64(len(podSet.PodListItem))
+	return podSet, nil
 }
 
 // 查询Pod详情

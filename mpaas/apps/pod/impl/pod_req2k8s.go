@@ -1,9 +1,10 @@
-package pod
+package impl
 
 import (
 	"strconv"
 	"strings"
 
+	"github.com/solodba/devcloud/tree/main/mpaas/apps/pod"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -26,7 +27,7 @@ const (
 const (
 	PROBE_HTTP = "http"
 	PROBE_TCP  = "tcp"
-	PROB_EXEC  = "exec"
+	PROBE_EXEC = "exec"
 )
 
 const (
@@ -39,27 +40,27 @@ const (
 )
 
 // Pod自定义结构体转换成K8s中定义的结构体
-func (p *Pod) PodReq2K8s() *corev1.Pod {
-	nodeAffinity, nodeSelector, nodeName := p.getNodeK8sScheduling()
+func (i *impl) PodReq2K8s(p *pod.Pod) *corev1.Pod {
+	nodeAffinity, nodeSelector, nodeName := i.getNodeK8sScheduling(p)
 	return &corev1.Pod{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      p.Base.Name,
 			Namespace: p.Base.Namespace,
-			Labels:    p.getK8sLabels(),
+			Labels:    i.getK8sLabels(p),
 		},
 		Spec: corev1.PodSpec{
 			NodeName:       nodeName,
 			NodeSelector:   nodeSelector,
 			Affinity:       nodeAffinity,
-			Tolerations:    p.getK8sTolerations(),
-			InitContainers: p.getK8sContainer(p.InitContainers),
-			Containers:     p.getK8sContainer(p.Containers),
-			Volumes:        p.getK8sVolumes(),
+			Tolerations:    i.getK8sTolerations(p),
+			InitContainers: i.getK8sContainer(p.InitContainers),
+			Containers:     i.getK8sContainer(p.Containers),
+			Volumes:        i.getK8sVolumes(p),
 			DNSConfig: &corev1.PodDNSConfig{
 				Nameservers: p.NetWorking.DnsConfig.Nameservers,
 			},
 			DNSPolicy:     corev1.DNSPolicy(p.NetWorking.DnsPolicy),
-			HostAliases:   p.getK8sHostAlias(),
+			HostAliases:   i.getK8sHostAlias(p),
 			Hostname:      p.NetWorking.HostName,
 			RestartPolicy: corev1.RestartPolicy(p.Base.RestartPolicy),
 		},
@@ -67,7 +68,7 @@ func (p *Pod) PodReq2K8s() *corev1.Pod {
 }
 
 // HostAliases转换
-func (p *Pod) getK8sHostAlias() []corev1.HostAlias {
+func (i *impl) getK8sHostAlias(p *pod.Pod) []corev1.HostAlias {
 	podK8sHostAliases := make([]corev1.HostAlias, 0)
 	for _, item := range p.NetWorking.HostAliases {
 		podK8sHostAliases = append(podK8sHostAliases, corev1.HostAlias{
@@ -79,7 +80,7 @@ func (p *Pod) getK8sHostAlias() []corev1.HostAlias {
 }
 
 // Volumes转换
-func (p *Pod) getK8sVolumes() []corev1.Volume {
+func (i *impl) getK8sVolumes(p *pod.Pod) []corev1.Volume {
 	podK8sVolumes := make([]corev1.Volume, 0)
 	for _, volume := range p.Volumes {
 		source := corev1.VolumeSource{}
@@ -147,7 +148,7 @@ func (p *Pod) getK8sVolumes() []corev1.Volume {
 }
 
 // InitContainer结构体转换
-func (p *Pod) getK8sContainer(podReqContainers []*Container) []corev1.Container {
+func (i *impl) getK8sContainer(podReqContainers []*pod.Container) []corev1.Container {
 	podK8sContainers := make([]corev1.Container, 0)
 	for _, item := range podReqContainers {
 		podK8sContainers = append(podK8sContainers, corev1.Container{
@@ -161,21 +162,21 @@ func (p *Pod) getK8sContainer(podReqContainers []*Container) []corev1.Container 
 			SecurityContext: &corev1.SecurityContext{
 				Privileged: &item.Privileged,
 			},
-			Ports:          p.getK8sPorts(item.Ports),
-			Env:            p.getK8sEnv(item.Envs),
-			EnvFrom:        p.getK8sEnvFrom(item.EnvsFrom),
-			VolumeMounts:   p.getK8sVolumeMounts(item.VolumeMounts),
-			StartupProbe:   p.getK8sContainerProbe(item.StartupProbe),
-			LivenessProbe:  p.getK8sContainerProbe(item.LivenessProbe),
-			ReadinessProbe: p.getK8sContainerProbe(item.ReadinessProbe),
-			Resources:      p.getK8sResources(item.Resources),
+			Ports:          i.getK8sPorts(item.Ports),
+			Env:            i.getK8sEnv(item.Envs),
+			EnvFrom:        i.getK8sEnvFrom(item.EnvsFrom),
+			VolumeMounts:   i.getK8sVolumeMounts(item.VolumeMounts),
+			StartupProbe:   i.getK8sContainerProbe(item.StartupProbe),
+			LivenessProbe:  i.getK8sContainerProbe(item.LivenessProbe),
+			ReadinessProbe: i.getK8sContainerProbe(item.ReadinessProbe),
+			Resources:      i.getK8sResources(item.Resources),
 		})
 	}
 	return podK8sContainers
 }
 
 // Resources转换
-func (p *Pod) getK8sResources(podReqResources *Resources) corev1.ResourceRequirements {
+func (i *impl) getK8sResources(podReqResources *pod.Resources) corev1.ResourceRequirements {
 	var k8sPodResources corev1.ResourceRequirements
 	if podReqResources == nil {
 		return k8sPodResources
@@ -195,7 +196,7 @@ func (p *Pod) getK8sResources(podReqResources *Resources) corev1.ResourceRequire
 }
 
 // StartupProbe转换
-func (p *Pod) getK8sContainerProbe(podReqProbe *ContainerProbe) *corev1.Probe {
+func (i *impl) getK8sContainerProbe(podReqProbe *pod.ContainerProbe) *corev1.Probe {
 	if podReqProbe == nil {
 		return nil
 	}
@@ -236,7 +237,7 @@ func (p *Pod) getK8sContainerProbe(podReqProbe *ContainerProbe) *corev1.Probe {
 		k8sProbe.TimeoutSeconds = podReqProbe.ProbeTime.TimeoutSeconds
 		k8sProbe.SuccessThreshold = podReqProbe.ProbeTime.SuccessThreshold
 		k8sProbe.FailureThreshold = podReqProbe.ProbeTime.FailureThreshold
-	case PROB_EXEC:
+	case PROBE_EXEC:
 		exec := podReqProbe.Exec
 		k8sProbe.Exec = &corev1.ExecAction{
 			Command: exec.Command,
@@ -251,7 +252,7 @@ func (p *Pod) getK8sContainerProbe(podReqProbe *ContainerProbe) *corev1.Probe {
 }
 
 // VolumeMounts转换
-func (p *Pod) getK8sVolumeMounts(podReqVolumeMounts []*VolumeMounts) []corev1.VolumeMount {
+func (i *impl) getK8sVolumeMounts(podReqVolumeMounts []*pod.VolumeMounts) []corev1.VolumeMount {
 	podK8sVolumeMounts := make([]corev1.VolumeMount, 0)
 	for _, mount := range podReqVolumeMounts {
 		podK8sVolumeMounts = append(podK8sVolumeMounts, corev1.VolumeMount{
@@ -264,7 +265,7 @@ func (p *Pod) getK8sVolumeMounts(podReqVolumeMounts []*VolumeMounts) []corev1.Vo
 }
 
 // EnvFrom转换
-func (p *Pod) getK8sEnvFrom(podReqEnvsFrom []*EnvVarFromResource) []corev1.EnvFromSource {
+func (i *impl) getK8sEnvFrom(podReqEnvsFrom []*pod.EnvVarFromResource) []corev1.EnvFromSource {
 	podK8sEnvsFrom := make([]corev1.EnvFromSource, 0)
 	for _, fromResource := range podReqEnvsFrom {
 		// 前缀通用
@@ -292,7 +293,7 @@ func (p *Pod) getK8sEnvFrom(podReqEnvsFrom []*EnvVarFromResource) []corev1.EnvFr
 }
 
 // Env转换
-func (p *Pod) getK8sEnv(podReqEnvs []*EnvVar) []corev1.EnvVar {
+func (i *impl) getK8sEnv(podReqEnvs []*pod.EnvVar) []corev1.EnvVar {
 	podK8sEnvs := make([]corev1.EnvVar, 0)
 	for _, item := range podReqEnvs {
 		envVar := corev1.EnvVar{
@@ -328,7 +329,7 @@ func (p *Pod) getK8sEnv(podReqEnvs []*EnvVar) []corev1.EnvVar {
 }
 
 // Ports转换
-func (p *Pod) getK8sPorts(podReqPorts []*ContainerPort) []corev1.ContainerPort {
+func (i *impl) getK8sPorts(podReqPorts []*pod.ContainerPort) []corev1.ContainerPort {
 	podK8sContainerPorts := make([]corev1.ContainerPort, 0)
 	for _, item := range podReqPorts {
 		podK8sContainerPorts = append(podK8sContainerPorts, corev1.ContainerPort{
@@ -341,7 +342,7 @@ func (p *Pod) getK8sPorts(podReqPorts []*ContainerPort) []corev1.ContainerPort {
 }
 
 // 污点转换
-func (p *Pod) getK8sTolerations() []corev1.Toleration {
+func (i *impl) getK8sTolerations(p *pod.Pod) []corev1.Toleration {
 	podK8sTolerations := make([]corev1.Toleration, 0)
 	for _, item := range p.Tolerations {
 		podK8sTolerations = append(podK8sTolerations, corev1.Toleration{
@@ -354,7 +355,7 @@ func (p *Pod) getK8sTolerations() []corev1.Toleration {
 }
 
 // 标签转换
-func (p *Pod) getK8sLabels() map[string]string {
+func (i *impl) getK8sLabels(p *pod.Pod) map[string]string {
 	podK8sLabels := make(map[string]string)
 	for _, label := range p.Base.Labels {
 		podK8sLabels[label.Key] = label.Value
@@ -363,7 +364,7 @@ func (p *Pod) getK8sLabels() map[string]string {
 }
 
 // 获取Affinity,NodeSelector,NodeName
-func (p *Pod) getNodeK8sScheduling() (affinity *corev1.Affinity, nodeSelector map[string]string, nodeName string) {
+func (i *impl) getNodeK8sScheduling(p *pod.Pod) (affinity *corev1.Affinity, nodeSelector map[string]string, nodeName string) {
 	nodeScheduling := p.NodeScheduling
 	switch nodeScheduling.Type {
 	case SCHEDULING_NODENAME:

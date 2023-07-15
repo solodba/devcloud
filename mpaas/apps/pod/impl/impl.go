@@ -18,6 +18,7 @@ type impl struct {
 	pod.UnimplementedRPCServer
 	col       *mongo.Collection
 	clientSet *kubernetes.Clientset
+	volumeMap map[string]string
 }
 
 // 实现Ioc中心Name方法

@@ -24,3 +24,8 @@ func NewCreatePodRequest() *CreatePodRequest {
 func NewQueryPodRequest() *QueryPodRequest {
 	return &QueryPodRequest{}
 }
+
+// DescribePodRequest初始化函数
+func NewDescribePodRequest() *DescribePodRequest {
+	return &DescribePodRequest{}
+}

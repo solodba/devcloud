@@ -1,15 +1,16 @@
-package pod
+package impl
 
 import (
 	"fmt"
 
+	"github.com/solodba/devcloud/tree/main/mpaas/apps/pod"
 	corev1 "k8s.io/api/core/v1"
 )
 
 // k8s中Pod结构体转换成自定义Pod结构体
-func PodK8s2ItemRes(pod corev1.Pod) *PodListItem {
+func (i *impl) PodK8s2ItemRes(k8sPod corev1.Pod) *pod.PodListItem {
 	var totalC, readyC, restartC int32
-	for _, containerStatus := range pod.Status.ContainerStatuses {
+	for _, containerStatus := range k8sPod.Status.ContainerStatuses {
 		if containerStatus.Ready {
 			readyC++
 		}
@@ -17,18 +18,18 @@ func PodK8s2ItemRes(pod corev1.Pod) *PodListItem {
 		totalC++
 	}
 	var podStatus string
-	if pod.Status.Phase != "Running" {
+	if k8sPod.Status.Phase != "Running" {
 		podStatus = "Error"
 	} else {
 		podStatus = "Running"
 	}
-	return &PodListItem{
-		Name:     pod.Name,
+	return &pod.PodListItem{
+		Name:     k8sPod.Name,
 		Ready:    fmt.Sprintf("%d/%d", readyC, totalC),
 		Status:   podStatus,
 		Restarts: restartC,
-		Age:      pod.CreationTimestamp.Unix(),
-		IP:       pod.Status.PodIP,
-		Node:     pod.Spec.NodeName,
+		Age:      k8sPod.CreationTimestamp.Unix(),
+		IP:       k8sPod.Status.PodIP,
+		Node:     k8sPod.Spec.NodeName,
 	}
 }

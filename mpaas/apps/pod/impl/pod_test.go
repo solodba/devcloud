@@ -37,3 +37,14 @@ func TestQueryPod(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(podSet))
 }
+
+func TestDescribePod(t *testing.T) {
+	req := pod.NewDescribePodRequest()
+	req.Name = "test"
+	req.Namespace = "test"
+	pod, err := svc.DescribePod(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(pod))
+}

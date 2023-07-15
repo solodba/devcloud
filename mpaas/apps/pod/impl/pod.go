@@ -16,7 +16,7 @@ func (i *impl) CreatePod(ctx context.Context, in *pod.CreatePodRequest) (*pod.Po
 		return nil, err
 	}
 	// Pod结构体转换
-	k8sPod := in.Pod.PodReq2K8s()
+	k8sPod := i.PodReq2K8s(in.Pod)
 	podApi := i.clientSet.CoreV1().Pods(k8sPod.Namespace)
 	if getPod, err := podApi.Get(ctx, k8sPod.Name, metav1.GetOptions{}); err == nil {
 		return nil, fmt.Errorf("[namespace=%s, name=%s] pod already exists", getPod.Namespace, getPod.Name)
@@ -61,7 +61,7 @@ func (i *impl) QueryPod(ctx context.Context, in *pod.QueryPodRequest) (*pod.PodS
 		}
 		if strings.Contains(item.Name, in.Keyword) {
 			// K8S中Pod转换成自定义Pod
-			podItem := pod.PodK8s2ItemRes(item)
+			podItem := i.PodK8s2ItemRes(item)
 			podSet.AddItems(podItem)
 		}
 	}
@@ -71,5 +71,11 @@ func (i *impl) QueryPod(ctx context.Context, in *pod.QueryPodRequest) (*pod.PodS
 
 // 查询Pod详情
 func (i *impl) DescribePod(ctx context.Context, in *pod.DescribePodRequest) (*pod.Pod, error) {
-	return nil, nil
+	podApi := i.clientSet.CoreV1().Pods(in.Namespace)
+	k8sGetPod, err := podApi.Get(ctx, in.Name, metav1.GetOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s,name=%s] get pod detail error, err: %s", in.Namespace, in.Name, err.Error())
+	}
+	// K8s中Pod转换成自定义Pod
+	return i.PodK8s2Req(k8sGetPod), nil
 }

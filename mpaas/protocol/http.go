@@ -8,7 +8,7 @@ import (
 
 	restfulspec "github.com/emicklei/go-restful-openapi/v2"
 	"github.com/emicklei/go-restful/v3"
-	"github.com/solodba/devcloud/tree/main/mcenter/conf"
+	"github.com/solodba/devcloud/tree/main/mpaas/conf"
 	"github.com/solodba/mcube/apps"
 	"github.com/solodba/mcube/logger"
 	"github.com/solodba/mcube/swagger"
@@ -59,7 +59,7 @@ func (s *HttpService) Start() error {
 	config := restfulspec.Config{
 		WebServices:                   restful.RegisteredWebServices(),
 		APIPath:                       "/apidocs.json",
-		PostBuildSwaggerObjectHandler: swagger.DocsMcenter,
+		PostBuildSwaggerObjectHandler: swagger.DocsMpaas,
 		DefinitionNameHandler: func(name string) string {
 			if name == "state" || name == "sizeCache" || name == "unknownFields" {
 				return ""

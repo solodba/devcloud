@@ -6,8 +6,10 @@ require (
 	github.com/BurntSushi/toml v0.3.1
 	github.com/caarlos0/env v3.5.0+incompatible
 	github.com/emicklei/go-restful-openapi v1.4.1
+	github.com/emicklei/go-restful-openapi/v2 v2.9.1
 	github.com/emicklei/go-restful/v3 v3.10.2
-	github.com/solodba/mcube v1.0.1
+	github.com/solodba/mcube v1.0.2
+	github.com/spf13/cobra v1.7.0
 	go.mongodb.org/mongo-driver v1.12.0
 	google.golang.org/grpc v1.56.2
 	google.golang.org/protobuf v1.30.0
@@ -39,6 +41,7 @@ require (
 	github.com/google/gofuzz v1.1.0 // indirect
 	github.com/googleapis/gnostic v0.4.1 // indirect
 	github.com/imdario/mergo v0.3.5 // indirect
+	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/infraboard/mcube v1.9.16 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect

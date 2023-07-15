@@ -12,6 +12,6 @@ port = 8889
 [mongodb]
 username = ""
 password = ""
-endpoints = ["119.45.63.105:27017"]
+endpoints = ["118.195.239.185:27017"]
 database = "mcenter"
 authsource = "mcenter"

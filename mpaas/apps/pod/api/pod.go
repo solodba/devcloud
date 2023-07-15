@@ -9,7 +9,7 @@ import (
 // 创建Pod
 func (h *handler) CreatePod(r *restful.Request, w *restful.Response) {
 	req := pod.NewCreatePodRequest()
-	err := r.ReadEntity(req)
+	err := r.ReadEntity(req.Pod)
 	if err != nil {
 		w.WriteEntity(response.NewFail(400, err.Error()))
 		return

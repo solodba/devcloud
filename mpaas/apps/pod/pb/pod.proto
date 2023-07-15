@@ -28,9 +28,19 @@ message Pod {
     // @gotags: bson:",inline" json:"containers"
     repeated Container Containers = 5;
     // @gotags: bson:"tolerations" json:"tolerations"
-    repeated ListMapItem Tolerations = 6;
+    repeated Tolerations Tolerations = 6;
     // @gotags: bson:",inline" json:"nodeScheduling"
     NodeScheduling NodeScheduling = 7;
+}
+
+// Tolerations结构体
+message Tolerations {
+    // @gotags: bson:"key" json:"key"
+    string Key = 1;
+    // @gotags: bson:"value" json:"value"
+    string Value = 2;
+    // @gotags: bson:"operator" json:"operator"
+    string Operator = 3;
 }
 
 // 通用键值对结构体
@@ -66,7 +76,7 @@ message Volume {
     // @gotags: bson:",inline" json:"hostPathVolume"
     HostPathVolume HostPathVolume = 5;
     // @gotags: bson:",inline" json:"downwardAPIVolume"
-    DownwardAPIVolumeItem DownwardAPIVolumeItem = 6;
+    DownwardAPIVolume DownwardAPIVolume = 6;
     // @gotags: bson:",inline" json:"PVCVolume"
     PVCVolume PVCVolume = 7;
 }
@@ -101,6 +111,12 @@ message DownwardAPIVolumeItem {
     string Path = 1;
     // @gotags: bson:"fieldRefPath" json:"fieldRefPath"
     string FieldRefPath = 2;
+}
+
+// DownwardAPIVolume结构体
+message DownwardAPIVolume {
+    // @gotags: bson:"items" json:"items"
+    repeated DownwardAPIVolumeItem Items = 1;
 }
 
 // PVCVolume结构体

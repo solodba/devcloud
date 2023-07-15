@@ -177,6 +177,9 @@ func (p *Pod) getK8sContainer(podReqContainers []*Container) []corev1.Container 
 // Resources转换
 func (p *Pod) getK8sResources(podReqResources *Resources) corev1.ResourceRequirements {
 	var k8sPodResources corev1.ResourceRequirements
+	if podReqResources == nil {
+		return k8sPodResources
+	}
 	if !podReqResources.Enable {
 		return k8sPodResources
 	}
@@ -193,6 +196,9 @@ func (p *Pod) getK8sResources(podReqResources *Resources) corev1.ResourceRequire
 
 // StartupProbe转换
 func (p *Pod) getK8sContainerProbe(podReqProbe *ContainerProbe) *corev1.Probe {
+	if podReqProbe == nil {
+		return nil
+	}
 	if !podReqProbe.Enable {
 		return nil
 	}

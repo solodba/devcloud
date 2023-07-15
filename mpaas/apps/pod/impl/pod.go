@@ -18,11 +18,11 @@ func (i *impl) CreatePod(ctx context.Context, in *pod.CreatePodRequest) (*pod.Po
 	k8sPod := in.Pod.PodReq2K8s()
 	podApi := i.clientSet.CoreV1().Pods(k8sPod.Namespace)
 	if getPod, err := podApi.Get(ctx, k8sPod.Name, metav1.GetOptions{}); err == nil {
-		return nil, fmt.Errorf("[namespace=%s, name=%s]Pod已经存在!", getPod.Namespace, getPod.Name)
+		return nil, fmt.Errorf("[namespace=%s, name=%s] pod already exists", getPod.Namespace, getPod.Name)
 	}
 	_, err := podApi.Create(ctx, k8sPod, metav1.CreateOptions{})
 	if err != nil {
-		return nil, fmt.Errorf("[namespace=%s, name=%s]Pod创建失败!", k8sPod.Namespace, k8sPod.Name)
+		return nil, fmt.Errorf("[namespace=%s, name=%s] create failed, err: %s", k8sPod.Namespace, k8sPod.Name, err.Error())
 	}
 	return in.Pod, nil
 }

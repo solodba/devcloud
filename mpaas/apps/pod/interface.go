@@ -1,5 +1,7 @@
 package pod
 
+import "github.com/solodba/mcube/pb/meta"
+
 // 模块名称
 const (
 	AppName = "pod"
@@ -8,4 +10,12 @@ const (
 // 定义业务接口
 type Service interface {
 	RPCServer
+}
+
+// CreatePodRequest初始化函数
+func NewCreatePodRequest() *CreatePodRequest {
+	return &CreatePodRequest{
+		Meta: meta.NewMeta(),
+		Pod:  NewPod(),
+	}
 }

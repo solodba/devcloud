@@ -17,4 +17,4 @@ database = "mpaas"
 authsource = "mpaas"
 
 [k8s]
-kubeconfig = ".kube/config"
+kubeconfig = "etc/config"

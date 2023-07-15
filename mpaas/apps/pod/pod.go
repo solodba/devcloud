@@ -55,3 +55,36 @@ func (req *Pod) Validate() error {
 	}
 	return nil
 }
+
+// Pod初始化函数
+func NewPod() *Pod {
+	return &Pod{
+		Base:           NewBase(),
+		Volumes:        make([]*Volume, 0),
+		NetWorking:     NewNetWorking(),
+		InitContainers: make([]*Container, 0),
+		Containers:     make([]*Container, 0),
+		Tolerations:    make([]*Tolerations, 0),
+		NodeScheduling: NewNodeScheduling(),
+	}
+}
+
+// Base初始化函数
+func NewBase() *Base {
+	return &Base{
+		Name:          "test",
+		Namespace:     "test",
+		Labels:        make([]*ListMapItem, 0),
+		RestartPolicy: RESTART_POLICY_ALWAYS,
+	}
+}
+
+// NetWorking初始化函数
+func NewNetWorking() *NetWorking {
+	return &NetWorking{}
+}
+
+// NodeScheduling初始化函数
+func NewNodeScheduling() *NodeScheduling {
+	return &NodeScheduling{}
+}

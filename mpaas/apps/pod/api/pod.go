@@ -21,3 +21,14 @@ func (h *handler) CreatePod(r *restful.Request, w *restful.Response) {
 	}
 	w.WriteEntity(response.NewSuccess(200, pod))
 }
+
+// 删除Pod
+func (h *handler) DeletePod(r *restful.Request, w *restful.Response) {
+	req := pod.NewDeletePodRequestFromRestful(r)
+	pod, err := h.svc.DeletePod(r.Request.Context(), req)
+	if err != nil {
+		w.WriteEntity(response.NewFail(500, err.Error()))
+		return
+	}
+	w.WriteEntity(response.NewSuccess(200, pod))
+}

@@ -1,5 +1,7 @@
 package pod
 
+import "github.com/emicklei/go-restful/v3"
+
 // 模块名称
 const (
 	AppName = "pod"
@@ -36,5 +38,13 @@ func NewDeletePodRequest() *DeletePodRequest {
 func NewUpdatePodRequest(pod *Pod) *UpdatePodRequest {
 	return &UpdatePodRequest{
 		Pod: pod,
+	}
+}
+
+// 从前端获取参数初始化DeletePodRequest
+func NewDeletePodRequestFromRestful(r *restful.Request) *DeletePodRequest {
+	return &DeletePodRequest{
+		Namespace: r.PathParameter("namespace"),
+		Name:      r.PathParameter("name"),
 	}
 }

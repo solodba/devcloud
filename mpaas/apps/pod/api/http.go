@@ -31,12 +31,21 @@ func (h *handler) Version() string {
 
 // 实现注册restful实例Registry方法
 func (h *handler) RegistryHandler(ws *restful.WebService) {
-	tags := []string{"登录"}
+	tags := []string{"Pod管理"}
 	// webservice定义路由信息
+	// 创建Pod
 	ws.Route(ws.POST("/").To(h.CreatePod).
 		Doc("创建Pod").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
 		Reads(pod.CreatePodRequest{}).
+		Writes(pod.Pod{}).
+		Returns(200, "OK", pod.Pod{}))
+
+	// 删除Pod
+	ws.Route(ws.DELETE("/{namespace}/{name}").To(h.DeletePod).
+		Doc("删除Pod").
+		Metadata(restfulspec.KeyOpenAPITags, tags).
+		Reads(pod.DeletePodRequest{}).
 		Writes(pod.Pod{}).
 		Returns(200, "OK", pod.Pod{}))
 }

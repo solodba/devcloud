@@ -48,3 +48,20 @@ func NewDeletePodRequestFromRestful(r *restful.Request) *DeletePodRequest {
 		Name:      r.PathParameter("name"),
 	}
 }
+
+// 从前端获取参数初始化DeletePodRequest
+func NewQueryPodRequestFromRestful(r *restful.Request) *QueryPodRequest {
+	return &QueryPodRequest{
+		Namespace: r.PathParameter("namespace"),
+		NodeName:  r.QueryParameter("nodename"),
+		Keyword:   r.QueryParameter("keyword"),
+	}
+}
+
+// 从前端获取参数初始化DescribePodRequest
+func NewDescribePodRequestFromRestful(r *restful.Request) *DescribePodRequest {
+	return &DescribePodRequest{
+		Namespace: r.PathParameter("namespace"),
+		Name:      r.QueryParameter("name"),
+	}
+}

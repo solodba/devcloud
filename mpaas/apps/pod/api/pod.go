@@ -49,3 +49,24 @@ func (h *handler) UpdatePod(r *restful.Request, w *restful.Response) {
 	}
 	w.WriteEntity(response.NewSuccess(200, pod))
 }
+
+// 查询Pod
+func (h *handler) QueryOrDescribePod(r *restful.Request, w *restful.Response) {
+	if r.QueryParameter("name") != "" {
+		req := pod.NewDescribePodRequestFromRestful(r)
+		pod, err := h.svc.DescribePod(r.Request.Context(), req)
+		if err != nil {
+			w.WriteEntity(response.NewFail(500, err.Error()))
+			return
+		}
+		w.WriteEntity(response.NewSuccess(200, pod))
+	} else {
+		req := pod.NewQueryPodRequestFromRestful(r)
+		podSet, err := h.svc.QueryPod(r.Request.Context(), req)
+		if err != nil {
+			w.WriteEntity(response.NewFail(500, err.Error()))
+			return
+		}
+		w.WriteEntity(response.NewSuccess(200, podSet))
+	}
+}

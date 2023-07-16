@@ -48,6 +48,14 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 		Reads(pod.DeletePodRequest{}).
 		Writes(pod.Pod{}).
 		Returns(200, "OK", pod.Pod{}))
+
+	// 更新Pod
+	ws.Route(ws.PUT("/").To(h.UpdatePod).
+		Doc("更新Pod").
+		Metadata(restfulspec.KeyOpenAPITags, tags).
+		Reads(pod.UpdatePodRequest{}).
+		Writes(pod.Pod{}).
+		Returns(200, "OK", pod.Pod{}))
 }
 
 // 初始化函数注册restful实例

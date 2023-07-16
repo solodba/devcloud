@@ -32,3 +32,20 @@ func (h *handler) DeletePod(r *restful.Request, w *restful.Response) {
 	}
 	w.WriteEntity(response.NewSuccess(200, pod))
 }
+
+// 更新Pod
+func (h *handler) UpdatePod(r *restful.Request, w *restful.Response) {
+	podReq := pod.NewDefaultPod()
+	err := r.ReadEntity(podReq)
+	if err != nil {
+		w.WriteEntity(response.NewFail(400, err.Error()))
+		return
+	}
+	req := pod.NewUpdatePodRequest(podReq)
+	pod, err := h.svc.UpdatePod(r.Request.Context(), req)
+	if err != nil {
+		w.WriteEntity(response.NewFail(500, err.Error()))
+		return
+	}
+	w.WriteEntity(response.NewSuccess(200, pod))
+}

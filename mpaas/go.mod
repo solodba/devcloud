@@ -3,7 +3,7 @@ module github.com/solodba/devcloud/mpaas
 go 1.18
 
 require (
-	github.com/BurntSushi/toml v0.3.1
+	github.com/BurntSushi/toml v1.3.2
 	github.com/caarlos0/env v3.5.0+incompatible
 	github.com/emicklei/go-restful-openapi v1.4.1
 	github.com/emicklei/go-restful-openapi/v2 v2.9.1
@@ -57,6 +57,7 @@ require (
 	github.com/pelletier/go-toml/v2 v2.0.8 // indirect
 	github.com/rs/xid v1.5.0 // indirect
 	github.com/rs/zerolog v1.29.1 // indirect
+	github.com/solodba/devcloud/mcenter v0.0.0-20230717162804-df5cdb76368a // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.11 // indirect

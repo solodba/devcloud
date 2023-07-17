@@ -1,7 +1,7 @@
 package start
 
 import (
-	"github.com/solodba/devcloud/tree/main/mcenter/protocol"
+	"github.com/solodba/devcloud/mcenter/protocol"
 	"github.com/spf13/cobra"
 )
 

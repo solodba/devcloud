@@ -1,6 +1,6 @@
 package main
 
-import "github.com/solodba/devcloud/tree/main/mpaas/cmd"
+import "github.com/solodba/devcloud/mpaas/cmd"
 
 func main() {
 	cmd.Execute()

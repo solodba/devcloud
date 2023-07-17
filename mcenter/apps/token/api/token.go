@@ -2,7 +2,7 @@ package api
 
 import (
 	"github.com/emicklei/go-restful/v3"
-	"github.com/solodba/devcloud/tree/main/mcenter/apps/token"
+	"github.com/solodba/devcloud/mcenter/apps/token"
 	"github.com/solodba/mcube/response"
 )
 

@@ -8,7 +8,7 @@ import (
 
 	restfulspec "github.com/emicklei/go-restful-openapi/v2"
 	"github.com/emicklei/go-restful/v3"
-	"github.com/solodba/devcloud/tree/main/mpaas/conf"
+	"github.com/solodba/devcloud/mpaas/conf"
 	"github.com/solodba/mcube/apps"
 	"github.com/solodba/mcube/logger"
 	"github.com/solodba/mcube/swagger"

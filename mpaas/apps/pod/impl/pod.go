@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/solodba/devcloud/tree/main/mpaas/apps/pod"
+	"github.com/solodba/devcloud/mpaas/apps/pod"
 	"go.mongodb.org/mongo-driver/bson"
 	corev1 "k8s.io/api/core/v1"
 	k8serror "k8s.io/apimachinery/pkg/api/errors"

@@ -1,8 +1,8 @@
 package tools
 
 import (
-	_ "github.com/solodba/devcloud/tree/main/mpaas/apps/all"
-	"github.com/solodba/devcloud/tree/main/mpaas/conf"
+	_ "github.com/solodba/devcloud/mpaas/apps/all"
+	"github.com/solodba/devcloud/mpaas/conf"
 	"github.com/solodba/mcube/apps"
 	"github.com/solodba/mcube/logger"
 )

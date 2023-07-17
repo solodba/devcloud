@@ -3,7 +3,7 @@ package impl
 import (
 	"strings"
 
-	"github.com/solodba/devcloud/tree/main/mpaas/apps/pod"
+	"github.com/solodba/devcloud/mpaas/apps/pod"
 	corev1 "k8s.io/api/core/v1"
 )
 

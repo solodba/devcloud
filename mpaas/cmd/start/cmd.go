@@ -1,7 +1,7 @@
 package start
 
 import (
-	"github.com/solodba/devcloud/tree/main/mpaas/protocol"
+	"github.com/solodba/devcloud/mpaas/protocol"
 	"github.com/spf13/cobra"
 )
 

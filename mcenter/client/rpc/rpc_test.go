@@ -3,7 +3,7 @@ package rpc_test
 import (
 	"context"
 
-	"github.com/solodba/devcloud/tree/main/mcenter/client/rpc"
+	"github.com/solodba/devcloud/mcenter/client/rpc"
 )
 
 // 全局参数

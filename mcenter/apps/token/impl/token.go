@@ -3,8 +3,8 @@ package impl
 import (
 	"context"
 
-	"github.com/solodba/devcloud/tree/main/mcenter/apps/token"
-	"github.com/solodba/devcloud/tree/main/mcenter/apps/token/provider"
+	"github.com/solodba/devcloud/mcenter/apps/token"
+	"github.com/solodba/devcloud/mcenter/apps/token/provider"
 	"go.mongodb.org/mongo-driver/bson"
 )
 

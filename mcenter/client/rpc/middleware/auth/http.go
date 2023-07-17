@@ -4,8 +4,8 @@ import (
 	"strings"
 
 	"github.com/emicklei/go-restful/v3"
-	"github.com/solodba/devcloud/tree/main/mcenter/apps/token"
-	"github.com/solodba/devcloud/tree/main/mcenter/client/rpc"
+	"github.com/solodba/devcloud/mcenter/apps/token"
+	"github.com/solodba/devcloud/mcenter/client/rpc"
 	"github.com/solodba/mcube/logger"
 	"github.com/solodba/mcube/response"
 )

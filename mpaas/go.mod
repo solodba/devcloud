@@ -1,4 +1,4 @@
-module github.com/solodba/devcloud/tree/main/mpaas
+module github.com/solodba/devcloud/mpaas
 
 go 1.18
 

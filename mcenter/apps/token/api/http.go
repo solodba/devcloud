@@ -3,7 +3,7 @@ package api
 import (
 	restfulspec "github.com/emicklei/go-restful-openapi/v2"
 	"github.com/emicklei/go-restful/v3"
-	"github.com/solodba/devcloud/tree/main/mcenter/apps/token"
+	"github.com/solodba/devcloud/mcenter/apps/token"
 	"github.com/solodba/mcube/apps"
 )
 

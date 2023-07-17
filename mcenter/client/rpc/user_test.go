@@ -3,8 +3,8 @@ package rpc_test
 import (
 	"testing"
 
-	"github.com/solodba/devcloud/tree/main/mcenter/apps/user"
-	"github.com/solodba/devcloud/tree/main/mcenter/test/tools"
+	"github.com/solodba/devcloud/mcenter/apps/user"
+	"github.com/solodba/devcloud/mcenter/test/tools"
 )
 
 func TestQueryUser(t *testing.T) {

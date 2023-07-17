@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package codehorse.mcenter.token;
 
-option go_package = "github.com/solodba/devcloud/tree/main/mcenter/apps/token";
+option go_package = "github.com/solodba/devcloud/mcenter/apps/token";
 
 import "apps/token/pb/token.proto";
 

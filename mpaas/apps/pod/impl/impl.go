@@ -1,8 +1,8 @@
 package impl
 
 import (
-	"github.com/solodba/devcloud/tree/main/mpaas/apps/pod"
-	"github.com/solodba/devcloud/tree/main/mpaas/conf"
+	"github.com/solodba/devcloud/mpaas/apps/pod"
+	"github.com/solodba/devcloud/mpaas/conf"
 	"github.com/solodba/mcube/apps"
 	"go.mongodb.org/mongo-driver/mongo"
 	"google.golang.org/grpc"

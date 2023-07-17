@@ -1,6 +1,6 @@
 PROJECT_NAME := "mcenter"
 MAIN_FILE_PAHT := "main.go"
-PKG := "github.com/solodba/devcloud/tree/main/mcenter"
+PKG := "github.com/solodba/devcloud/mcenter"
 
 MOD_DIR := $(shell go env GOPATH)/pkg/mod
 PKG_LIST := $(shell go list ${PKG}/... | grep -v /vendor/ | grep -v redis)

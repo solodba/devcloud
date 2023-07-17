@@ -3,10 +3,10 @@ package cmd
 import (
 	"fmt"
 
-	_ "github.com/solodba/devcloud/tree/main/mpaas/apps/all"
-	"github.com/solodba/devcloud/tree/main/mpaas/cmd/initial"
-	"github.com/solodba/devcloud/tree/main/mpaas/cmd/start"
-	"github.com/solodba/devcloud/tree/main/mpaas/conf"
+	_ "github.com/solodba/devcloud/mpaas/apps/all"
+	"github.com/solodba/devcloud/mpaas/cmd/initial"
+	"github.com/solodba/devcloud/mpaas/cmd/start"
+	"github.com/solodba/devcloud/mpaas/conf"
 	"github.com/solodba/mcube/apps"
 	"github.com/solodba/mcube/logger"
 	"github.com/solodba/mcube/version"

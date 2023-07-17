@@ -3,7 +3,7 @@ package impl
 import (
 	"context"
 
-	"github.com/solodba/devcloud/tree/main/mcenter/apps/user"
+	"github.com/solodba/devcloud/mcenter/apps/user"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )

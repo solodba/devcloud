@@ -1,8 +1,8 @@
 package impl
 
 import (
-	"github.com/solodba/devcloud/tree/main/mcenter/apps/user"
-	"github.com/solodba/devcloud/tree/main/mcenter/conf"
+	"github.com/solodba/devcloud/mcenter/apps/user"
+	"github.com/solodba/devcloud/mcenter/conf"
 	"github.com/solodba/mcube/apps"
 	"go.mongodb.org/mongo-driver/mongo"
 	"google.golang.org/grpc"

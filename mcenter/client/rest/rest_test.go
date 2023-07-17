@@ -3,7 +3,7 @@ package rest_test
 import (
 	"context"
 
-	"github.com/solodba/devcloud/tree/main/mcenter/client/rest"
+	"github.com/solodba/devcloud/mcenter/client/rest"
 )
 
 // 全局参数

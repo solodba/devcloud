@@ -3,7 +3,7 @@ package conf_test
 import (
 	"testing"
 
-	"github.com/solodba/devcloud/tree/main/mpaas/conf"
+	"github.com/solodba/devcloud/mpaas/conf"
 )
 
 func TestLoadConfigFromToml(t *testing.T) {

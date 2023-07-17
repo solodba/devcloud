@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package codehorse.mcenter.user;
 
-option go_package = "github.com/solodba/devcloud/tree/main/mcenter/apps/user";
+option go_package = "github.com/solodba/devcloud/mcenter/apps/user";
 
 import "common/pb/github.com/solodba/mcube/pb/meta/meta.proto";
 

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package codehorse.mpaas.pod;
 
-option go_package = "github.com/solodba/devcloud/tree/main/mpaas/apps/pod";
+option go_package = "github.com/solodba/devcloud/mpaas/apps/pod";
 
 // 导入外部包
 import "common/pb/github.com/solodba/mcube/pb/meta/meta.proto";

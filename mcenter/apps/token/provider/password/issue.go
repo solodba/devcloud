@@ -4,9 +4,9 @@ import (
 	"context"
 
 	"github.com/rs/xid"
-	"github.com/solodba/devcloud/tree/main/mcenter/apps/token"
-	"github.com/solodba/devcloud/tree/main/mcenter/apps/token/provider"
-	"github.com/solodba/devcloud/tree/main/mcenter/apps/user"
+	"github.com/solodba/devcloud/mcenter/apps/token"
+	"github.com/solodba/devcloud/mcenter/apps/token/provider"
+	"github.com/solodba/devcloud/mcenter/apps/user"
 	"github.com/solodba/mcube/apps"
 )
 

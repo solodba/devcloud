@@ -5,8 +5,8 @@ import (
 	"io/ioutil"
 	"testing"
 
-	"github.com/solodba/devcloud/tree/main/mpaas/apps/pod"
-	"github.com/solodba/devcloud/tree/main/mpaas/test/tools"
+	"github.com/solodba/devcloud/mpaas/apps/pod"
+	"github.com/solodba/devcloud/mpaas/test/tools"
 )
 
 func TestCreatePod(t *testing.T) {

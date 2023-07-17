@@ -3,7 +3,7 @@ package rest
 import (
 	"context"
 
-	"github.com/solodba/devcloud/tree/main/mcenter/apps/token"
+	"github.com/solodba/devcloud/mcenter/apps/token"
 )
 
 // 数据返回结构体

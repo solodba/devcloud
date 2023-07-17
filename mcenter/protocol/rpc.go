@@ -16,7 +16,7 @@ type GrpcService struct {
 	c   *conf.Config
 }
 
-// GRPC服务结构体初始化函数
+// GRPC服务结构体初始化
 func NewGrpcService() *GrpcService {
 	srv := grpc.NewServer()
 	return &GrpcService{

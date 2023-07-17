@@ -13,8 +13,8 @@ type Client struct {
 }
 
 // GRPC客户端初始化函数
-func NewClient(address string) *Client {
-	clientConn, err := grpc.Dial(address, grpc.WithInsecure())
+func NewClient(conf *Config) *Client {
+	clientConn, err := grpc.Dial(conf.address, grpc.WithInsecure())
 	if err != nil {
 		logger.L().Panic().Msgf("grpc client dial error, err: %s", err.Error())
 	}

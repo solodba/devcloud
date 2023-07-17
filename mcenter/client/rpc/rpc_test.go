@@ -14,5 +14,6 @@ var (
 
 // 初始化函数
 func init() {
-	c = rpc.NewClient("127.0.0.1:8889")
+	conf := rpc.NewConfig()
+	c = rpc.NewClient(conf)
 }

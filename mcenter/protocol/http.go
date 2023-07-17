@@ -8,6 +8,8 @@ import (
 
 	restfulspec "github.com/emicklei/go-restful-openapi/v2"
 	"github.com/emicklei/go-restful/v3"
+	"github.com/solodba/devcloud/tree/main/mcenter/client/rpc"
+	"github.com/solodba/devcloud/tree/main/mcenter/client/rpc/middleware/auth"
 	"github.com/solodba/devcloud/tree/main/mcenter/conf"
 	"github.com/solodba/mcube/apps"
 	"github.com/solodba/mcube/logger"
@@ -32,6 +34,8 @@ func NewHttpService() *HttpService {
 		Container:      r,
 	}
 	r.Filter(cors.Filter)
+	// 中间件
+	r.Filter(auth.NewHttpAuther(rpc.NewConfig()).AuthFunc)
 	srv := &http.Server{
 		Addr:              conf.C().App.Http.Addr(),
 		Handler:           r,

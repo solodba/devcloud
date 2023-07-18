@@ -1,3 +1,5 @@
 package all
 
-// _ "github.com/solodba/devcloud/mpaas/apps/pod/impl"
+import (
+	_ "github.com/solodba/devcloud/mpaas/apps/pod/impl"
+)

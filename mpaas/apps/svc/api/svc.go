@@ -24,7 +24,13 @@ func (h *handler) CreateService(r *restful.Request, w *restful.Response) {
 
 // 创建Service
 func (h *handler) DeleteService(r *restful.Request, w *restful.Response) {
-
+	req := svc.NewDeleteServiceRequestFromRestful(r)
+	service, err := h.svc.DeleteService(r.Request.Context(), req)
+	if err != nil {
+		w.WriteEntity(response.NewFail(500, err.Error()))
+		return
+	}
+	w.WriteEntity(response.NewSuccess(200, service))
 }
 
 // 创建Service

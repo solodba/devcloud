@@ -1,5 +1,7 @@
 package svc
 
+import "github.com/emicklei/go-restful/v3"
+
 // 模块名称
 const (
 	AppName = "svc"
@@ -40,4 +42,12 @@ func NewDescribeServiceRequest() *DescribeServiceRequest {
 // DeleteServiceRequest结构体初始化函数
 func NewDeleteServiceRequest() *DeleteServiceRequest {
 	return &DeleteServiceRequest{}
+}
+
+// 从restful获取参数初始化DeleteServiceRequest
+func NewDeleteServiceRequestFromRestful(r *restful.Request) *DeleteServiceRequest {
+	return &DeleteServiceRequest{
+		Namespace: r.PathParameter("namespace"),
+		Name:      r.PathParameter("name"),
+	}
 }

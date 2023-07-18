@@ -17,3 +17,15 @@ func NewDefaultService() *Service {
 		Service: NewCreateServiceRequest(),
 	}
 }
+
+// ServiceSet初始化函数
+func NewServiceSet() *ServiceSet {
+	return &ServiceSet{
+		Items: make([]*ServiceListItem, 0),
+	}
+}
+
+// ServiceSet添加方法
+func (s *ServiceSet) AddItems(items ...*ServiceListItem) {
+	s.Items = append(s.Items, items...)
+}

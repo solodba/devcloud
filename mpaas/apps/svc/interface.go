@@ -26,3 +26,8 @@ func NewUpdateServiceRequest(req *CreateServiceRequest) *UpdateServiceRequest {
 		Service: req,
 	}
 }
+
+// QueryServiceRequest结构体初始化函数
+func NewQueryServiceRequest() *QueryServiceRequest {
+	return &QueryServiceRequest{}
+}

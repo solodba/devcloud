@@ -42,3 +42,13 @@ func TestUpdateService(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(service))
 }
+
+func TestQueryService(t *testing.T) {
+	req := svc.NewQueryServiceRequest()
+	req.Namespace = "test"
+	serviceSet, err := svcService.QueryService(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(serviceSet))
+}

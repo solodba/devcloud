@@ -3,6 +3,7 @@ package impl
 import (
 	"context"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/solodba/devcloud/mpaas/apps/svc"
@@ -65,8 +66,21 @@ func (i *impl) UpdateService(ctx context.Context, in *svc.UpdateServiceRequest) 
 
 // 查询Service
 func (i *impl) QueryService(ctx context.Context, in *svc.QueryServiceRequest) (*svc.ServiceSet, error) {
-
-	return nil, nil
+	svcApi := i.clientSet.CoreV1().Services(in.Namespace)
+	k8sSVCList, err := svcApi.List(ctx, metav1.ListOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("get service list error, err: %s", err.Error())
+	}
+	serviceSet := svc.NewServiceSet()
+	for _, k8sSvc := range k8sSVCList.Items {
+		// 数据转换
+		svcRes := i.SVCK8s2ResConvert(k8sSvc)
+		if strings.Contains(svcRes.Name, in.Keyword) {
+			serviceSet.AddItems(svcRes)
+		}
+	}
+	serviceSet.Total = int64(len(serviceSet.Items))
+	return serviceSet, nil
 }
 
 // 查询Service详情

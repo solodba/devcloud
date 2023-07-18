@@ -36,3 +36,8 @@ func NewQueryServiceRequest() *QueryServiceRequest {
 func NewDescribeServiceRequest() *DescribeServiceRequest {
 	return &DescribeServiceRequest{}
 }
+
+// DeleteServiceRequest结构体初始化函数
+func NewDeleteServiceRequest() *DeleteServiceRequest {
+	return &DeleteServiceRequest{}
+}

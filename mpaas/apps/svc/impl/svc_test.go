@@ -64,3 +64,14 @@ func TestDescribeService(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(service))
 }
+
+func TestDeleteService(t *testing.T) {
+	req := svc.NewDeleteServiceRequest()
+	req.Namespace = "test"
+	req.Name = "test-svc"
+	service, err := svcService.DeleteService(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(service))
+}

@@ -36,7 +36,24 @@ func (i *impl) CreateService(ctx context.Context, in *svc.CreateServiceRequest) 
 
 // 删除Service
 func (i *impl) DeleteService(ctx context.Context, in *svc.DeleteServiceRequest) (*svc.Service, error) {
-	return nil, nil
+	req := svc.NewDescribeServiceRequest()
+	req.Namespace = in.Namespace
+	req.Name = in.Name
+	service, err := i.DescribeService(ctx, req)
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] service not found", in.Namespace, in.Name)
+	}
+	svcApi := i.clientSet.CoreV1().Services(service.Service.Namespace)
+	err = svcApi.Delete(ctx, service.Service.Name, metav1.DeleteOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] service delete fail", service.Service.Namespace, service.Service.Name)
+	}
+	// 从库中删除
+	_, err = i.col.DeleteOne(ctx, bson.M{"name": service.Service.Name})
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] delete from mongodb fail", service.Service.Namespace, service.Service.Name)
+	}
+	return service, nil
 }
 
 // 修改Service
@@ -44,7 +61,7 @@ func (i *impl) UpdateService(ctx context.Context, in *svc.UpdateServiceRequest) 
 	k8sSVC := i.SVCReq2K8sConvert(in.Service)
 	svcApi := i.clientSet.CoreV1().Services(in.Service.Namespace)
 	if _, err := svcApi.Get(ctx, in.Service.Name, metav1.GetOptions{}); err != nil {
-		return nil, fmt.Errorf("[namespace=%s, name=%s] service not exists", in.Service.Namespace, in.Service.Name)
+		return nil, fmt.Errorf("[namespace=%s, name=%s] service not found", in.Service.Namespace, in.Service.Name)
 	}
 	_, err := svcApi.Update(ctx, k8sSVC, metav1.UpdateOptions{})
 	if err != nil {
@@ -57,6 +74,7 @@ func (i *impl) UpdateService(ctx context.Context, in *svc.UpdateServiceRequest) 
 	}
 	service.Meta.UpdatedAt = time.Now().Unix()
 	service.Service = in.Service
+	// 入库
 	_, err = i.col.UpdateOne(ctx, bson.M{"name": k8sSVC.Name}, bson.M{"$set": service})
 	if err != nil {
 		return nil, fmt.Errorf("[namespace=%s, name=%s] update in mongodb, err: %s", k8sSVC.Namespace, k8sSVC.Name, err.Error())

@@ -46,9 +46,21 @@ func TestUpdateService(t *testing.T) {
 func TestQueryService(t *testing.T) {
 	req := svc.NewQueryServiceRequest()
 	req.Namespace = "test"
+	req.Keyword = "haha"
 	serviceSet, err := svcService.QueryService(ctx, req)
 	if err != nil {
 		t.Fatal(err)
 	}
 	t.Log(tools.MustToJson(serviceSet))
+}
+
+func TestDescribeService(t *testing.T) {
+	req := svc.NewDescribeServiceRequest()
+	req.Namespace = "test"
+	req.Name = "test-svc"
+	service, err := svcService.DescribeService(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(service))
 }

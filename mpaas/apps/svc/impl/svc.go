@@ -85,5 +85,11 @@ func (i *impl) QueryService(ctx context.Context, in *svc.QueryServiceRequest) (*
 
 // 查询Service详情
 func (i *impl) DescribeService(ctx context.Context, in *svc.DescribeServiceRequest) (*svc.Service, error) {
-	return nil, nil
+	svcApi := i.clientSet.CoreV1().Services(in.Namespace)
+	k8sSVC, err := svcApi.Get(ctx, in.Name, metav1.GetOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("get service detail error, err: %s", err.Error())
+	}
+	service := i.SVCK8s2Req(k8sSVC)
+	return service, nil
 }

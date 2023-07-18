@@ -31,3 +31,8 @@ func NewUpdateServiceRequest(req *CreateServiceRequest) *UpdateServiceRequest {
 func NewQueryServiceRequest() *QueryServiceRequest {
 	return &QueryServiceRequest{}
 }
+
+// DescribeServiceRequest结构体初始化函数
+func NewDescribeServiceRequest() *DescribeServiceRequest {
+	return &DescribeServiceRequest{}
+}

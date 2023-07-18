@@ -51,3 +51,10 @@ func NewDeleteServiceRequestFromRestful(r *restful.Request) *DeleteServiceReques
 		Name:      r.PathParameter("name"),
 	}
 }
+
+// UpdateServiceRequest结构体默认初始化函数
+func NewDefaultUpdateServiceRequest() *UpdateServiceRequest {
+	return &UpdateServiceRequest{
+		Service: NewCreateServiceRequest(),
+	}
+}

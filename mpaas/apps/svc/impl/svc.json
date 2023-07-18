@@ -3,8 +3,8 @@
     "namespace": "test",
     "labels": [
         {
-            "key": "test",
-            "value": "svc"
+            "key": "app",
+            "value": "huxiaodan"
         }
     ],
     "selector": [

@@ -3,8 +3,10 @@ package impl
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/solodba/devcloud/mpaas/apps/svc"
+	"go.mongodb.org/mongo-driver/bson"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -26,7 +28,7 @@ func (i *impl) CreateService(ctx context.Context, in *svc.CreateServiceRequest) 
 	// 入库
 	_, err = i.col.InsertOne(ctx, service)
 	if err != nil {
-		return nil, fmt.Errorf("[namespace=%s, name=%s] service insert mongodb fail", k8sSVC.Namespace, k8sSVC.Name)
+		return nil, fmt.Errorf("[namespace=%s, name=%s] service insert mongodb fail, err: %s", k8sSVC.Namespace, k8sSVC.Name, err.Error())
 	}
 	return service, nil
 }
@@ -38,11 +40,32 @@ func (i *impl) DeleteService(ctx context.Context, in *svc.DeleteServiceRequest) 
 
 // 修改Service
 func (i *impl) UpdateService(ctx context.Context, in *svc.UpdateServiceRequest) (*svc.Service, error) {
-	return nil, nil
+	k8sSVC := i.SVCReq2K8sConvert(in.Service)
+	svcApi := i.clientSet.CoreV1().Services(in.Service.Namespace)
+	if _, err := svcApi.Get(ctx, in.Service.Name, metav1.GetOptions{}); err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] service not exists", in.Service.Namespace, in.Service.Name)
+	}
+	_, err := svcApi.Update(ctx, k8sSVC, metav1.UpdateOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] service update error, err: %s", in.Service.Namespace, in.Service.Name, err.Error())
+	}
+	service := svc.NewDefaultService()
+	err = i.col.FindOne(ctx, bson.M{"name": k8sSVC.Name}).Decode(service)
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] not found in mongodb, err: %s", k8sSVC.Namespace, k8sSVC.Name, err.Error())
+	}
+	service.Meta.UpdatedAt = time.Now().Unix()
+	service.Service = in.Service
+	_, err = i.col.UpdateOne(ctx, bson.M{"name": k8sSVC.Name}, bson.M{"$set": service})
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] update in mongodb, err: %s", k8sSVC.Namespace, k8sSVC.Name, err.Error())
+	}
+	return service, nil
 }
 
 // 查询Service
 func (i *impl) QueryService(ctx context.Context, in *svc.QueryServiceRequest) (*svc.ServiceSet, error) {
+
 	return nil, nil
 }
 

@@ -19,3 +19,10 @@ func NewCreateServiceRequest() *CreateServiceRequest {
 		Ports:    make([]*ServicePort, 0),
 	}
 }
+
+// UpdateServiceRequest结构体初始化函数
+func NewUpdateServiceRequest(req *CreateServiceRequest) *UpdateServiceRequest {
+	return &UpdateServiceRequest{
+		Service: req,
+	}
+}

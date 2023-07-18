@@ -1,8 +1,6 @@
 package impl
 
 import (
-	"fmt"
-
 	"github.com/solodba/devcloud/mpaas/apps/svc"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -54,6 +52,5 @@ func (i *impl) getK8sSVCPorts(svcReqPorts []*svc.ServicePort) []corev1.ServicePo
 			NodePort:   port.NodePort,
 		})
 	}
-	fmt.Println(k8sSVCPorts)
 	return k8sSVCPorts
 }

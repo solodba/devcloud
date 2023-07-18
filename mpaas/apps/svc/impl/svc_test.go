@@ -25,3 +25,20 @@ func TestCreateService(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(service))
 }
+
+func TestUpdateService(t *testing.T) {
+	req := svc.NewUpdateServiceRequest(svc.NewCreateServiceRequest())
+	dj, err := ioutil.ReadFile("svc.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	err = json.Unmarshal(dj, req.Service)
+	if err != nil {
+		t.Fatal(err)
+	}
+	service, err := svcService.UpdateService(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(service))
+}

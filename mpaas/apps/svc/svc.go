@@ -9,3 +9,11 @@ func NewService(req *CreateServiceRequest) *Service {
 		Service: req,
 	}
 }
+
+// Service结构体默认初始化函数
+func NewDefaultService() *Service {
+	return &Service{
+		Meta:    meta.NewMeta(),
+		Service: NewCreateServiceRequest(),
+	}
+}

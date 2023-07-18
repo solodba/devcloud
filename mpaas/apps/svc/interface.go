@@ -58,3 +58,19 @@ func NewDefaultUpdateServiceRequest() *UpdateServiceRequest {
 		Service: NewCreateServiceRequest(),
 	}
 }
+
+// 从restful获取参数初始化DescribeServiceRequest
+func NewDescribeServiceRequestFromRestful(r *restful.Request) *DescribeServiceRequest {
+	return &DescribeServiceRequest{
+		Namespace: r.PathParameter("namespace"),
+		Name:      r.QueryParameter("name"),
+	}
+}
+
+// 从restful获取参数初始化QueryServiceRequest
+func NewQueryServiceRequestFromRestful(r *restful.Request) *QueryServiceRequest {
+	return &QueryServiceRequest{
+		Namespace: r.PathParameter("namespace"),
+		Keyword:   r.QueryParameter("keyword"),
+	}
+}

@@ -51,5 +51,21 @@ func (h *handler) UpdateService(r *restful.Request, w *restful.Response) {
 
 // 创建Service
 func (h *handler) QueryOrDescribeService(r *restful.Request, w *restful.Response) {
-
+	if r.QueryParameter("name") == "" {
+		req := svc.NewQueryServiceRequestFromRestful(r)
+		serviceSet, err := h.svc.QueryService(r.Request.Context(), req)
+		if err != nil {
+			w.WriteEntity(response.NewFail(500, err.Error()))
+			return
+		}
+		w.WriteEntity(response.NewSuccess(200, serviceSet))
+	} else {
+		req := svc.NewDescribeServiceRequestFromRestful(r)
+		service, err := h.svc.DescribeService(r.Request.Context(), req)
+		if err != nil {
+			w.WriteEntity(response.NewFail(500, err.Error()))
+			return
+		}
+		w.WriteEntity(response.NewSuccess(200, service))
+	}
 }

@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package codehorse.mpaas.svc;
+
+option go_package = "github.com/solodba/devcloud/mpaas/apps/svc";
+
+// 导入外部包
+import "common/pb/github.com/solodba/mcube/pb/meta/meta.proto";
+
+// Service结构体
+message Service {
+    // @gotags: bson:",inline" json:"meta"
+    codehorse.mcube.meta.Meta Meta = 1;
+    // @gotags: bson:",inline" json:"service"
+    CreateServiceRequest Service = 2;
+}
+
+// CreateServiceRequest结构体
+message CreateServiceRequest {
+    // @gotags: bson:"name" json:"name"
+    string Name = 1;
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 2;
+    // @gotags: bson:"labels" json:"labels"
+    repeated ListMapItem Labels = 3;
+    // @gotags: bson:"type" json:"type"
+    string Type = 4;
+    // @gotags: bson:"selector" json:"selector"
+    repeated ListMapItem Selector = 5;
+    // @gotags: bson:"ports" json:"ports"
+    repeated ServicePort Ports = 6;
+    
+}
+
+// 通用键值对结构体
+message ListMapItem {
+    // @gotags: bson:"key" json:"key"
+    string Key = 1;
+    // @gotags: bson:"value" json:"value"
+    string Value = 2;
+}
+
+// ServicePort结构体
+message ServicePort {
+    // @gotags: bson:"name" json:"name"
+    string Name = 1;
+    // @gotags: bson:"port" json:"port"
+    int32 Port = 2;
+    // @gotags: bson:"targetPort" json:"targetPort"
+    int32 TargetPort = 3;
+    // @gotags: bson:"nodePort" json:"nodePort"
+    int32 NodePort = 4;
+}
+
+// ServiceSet结构体
+message ServiceSet {
+    // @gotags: bson:"total" json:"total"
+    int64 Total = 1;
+    // @gotags: bson:"items" json:"items"
+    repeated ServiceListItem Items = 2;
+}
+
+// ServiceListItem结构体
+message ServiceListItem {
+    // @gotags: bson:"name" json:"name"
+    string Name = 1;
+    // @gotags: bson:"type" json:"type"
+    string Type = 2;
+    // @gotags: bson:"clusterIP" json:"clusterIP"
+    string ClusterIP = 3;
+    // @gotags: bson:"externalIP" json:"externalIP"
+    string ExternalIP = 4;
+    // @gotags: bson:"age" json:"age"
+    int64 Age = 5;
+}

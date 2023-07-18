@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package codehorse.mpaas.svc;
+
+option go_package = "github.com/solodba/devcloud/mpaas/apps/svc";
+
+import "apps/svc/pb/svc.proto";
+
+// 定义service服务接口
+service RPC {
+    // 创建Service
+    rpc CreateService(CreateServiceRequest) returns(Service);
+    // 删除Service
+    rpc DeleteService(DeleteServiceRequest) returns(Service);
+    // 更新Service
+    rpc UpdateService(UpdateServiceRequest) returns(Service);
+    // 查询Service
+    rpc QueryService(QueryServiceRequest) returns(ServiceSet);
+    // 查询Service详情
+    rpc DescribeService(DescribeServiceRequest) returns(Service);
+}
+
+
+// DeleteServiceRequest结构体
+message DeleteServiceRequest {
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 1;
+    // @gotags: bson:"name" json:"name"
+    string Name = 2;
+}
+
+// UpdateServiceRequest结构体
+message UpdateServiceRequest {
+    // @gotags: bson:"service" json:"service"
+    CreateServiceRequest Service = 1;
+}
+
+// QueryServiceRequest结构体
+message QueryServiceRequest {
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 1;
+    // @gotags: bson:"keyword" json:"keyword"
+    string Keyword = 2;
+}
+
+// DescribeServiceRequest结构体
+message DescribeServiceRequest {
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 1;
+    // @gotags: bson:"name" json:"name"
+    string Name = 2;
+}
+

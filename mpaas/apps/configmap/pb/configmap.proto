@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package codehorse.mpaas.configmap;
+
+option go_package = "github.com/solodba/devcloud/mpaas/apps/configmap";
+
+// 导入外部包
+import "common/pb/github.com/solodba/mcube/pb/meta/meta.proto";
+
+// 创建ConfigMap结构体
+message CreateConfigMapRequest {
+    // @gotags: bson:"name" json:"name"
+    string Name = 1;
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 2;
+    // @gotags: bson:"labels" json:"labels"
+    repeated ListMapItem Labels = 3;
+    // @gotags: bson:"data" json:"data"
+    repeated ListMapItem Data = 4;
+}
+
+// 通用键值对结构体
+message ListMapItem {
+    // @gotags: bson:"key" json:"key"
+    string Key = 1;
+    // @gotags: bson:"value" json:"value"
+    string Value = 2;
+}
+
+// ConfigMap结构体
+message ConfigMap {
+    // @gotags: bson:",inline" json:"meta"
+    codehorse.mcube.meta.Meta Meta = 1;
+    // @gotags: bson:",inline" json:"configmap"
+    CreateConfigMapRequest ConfigMap = 2;
+}
+
+// ConfigMapSet结构体
+message ConfigMapSet {
+    // @gotags: bson:"total" json:"total"
+    int64 Total = 1;
+    // @gotags: bson:"items" json:"items"
+    repeated ConfigMapSetItem Items = 2;
+}
+
+// ConfigMapListItem结构体
+message ConfigMapSetItem {
+    // @gotags: bson:"name" json:"name"
+    string Name = 1;
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 2;
+    // @gotags: bson:"dataNum" json:"dataNum"
+    int64 DataNum = 3;
+    // @gotags: bson:"age" json:"age"
+    int64 Age = 4;
+    // @gotags: bson:"data" json:"data"
+    repeated ListMapItem Data = 5;
+    // @gotags: bson:"labels" json:"labels"
+    repeated ListMapItem Labels = 6;
+}

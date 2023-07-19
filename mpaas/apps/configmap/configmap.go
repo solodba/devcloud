@@ -9,3 +9,11 @@ func NewConfigMap(req *CreateConfigMapRequest) *ConfigMap {
 		ConfigMap: req,
 	}
 }
+
+// ConfigMap默认初始化函数
+func NewDefaultConfigMap() *ConfigMap {
+	return &ConfigMap{
+		Meta:      meta.NewMeta(),
+		ConfigMap: NewCreateConfigMapRequest(),
+	}
+}

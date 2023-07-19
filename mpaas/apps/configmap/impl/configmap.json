@@ -3,8 +3,8 @@
     "namespace": "test",
     "labels": [
         {
-            "key": "cm",
-            "value": "testcm"
+            "key": "jj",
+            "value": "kk"
         }
     ],
     "data": [

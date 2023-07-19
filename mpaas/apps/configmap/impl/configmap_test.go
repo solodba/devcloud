@@ -25,3 +25,20 @@ func TestCreateConfigMap(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(configmap))
 }
+
+func TestUpdateConfigMap(t *testing.T) {
+	req := configmap.NewUpdateConfigMapRequest(configmap.NewCreateConfigMapRequest())
+	dj, err := ioutil.ReadFile("configmap.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	err = json.Unmarshal(dj, req.ConfigMap)
+	if err != nil {
+		t.Fatal(err)
+	}
+	configmap, err := svc.UpdateConfigMap(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(configmap))
+}

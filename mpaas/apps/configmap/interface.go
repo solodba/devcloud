@@ -15,3 +15,10 @@ type Service interface {
 func NewCreateConfigMapRequest() *CreateConfigMapRequest {
 	return &CreateConfigMapRequest{}
 }
+
+// UpdateConfigMapRequest初始化函数
+func NewUpdateConfigMapRequest(req *CreateConfigMapRequest) *UpdateConfigMapRequest {
+	return &UpdateConfigMapRequest{
+		ConfigMap: req,
+	}
+}

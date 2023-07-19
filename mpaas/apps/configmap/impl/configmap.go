@@ -3,8 +3,10 @@ package impl
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/solodba/devcloud/mpaas/apps/configmap"
+	"go.mongodb.org/mongo-driver/bson"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -12,13 +14,13 @@ import (
 func (i *impl) CreateConfigMap(ctx context.Context, in *configmap.CreateConfigMapRequest) (*configmap.ConfigMap, error) {
 	// ConfigMap转换
 	k8sConfigMap := i.CmReq2K8s(in)
-	svcApi := i.clientSet.CoreV1().ConfigMaps(k8sConfigMap.Namespace)
+	configmapApi := i.clientSet.CoreV1().ConfigMaps(k8sConfigMap.Namespace)
 	// 判断Service是否存在
-	if getSVC, err := svcApi.Get(ctx, k8sConfigMap.Name, metav1.GetOptions{}); err == nil {
+	if getSVC, err := configmapApi.Get(ctx, k8sConfigMap.Name, metav1.GetOptions{}); err == nil {
 		return nil, fmt.Errorf("[namespace=%s, name=%s] configmap already exists", getSVC.Namespace, getSVC.Name)
 	}
 	// 创建Service
-	_, err := svcApi.Create(ctx, k8sConfigMap, metav1.CreateOptions{})
+	_, err := configmapApi.Create(ctx, k8sConfigMap, metav1.CreateOptions{})
 	if err != nil {
 		return nil, fmt.Errorf("[namespace=%s, name=%s] configmap create fail", k8sConfigMap.Namespace, k8sConfigMap.Name)
 	}
@@ -38,7 +40,28 @@ func (i *impl) DeleteConfigMap(ctx context.Context, in *configmap.DeleteConfigMa
 
 // 更新ConfigMap
 func (i *impl) UpdateConfigMap(ctx context.Context, in *configmap.UpdateConfigMapRequest) (*configmap.ConfigMap, error) {
-	return nil, nil
+	k8sConfigMap := i.CmReq2K8s(in.ConfigMap)
+	configmapApi := i.clientSet.CoreV1().ConfigMaps(in.ConfigMap.Namespace)
+	if _, err := configmapApi.Get(ctx, in.ConfigMap.Name, metav1.GetOptions{}); err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] configmap not found", in.ConfigMap.Namespace, in.ConfigMap.Name)
+	}
+	_, err := configmapApi.Update(ctx, k8sConfigMap, metav1.UpdateOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] service update error, err: %s", in.ConfigMap.Namespace, in.ConfigMap.Name, err.Error())
+	}
+	configmap := configmap.NewDefaultConfigMap()
+	err = i.col.FindOne(ctx, bson.M{"name": k8sConfigMap.Name}).Decode(configmap)
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] not found in mongodb, err: %s", k8sConfigMap.Namespace, k8sConfigMap.Name, err.Error())
+	}
+	configmap.Meta.UpdatedAt = time.Now().Unix()
+	configmap.ConfigMap = in.ConfigMap
+	// 入库
+	_, err = i.col.UpdateOne(ctx, bson.M{"name": k8sConfigMap.Name}, bson.M{"$set": configmap})
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] update in mongodb, err: %s", k8sConfigMap.Namespace, k8sConfigMap.Name, err.Error())
+	}
+	return configmap, nil
 }
 
 // 查询ConfigMap

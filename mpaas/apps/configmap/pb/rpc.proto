@@ -30,8 +30,8 @@ message DeleteConfigMapRequest {
 
 // 更新ConfigMap结构体
 message UpdateConfigMapRequest {
-    // @gotags: bson:"service" json:"service"
-    QueryConfigMapRequest ConfigMap = 1;
+    // @gotags: bson:"configmap" json:"configmap"
+    CreateConfigMapRequest ConfigMap = 1;
 }
 
 // 查询ConfigMap结构体

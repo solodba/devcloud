@@ -32,3 +32,8 @@ func NewQueryConfigMapRequest() *QueryConfigMapRequest {
 func NewDescribeConfigMapRequest() *DescribeConfigMapRequest {
 	return &DescribeConfigMapRequest{}
 }
+
+// DeleteConfigMapRequest初始化函数
+func NewDeleteConfigMapRequest() *DeleteConfigMapRequest {
+	return &DeleteConfigMapRequest{}
+}

@@ -64,3 +64,14 @@ func TestDescribeConfigMap(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(configmap))
 }
+
+func TestDeleteConfigMap(t *testing.T) {
+	req := configmap.NewDeleteConfigMapRequest()
+	req.Namespace = "test"
+	req.Name = "testcm"
+	configmap, err := svc.DeleteConfigMap(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(configmap))
+}

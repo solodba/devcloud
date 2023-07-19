@@ -11,7 +11,7 @@ service RPC {
     // 创建ConfigMap
     rpc CreateConfigMap(CreateConfigMapRequest) returns(ConfigMap);
     // 删除ConfigMap
-    rpc DeleteConfigMap(DeleteConfigMapRequest) returns(ConfigMap);
+    rpc DeleteConfigMap(DeleteConfigMapRequest) returns(ConfigMapSetItem);
     // 更新ConfigMap
     rpc UpdateConfigMap(UpdateConfigMapRequest) returns(ConfigMap);
     // 查询ConfigMap

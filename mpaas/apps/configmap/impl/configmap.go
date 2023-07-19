@@ -29,14 +29,31 @@ func (i *impl) CreateConfigMap(ctx context.Context, in *configmap.CreateConfigMa
 	// 入库
 	_, err = i.col.InsertOne(ctx, configmap)
 	if err != nil {
-		return nil, fmt.Errorf("[namespace=%s, name=%s] service insert mongodb fail, err: %s", k8sConfigMap.Namespace, k8sConfigMap.Name, err.Error())
+		return nil, fmt.Errorf("[namespace=%s, name=%s] configmap insert mongodb fail, err: %s", k8sConfigMap.Namespace, k8sConfigMap.Name, err.Error())
 	}
 	return configmap, nil
 }
 
 // 删除ConfigMap
-func (i *impl) DeleteConfigMap(ctx context.Context, in *configmap.DeleteConfigMapRequest) (*configmap.ConfigMap, error) {
-	return nil, nil
+func (i *impl) DeleteConfigMap(ctx context.Context, in *configmap.DeleteConfigMapRequest) (*configmap.ConfigMapSetItem, error) {
+	req := configmap.NewDescribeConfigMapRequest()
+	req.Namespace = in.Namespace
+	req.Name = in.Name
+	configmap, err := i.DescribeConfigMap(ctx, req)
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] configmap not found", in.Namespace, in.Name)
+	}
+	configmapAPi := i.clientSet.CoreV1().ConfigMaps(configmap.Namespace)
+	err = configmapAPi.Delete(ctx, configmap.Name, metav1.DeleteOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] configmap delete fail", configmap.Namespace, configmap.Name)
+	}
+	// 从库中删除
+	_, err = i.col.DeleteOne(ctx, bson.M{"name": configmap.Name})
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] delete from mongodb fail", configmap.Namespace, configmap.Name)
+	}
+	return configmap, nil
 }
 
 // 更新ConfigMap
@@ -48,7 +65,7 @@ func (i *impl) UpdateConfigMap(ctx context.Context, in *configmap.UpdateConfigMa
 	}
 	_, err := configmapApi.Update(ctx, k8sConfigMap, metav1.UpdateOptions{})
 	if err != nil {
-		return nil, fmt.Errorf("[namespace=%s, name=%s] service update error, err: %s", in.ConfigMap.Namespace, in.ConfigMap.Name, err.Error())
+		return nil, fmt.Errorf("[namespace=%s, name=%s] configmap update error, err: %s", in.ConfigMap.Namespace, in.ConfigMap.Name, err.Error())
 	}
 	configmap := configmap.NewDefaultConfigMap()
 	err = i.col.FindOne(ctx, bson.M{"name": k8sConfigMap.Name}).Decode(configmap)

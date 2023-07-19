@@ -33,7 +33,7 @@ type RPCClient interface {
 	// 创建ConfigMap
 	CreateConfigMap(ctx context.Context, in *CreateConfigMapRequest, opts ...grpc.CallOption) (*ConfigMap, error)
 	// 删除ConfigMap
-	DeleteConfigMap(ctx context.Context, in *DeleteConfigMapRequest, opts ...grpc.CallOption) (*ConfigMap, error)
+	DeleteConfigMap(ctx context.Context, in *DeleteConfigMapRequest, opts ...grpc.CallOption) (*ConfigMapSetItem, error)
 	// 更新ConfigMap
 	UpdateConfigMap(ctx context.Context, in *UpdateConfigMapRequest, opts ...grpc.CallOption) (*ConfigMap, error)
 	// 查询ConfigMap
@@ -59,8 +59,8 @@ func (c *rPCClient) CreateConfigMap(ctx context.Context, in *CreateConfigMapRequ
 	return out, nil
 }
 
-func (c *rPCClient) DeleteConfigMap(ctx context.Context, in *DeleteConfigMapRequest, opts ...grpc.CallOption) (*ConfigMap, error) {
-	out := new(ConfigMap)
+func (c *rPCClient) DeleteConfigMap(ctx context.Context, in *DeleteConfigMapRequest, opts ...grpc.CallOption) (*ConfigMapSetItem, error) {
+	out := new(ConfigMapSetItem)
 	err := c.cc.Invoke(ctx, RPC_DeleteConfigMap_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -102,7 +102,7 @@ type RPCServer interface {
 	// 创建ConfigMap
 	CreateConfigMap(context.Context, *CreateConfigMapRequest) (*ConfigMap, error)
 	// 删除ConfigMap
-	DeleteConfigMap(context.Context, *DeleteConfigMapRequest) (*ConfigMap, error)
+	DeleteConfigMap(context.Context, *DeleteConfigMapRequest) (*ConfigMapSetItem, error)
 	// 更新ConfigMap
 	UpdateConfigMap(context.Context, *UpdateConfigMapRequest) (*ConfigMap, error)
 	// 查询ConfigMap
@@ -119,7 +119,7 @@ type UnimplementedRPCServer struct {
 func (UnimplementedRPCServer) CreateConfigMap(context.Context, *CreateConfigMapRequest) (*ConfigMap, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateConfigMap not implemented")
 }
-func (UnimplementedRPCServer) DeleteConfigMap(context.Context, *DeleteConfigMapRequest) (*ConfigMap, error) {
+func (UnimplementedRPCServer) DeleteConfigMap(context.Context, *DeleteConfigMapRequest) (*ConfigMapSetItem, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteConfigMap not implemented")
 }
 func (UnimplementedRPCServer) UpdateConfigMap(context.Context, *UpdateConfigMapRequest) (*ConfigMap, error) {

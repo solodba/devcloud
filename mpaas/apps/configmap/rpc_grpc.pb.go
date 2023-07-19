@@ -39,7 +39,7 @@ type RPCClient interface {
 	// 查询ConfigMap
 	QueryConfigMap(ctx context.Context, in *QueryConfigMapRequest, opts ...grpc.CallOption) (*ConfigMapSet, error)
 	// 查询ConfigMap详情
-	DescribeConfigMap(ctx context.Context, in *DescribeConfigMapRequest, opts ...grpc.CallOption) (*ConfigMap, error)
+	DescribeConfigMap(ctx context.Context, in *DescribeConfigMapRequest, opts ...grpc.CallOption) (*ConfigMapSetItem, error)
 }
 
 type rPCClient struct {
@@ -86,8 +86,8 @@ func (c *rPCClient) QueryConfigMap(ctx context.Context, in *QueryConfigMapReques
 	return out, nil
 }
 
-func (c *rPCClient) DescribeConfigMap(ctx context.Context, in *DescribeConfigMapRequest, opts ...grpc.CallOption) (*ConfigMap, error) {
-	out := new(ConfigMap)
+func (c *rPCClient) DescribeConfigMap(ctx context.Context, in *DescribeConfigMapRequest, opts ...grpc.CallOption) (*ConfigMapSetItem, error) {
+	out := new(ConfigMapSetItem)
 	err := c.cc.Invoke(ctx, RPC_DescribeConfigMap_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -108,7 +108,7 @@ type RPCServer interface {
 	// 查询ConfigMap
 	QueryConfigMap(context.Context, *QueryConfigMapRequest) (*ConfigMapSet, error)
 	// 查询ConfigMap详情
-	DescribeConfigMap(context.Context, *DescribeConfigMapRequest) (*ConfigMap, error)
+	DescribeConfigMap(context.Context, *DescribeConfigMapRequest) (*ConfigMapSetItem, error)
 	mustEmbedUnimplementedRPCServer()
 }
 
@@ -128,7 +128,7 @@ func (UnimplementedRPCServer) UpdateConfigMap(context.Context, *UpdateConfigMapR
 func (UnimplementedRPCServer) QueryConfigMap(context.Context, *QueryConfigMapRequest) (*ConfigMapSet, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QueryConfigMap not implemented")
 }
-func (UnimplementedRPCServer) DescribeConfigMap(context.Context, *DescribeConfigMapRequest) (*ConfigMap, error) {
+func (UnimplementedRPCServer) DescribeConfigMap(context.Context, *DescribeConfigMapRequest) (*ConfigMapSetItem, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DescribeConfigMap not implemented")
 }
 func (UnimplementedRPCServer) mustEmbedUnimplementedRPCServer() {}

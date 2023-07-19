@@ -75,7 +75,7 @@ func (i *impl) QueryConfigMap(ctx context.Context, in *configmap.QueryConfigMapR
 	configmapSet := configmap.NewConfigMapSet()
 	for _, k8sConfigMap := range k8sConfigMapList.Items {
 		// 数据转换
-		configMapRes := i.GetCmResItem(k8sConfigMap)
+		configMapRes := i.GetCmResItem(&k8sConfigMap)
 		if strings.Contains(configMapRes.Name, in.Keyword) {
 			configmapSet.AddItems(configMapRes)
 		}
@@ -85,6 +85,12 @@ func (i *impl) QueryConfigMap(ctx context.Context, in *configmap.QueryConfigMapR
 }
 
 // 查询ConfigMap详情
-func (i *impl) DescribeConfigMap(ctx context.Context, in *configmap.DescribeConfigMapRequest) (*configmap.ConfigMap, error) {
-	return nil, nil
+func (i *impl) DescribeConfigMap(ctx context.Context, in *configmap.DescribeConfigMapRequest) (*configmap.ConfigMapSetItem, error) {
+	configmapApi := i.clientSet.CoreV1().ConfigMaps(in.Namespace)
+	k8sConfigMap, err := configmapApi.Get(ctx, in.Name, metav1.GetOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("get configmap detail error, err: %s", err.Error())
+	}
+	configmap := i.GetCmResDetail(k8sConfigMap)
+	return configmap, nil
 }

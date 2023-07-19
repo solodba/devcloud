@@ -53,3 +53,14 @@ func TestQueryConfigMap(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(configmapSet))
 }
+
+func TestDescribeConfigMap(t *testing.T) {
+	req := configmap.NewDescribeConfigMapRequest()
+	req.Namespace = "test"
+	req.Name = "testcm"
+	configmap, err := svc.DescribeConfigMap(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(configmap))
+}

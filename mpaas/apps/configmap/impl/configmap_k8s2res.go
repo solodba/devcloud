@@ -6,7 +6,7 @@ import (
 )
 
 // K8S中ConfigMap结构体转换成自定义ConfigMap结构体
-func (i *impl) GetCmResItem(configMap corev1.ConfigMap) *configmap.ConfigMapSetItem {
+func (i *impl) GetCmResItem(configMap *corev1.ConfigMap) *configmap.ConfigMapSetItem {
 	return &configmap.ConfigMapSetItem{
 		Name:      configMap.Name,
 		Namespace: configMap.Namespace,
@@ -16,7 +16,7 @@ func (i *impl) GetCmResItem(configMap corev1.ConfigMap) *configmap.ConfigMapSetI
 }
 
 // K8S中ConfgMap结构体转换成ConfigMap详情
-func (i *impl) GetCmResDetail(configMap corev1.ConfigMap) *configmap.ConfigMapSetItem {
+func (i *impl) GetCmResDetail(configMap *corev1.ConfigMap) *configmap.ConfigMapSetItem {
 	cm := i.GetCmResItem(configMap)
 	configMapResLables := make([]*configmap.ListMapItem, 0)
 	for k, v := range configMap.Labels {

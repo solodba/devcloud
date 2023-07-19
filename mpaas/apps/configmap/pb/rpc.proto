@@ -17,7 +17,7 @@ service RPC {
     // 查询ConfigMap
     rpc QueryConfigMap(QueryConfigMapRequest) returns(ConfigMapSet);
     // 查询ConfigMap详情
-    rpc DescribeConfigMap(DescribeConfigMapRequest) returns(ConfigMap);
+    rpc DescribeConfigMap(DescribeConfigMapRequest) returns(ConfigMapSetItem);
 }
 
 // 删除ConfigMap结构体

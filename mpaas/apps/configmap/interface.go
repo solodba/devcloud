@@ -47,3 +47,19 @@ func NewDeleteConfigMapRequestFromRestful(r *restful.Request) *DeleteConfigMapRe
 		Name:      r.PathParameter("name"),
 	}
 }
+
+// 从restful解析参数初始化QueryConfigMapRequest函数
+func NewQueryConfigMapRequestFromRestful(r *restful.Request) *QueryConfigMapRequest {
+	return &QueryConfigMapRequest{
+		Namespace: r.PathParameter("namespace"),
+		Keyword:   r.QueryParameter("keyword"),
+	}
+}
+
+// 从restful解析参数初始化DescribeConfigMapRequest函数
+func NewDescribeConfigMapRequestFromRestful(r *restful.Request) *DescribeConfigMapRequest {
+	return &DescribeConfigMapRequest{
+		Namespace: r.PathParameter("namespace"),
+		Name:      r.QueryParameter("name"),
+	}
+}

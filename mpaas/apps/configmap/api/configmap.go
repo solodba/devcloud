@@ -51,5 +51,21 @@ func (h *handler) UpdateConfigMap(r *restful.Request, w *restful.Response) {
 
 // 查询ConfigMap
 func (h *handler) QueryOrDescribeConfigMap(r *restful.Request, w *restful.Response) {
-
+	if r.QueryParameter("name") == "" {
+		req := configmap.NewQueryConfigMapRequestFromRestful(r)
+		configmapSet, err := h.svc.QueryConfigMap(r.Request.Context(), req)
+		if err != nil {
+			w.WriteEntity(response.NewFail(500, err.Error()))
+			return
+		}
+		w.WriteEntity(response.NewSuccess(200, configmapSet))
+	} else {
+		req := configmap.NewDescribeConfigMapRequestFromRestful(r)
+		configmap, err := h.svc.DescribeConfigMap(r.Request.Context(), req)
+		if err != nil {
+			w.WriteEntity(response.NewFail(500, err.Error()))
+			return
+		}
+		w.WriteEntity(response.NewSuccess(200, configmap))
+	}
 }

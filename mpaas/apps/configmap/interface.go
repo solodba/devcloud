@@ -1,5 +1,7 @@
 package configmap
 
+import "github.com/emicklei/go-restful/v3"
+
 // 模块名称
 const (
 	AppName = "configmap"
@@ -36,4 +38,12 @@ func NewDescribeConfigMapRequest() *DescribeConfigMapRequest {
 // DeleteConfigMapRequest初始化函数
 func NewDeleteConfigMapRequest() *DeleteConfigMapRequest {
 	return &DeleteConfigMapRequest{}
+}
+
+// 从restful解析参数初始化DeleteConfigMapRequest函数
+func NewDeleteConfigMapRequestFromRestful(r *restful.Request) *DeleteConfigMapRequest {
+	return &DeleteConfigMapRequest{
+		Namespace: r.PathParameter("namespace"),
+		Name:      r.PathParameter("name"),
+	}
 }

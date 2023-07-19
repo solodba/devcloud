@@ -1,0 +1,20 @@
+{
+    "name": "testcm",
+    "namespace": "test",
+    "labels": [
+        {
+            "key": "cm",
+            "value": "testcm"
+        }
+    ],
+    "data": [
+        {
+            "key": "db_name",
+            "value": "testcm"
+        },
+        {
+            "key": "db_host",
+            "value": "127.0.0.1"
+        }
+    ]
+}

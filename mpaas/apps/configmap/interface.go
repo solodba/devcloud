@@ -10,3 +10,8 @@ type Service interface {
 	// 嵌套ConfigMap GRPC接口
 	RPCServer
 }
+
+// CreateConfigMapRequest初始化函数
+func NewCreateConfigMapRequest() *CreateConfigMapRequest {
+	return &CreateConfigMapRequest{}
+}

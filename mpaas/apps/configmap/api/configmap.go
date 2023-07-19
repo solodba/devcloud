@@ -1,75 +1,25 @@
 package api
 
 import (
-	restfulspec "github.com/emicklei/go-restful-openapi"
 	"github.com/emicklei/go-restful/v3"
-	"github.com/solodba/devcloud/mpaas/apps/configmap"
-	"github.com/solodba/mcube/apps"
 )
 
-// handler结构体
-type handler struct {
-	svc configmap.Service
+// 创建ConfigMap
+func (h *handler) CreateConfigMap(r *restful.Request, w *restful.Response) {
+
 }
 
-// 实现注册restful实例Name方法
-func (h *handler) Name() string {
-	return configmap.AppName
+// 删除ConfigMap
+func (h *handler) DeleteConfigMap(r *restful.Request, w *restful.Response) {
+
 }
 
-// 实现注册restful实例Conf方法
-func (h *handler) Conf() error {
-	// 从IOC获取Service实例
-	h.svc = apps.GetInternalApp(configmap.AppName).(configmap.Service)
-	return nil
+// 修改ConfigMap
+func (h *handler) UpdateConfigMap(r *restful.Request, w *restful.Response) {
+
 }
 
-// 实现注册restful实例version方法
-func (h *handler) Version() string {
-	return "v1"
-}
+// 查询ConfigMap
+func (h *handler) QueryOrDescribeConfigMap(r *restful.Request, w *restful.Response) {
 
-// 实现注册restful实例Registry方法
-func (h *handler) RegistryHandler(ws *restful.WebService) {
-	tags := []string{"ConfigMap管理"}
-	// webservice定义路由信息
-	// 创建ConfigMap
-	ws.Route(ws.POST("/").To(h.CreateConfigMap).
-		Doc("创建ConfigMap").
-		Metadata(restfulspec.KeyOpenAPITags, tags).
-		Reads(configmap.CreateConfigMapRequest{}).
-		Writes(configmap.ConfigMap{}).
-		Returns(200, "OK", configmap.ConfigMap{}))
-
-	// 删除ConfigMap
-	ws.Route(ws.DELETE("/{namespace}/{name}").To(h.DeleteConfigMap).
-		Doc("删除ConfigMap").
-		Metadata(restfulspec.KeyOpenAPITags, tags).
-		Reads(configmap.DeleteConfigMapRequest{}).
-		Writes(configmap.ConfigMapSetItem{}).
-		Returns(200, "OK", configmap.ConfigMapSetItem{}))
-
-	// 更新ConfigMap
-	ws.Route(ws.PUT("/").To(h.UpdateConfigMap).
-		Doc("更新ConfigMap").
-		Metadata(restfulspec.KeyOpenAPITags, tags).
-		Reads(configmap.UpdateConfigMapRequest{}).
-		Writes(configmap.ConfigMap{}).
-		Returns(200, "OK", configmap.ConfigMap{}))
-
-	// 查询ConfigMap
-	ws.Route(ws.GET("/{namespace}").To(h.QueryOrDescribeConfigMap).
-		Doc("查询ConfigMap").
-		Metadata(restfulspec.KeyOpenAPITags, tags).
-		Reads(configmap.QueryConfigMapRequest{}).
-		Writes(configmap.ConfigMapSet{}).
-		Returns(200, "OK", configmap.ConfigMapSet{}).
-		Reads(configmap.DescribeConfigMapRequest{}).
-		Writes(configmap.ConfigMapSetItem{}).
-		Returns(200, "OK", configmap.ConfigMapSetItem{}))
-}
-
-// 初始化函数注册restful实例
-func init() {
-	apps.RegistryRestfulApp(&handler{})
 }

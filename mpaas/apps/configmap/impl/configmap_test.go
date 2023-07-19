@@ -42,3 +42,14 @@ func TestUpdateConfigMap(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(configmap))
 }
+
+func TestQueryConfigMap(t *testing.T) {
+	req := configmap.NewQueryConfigMapRequest()
+	req.Namespace = "test"
+	req.Keyword = "te"
+	configmapSet, err := svc.QueryConfigMap(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(configmapSet))
+}

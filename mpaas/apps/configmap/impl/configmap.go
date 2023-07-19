@@ -3,6 +3,7 @@ package impl
 import (
 	"context"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/solodba/devcloud/mpaas/apps/configmap"
@@ -66,7 +67,21 @@ func (i *impl) UpdateConfigMap(ctx context.Context, in *configmap.UpdateConfigMa
 
 // 查询ConfigMap
 func (i *impl) QueryConfigMap(ctx context.Context, in *configmap.QueryConfigMapRequest) (*configmap.ConfigMapSet, error) {
-	return nil, nil
+	configmapApi := i.clientSet.CoreV1().ConfigMaps(in.Namespace)
+	k8sConfigMapList, err := configmapApi.List(ctx, metav1.ListOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("get configmap list error, err: %s", err.Error())
+	}
+	configmapSet := configmap.NewConfigMapSet()
+	for _, k8sConfigMap := range k8sConfigMapList.Items {
+		// 数据转换
+		configMapRes := i.GetCmResItem(k8sConfigMap)
+		if strings.Contains(configMapRes.Name, in.Keyword) {
+			configmapSet.AddItems(configMapRes)
+		}
+	}
+	configmapSet.Total = int64(len(configmapSet.Items))
+	return configmapSet, nil
 }
 
 // 查询ConfigMap详情

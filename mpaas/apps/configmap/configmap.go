@@ -17,3 +17,15 @@ func NewDefaultConfigMap() *ConfigMap {
 		ConfigMap: NewCreateConfigMapRequest(),
 	}
 }
+
+// ConfigMapSet初始化函数
+func NewConfigMapSet() *ConfigMapSet {
+	return &ConfigMapSet{
+		Items: make([]*ConfigMapSetItem, 0),
+	}
+}
+
+// ConfigMapSet添加方法
+func (c *ConfigMapSet) AddItems(items ...*ConfigMapSetItem) {
+	c.Items = append(c.Items, items...)
+}

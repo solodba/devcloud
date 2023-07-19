@@ -22,3 +22,8 @@ func NewUpdateConfigMapRequest(req *CreateConfigMapRequest) *UpdateConfigMapRequ
 		ConfigMap: req,
 	}
 }
+
+// QueryConfigMapRequest初始化函数
+func NewQueryConfigMapRequest() *QueryConfigMapRequest {
+	return &QueryConfigMapRequest{}
+}

@@ -35,7 +35,18 @@ func (h *handler) DeleteConfigMap(r *restful.Request, w *restful.Response) {
 
 // 修改ConfigMap
 func (h *handler) UpdateConfigMap(r *restful.Request, w *restful.Response) {
-
+	req := configmap.NewUpdateConfigMapRequest(configmap.NewCreateConfigMapRequest())
+	err := r.ReadEntity(req.ConfigMap)
+	if err != nil {
+		w.WriteEntity(response.NewFail(400, err.Error()))
+		return
+	}
+	configmap, err := h.svc.UpdateConfigMap(r.Request.Context(), req)
+	if err != nil {
+		w.WriteEntity(response.NewFail(500, err.Error()))
+		return
+	}
+	w.WriteEntity(response.NewSuccess(200, configmap))
 }
 
 // 查询ConfigMap

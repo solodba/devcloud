@@ -86,5 +86,11 @@ func (i *impl) QuerySecret(ctx context.Context, in *secret.QuerySecretRequest) (
 
 // 查询Secret详情
 func (i *impl) DescribeSecret(ctx context.Context, in *secret.DescribeSecretRequest) (*secret.SecretSetItem, error) {
-	return nil, nil
+	secretApi := i.clientSet.CoreV1().Secrets(in.Namespace)
+	k8sSecret, err := secretApi.Get(ctx, in.Name, metav1.GetOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("get secret detail error, err: %s", err.Error())
+	}
+	secret := i.SecretK8s2ResDetailConvert(*k8sSecret)
+	return secret, nil
 }

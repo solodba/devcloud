@@ -18,3 +18,10 @@ func NewCreateSecretRequest() *CreateSecretRequest {
 		Data:   make([]*ListMapItem, 0),
 	}
 }
+
+// UpdateSecretRequest结构体
+func NewUpdateSecretRequest(req *CreateSecretRequest) *UpdateSecretRequest {
+	return &UpdateSecretRequest{
+		Secret: req,
+	}
+}

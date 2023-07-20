@@ -25,3 +25,20 @@ func TestCreateSecret(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(secret))
 }
+
+func TestUpdateSecret(t *testing.T) {
+	req := secret.NewUpdateSecretRequest(secret.NewCreateSecretRequest())
+	dj, err := ioutil.ReadFile("secret.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	err = json.Unmarshal(dj, req.Secret)
+	if err != nil {
+		t.Fatal(err)
+	}
+	secret, err := svc.UpdateSecret(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(secret))
+}

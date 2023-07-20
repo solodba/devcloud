@@ -33,7 +33,7 @@ type RPCClient interface {
 	// 创建Secret
 	CreateSecret(ctx context.Context, in *CreateSecretRequest, opts ...grpc.CallOption) (*Secret, error)
 	// 删除Secret
-	DeleteSecret(ctx context.Context, in *DeleteSecretRequest, opts ...grpc.CallOption) (*Secret, error)
+	DeleteSecret(ctx context.Context, in *DeleteSecretRequest, opts ...grpc.CallOption) (*SecretSetItem, error)
 	// 修改Secret
 	UpdateSecret(ctx context.Context, in *UpdateSecretRequest, opts ...grpc.CallOption) (*Secret, error)
 	// 查询Secret
@@ -59,8 +59,8 @@ func (c *rPCClient) CreateSecret(ctx context.Context, in *CreateSecretRequest, o
 	return out, nil
 }
 
-func (c *rPCClient) DeleteSecret(ctx context.Context, in *DeleteSecretRequest, opts ...grpc.CallOption) (*Secret, error) {
-	out := new(Secret)
+func (c *rPCClient) DeleteSecret(ctx context.Context, in *DeleteSecretRequest, opts ...grpc.CallOption) (*SecretSetItem, error) {
+	out := new(SecretSetItem)
 	err := c.cc.Invoke(ctx, RPC_DeleteSecret_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -102,7 +102,7 @@ type RPCServer interface {
 	// 创建Secret
 	CreateSecret(context.Context, *CreateSecretRequest) (*Secret, error)
 	// 删除Secret
-	DeleteSecret(context.Context, *DeleteSecretRequest) (*Secret, error)
+	DeleteSecret(context.Context, *DeleteSecretRequest) (*SecretSetItem, error)
 	// 修改Secret
 	UpdateSecret(context.Context, *UpdateSecretRequest) (*Secret, error)
 	// 查询Secret
@@ -119,7 +119,7 @@ type UnimplementedRPCServer struct {
 func (UnimplementedRPCServer) CreateSecret(context.Context, *CreateSecretRequest) (*Secret, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateSecret not implemented")
 }
-func (UnimplementedRPCServer) DeleteSecret(context.Context, *DeleteSecretRequest) (*Secret, error) {
+func (UnimplementedRPCServer) DeleteSecret(context.Context, *DeleteSecretRequest) (*SecretSetItem, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteSecret not implemented")
 }
 func (UnimplementedRPCServer) UpdateSecret(context.Context, *UpdateSecretRequest) (*Secret, error) {

@@ -35,8 +35,25 @@ func (i *impl) CreateSecret(ctx context.Context, in *secret.CreateSecretRequest)
 }
 
 // 删除Secret
-func (i *impl) DeleteSecret(ctx context.Context, in *secret.DeleteSecretRequest) (*secret.Secret, error) {
-	return nil, nil
+func (i *impl) DeleteSecret(ctx context.Context, in *secret.DeleteSecretRequest) (*secret.SecretSetItem, error) {
+	req := secret.NewDescribeSecretRequest()
+	req.Namespace = in.Namespace
+	req.Name = in.Name
+	secret, err := i.DescribeSecret(ctx, req)
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] secret not found", in.Namespace, in.Name)
+	}
+	secretApi := i.clientSet.CoreV1().Secrets(secret.Namespace)
+	err = secretApi.Delete(ctx, secret.Name, metav1.DeleteOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] secret delete fail", secret.Namespace, secret.Name)
+	}
+	// 从库中删除
+	_, err = i.col.DeleteOne(ctx, bson.M{"name": secret.Name})
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] delete from mongodb fail", secret.Namespace, secret.Name)
+	}
+	return secret, nil
 }
 
 // 修改Secret

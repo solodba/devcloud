@@ -30,3 +30,8 @@ func NewUpdateSecretRequest(req *CreateSecretRequest) *UpdateSecretRequest {
 func NewQuerySecretRequest() *QuerySecretRequest {
 	return &QuerySecretRequest{}
 }
+
+// DescribeSecretRequest结构体
+func NewDescribeSecretRequest() *DescribeSecretRequest {
+	return &DescribeSecretRequest{}
+}

@@ -53,3 +53,14 @@ func TestQuerySecret(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(secretSet))
 }
+
+func TestDescribeSecret(t *testing.T) {
+	req := secret.NewDescribeSecretRequest()
+	req.Namespace = "test"
+	req.Name = "testsec"
+	secret, err := svc.DescribeSecret(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(secret))
+}

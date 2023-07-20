@@ -29,7 +29,18 @@ func (h *handler) DeleteSecret(r *restful.Request, w *restful.Response) {
 
 // 更新Secret
 func (h *handler) UpdateSecret(r *restful.Request, w *restful.Response) {
-
+	req := secret.NewUpdateSecretRequest(secret.NewCreateSecretRequest())
+	err := r.ReadEntity(req.Secret)
+	if err != nil {
+		w.WriteEntity(response.NewFail(400, err.Error()))
+		return
+	}
+	secret, err := h.svc.UpdateSecret(r.Request.Context(), req)
+	if err != nil {
+		w.WriteEntity(response.NewFail(500, err.Error()))
+		return
+	}
+	w.WriteEntity(response.NewSuccess(200, secret))
 }
 
 // 查询Secret

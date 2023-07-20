@@ -9,3 +9,11 @@ func NewSecret(req *CreateSecretRequest) *Secret {
 		Secret: req,
 	}
 }
+
+// Secret初始化默认函数
+func NewDefaultSecret() *Secret {
+	return &Secret{
+		Meta:   meta.NewMeta(),
+		Secret: NewCreateSecretRequest(),
+	}
+}

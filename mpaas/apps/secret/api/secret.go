@@ -45,5 +45,21 @@ func (h *handler) UpdateSecret(r *restful.Request, w *restful.Response) {
 
 // 查询Secret
 func (h *handler) QueryOrDescribeSecret(r *restful.Request, w *restful.Response) {
-
+	if r.QueryParameter("name") == "" {
+		req := secret.NewQuerySecretRequestFromRestful(r)
+		secretSet, err := h.svc.QuerySecret(r.Request.Context(), req)
+		if err != nil {
+			w.WriteEntity(response.NewFail(500, err.Error()))
+			return
+		}
+		w.WriteEntity(response.NewSuccess(200, secretSet))
+	} else {
+		req := secret.NewDescribeSecretRequestFromRestful(r)
+		secret, err := h.svc.DescribeSecret(r.Request.Context(), req)
+		if err != nil {
+			w.WriteEntity(response.NewFail(500, err.Error()))
+			return
+		}
+		w.WriteEntity(response.NewSuccess(200, secret))
+	}
 }

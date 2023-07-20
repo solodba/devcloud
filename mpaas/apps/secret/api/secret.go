@@ -24,7 +24,13 @@ func (h *handler) CreateSecret(r *restful.Request, w *restful.Response) {
 
 // 删除Secret
 func (h *handler) DeleteSecret(r *restful.Request, w *restful.Response) {
-
+	req := secret.NewDeleteSecretRequestFromRestful(r)
+	secret, err := h.svc.DeleteSecret(r.Request.Context(), req)
+	if err != nil {
+		w.WriteEntity(response.NewFail(500, err.Error()))
+		return
+	}
+	w.WriteEntity(response.NewSuccess(200, secret))
 }
 
 // 更新Secret

@@ -58,3 +58,11 @@ func NewDescribeSecretRequestFromRestful(r *restful.Request) *DescribeSecretRequ
 		Name:      r.QueryParameter("name"),
 	}
 }
+
+// 从restful获取参数初始化DeleteSecretRequest结构体
+func NewDeleteSecretRequestFromRestful(r *restful.Request) *DeleteSecretRequest {
+	return &DeleteSecretRequest{
+		Namespace: r.PathParameter("namespace"),
+		Name:      r.PathParameter("name"),
+	}
+}

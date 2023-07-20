@@ -37,9 +37,9 @@ type RPCClient interface {
 	// 修改Secret
 	UpdateSecret(ctx context.Context, in *UpdateSecretRequest, opts ...grpc.CallOption) (*Secret, error)
 	// 查询Secret
-	QuerySecret(ctx context.Context, in *QuerySecretRequest, opts ...grpc.CallOption) (*SecretSetItem, error)
+	QuerySecret(ctx context.Context, in *QuerySecretRequest, opts ...grpc.CallOption) (*SecretSet, error)
 	// 查询Secret详情
-	DescribeSecret(ctx context.Context, in *DescribeSecretRequest, opts ...grpc.CallOption) (*SecretSet, error)
+	DescribeSecret(ctx context.Context, in *DescribeSecretRequest, opts ...grpc.CallOption) (*SecretSetItem, error)
 }
 
 type rPCClient struct {
@@ -77,8 +77,8 @@ func (c *rPCClient) UpdateSecret(ctx context.Context, in *UpdateSecretRequest, o
 	return out, nil
 }
 
-func (c *rPCClient) QuerySecret(ctx context.Context, in *QuerySecretRequest, opts ...grpc.CallOption) (*SecretSetItem, error) {
-	out := new(SecretSetItem)
+func (c *rPCClient) QuerySecret(ctx context.Context, in *QuerySecretRequest, opts ...grpc.CallOption) (*SecretSet, error) {
+	out := new(SecretSet)
 	err := c.cc.Invoke(ctx, RPC_QuerySecret_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -86,8 +86,8 @@ func (c *rPCClient) QuerySecret(ctx context.Context, in *QuerySecretRequest, opt
 	return out, nil
 }
 
-func (c *rPCClient) DescribeSecret(ctx context.Context, in *DescribeSecretRequest, opts ...grpc.CallOption) (*SecretSet, error) {
-	out := new(SecretSet)
+func (c *rPCClient) DescribeSecret(ctx context.Context, in *DescribeSecretRequest, opts ...grpc.CallOption) (*SecretSetItem, error) {
+	out := new(SecretSetItem)
 	err := c.cc.Invoke(ctx, RPC_DescribeSecret_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -106,9 +106,9 @@ type RPCServer interface {
 	// 修改Secret
 	UpdateSecret(context.Context, *UpdateSecretRequest) (*Secret, error)
 	// 查询Secret
-	QuerySecret(context.Context, *QuerySecretRequest) (*SecretSetItem, error)
+	QuerySecret(context.Context, *QuerySecretRequest) (*SecretSet, error)
 	// 查询Secret详情
-	DescribeSecret(context.Context, *DescribeSecretRequest) (*SecretSet, error)
+	DescribeSecret(context.Context, *DescribeSecretRequest) (*SecretSetItem, error)
 	mustEmbedUnimplementedRPCServer()
 }
 
@@ -125,10 +125,10 @@ func (UnimplementedRPCServer) DeleteSecret(context.Context, *DeleteSecretRequest
 func (UnimplementedRPCServer) UpdateSecret(context.Context, *UpdateSecretRequest) (*Secret, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateSecret not implemented")
 }
-func (UnimplementedRPCServer) QuerySecret(context.Context, *QuerySecretRequest) (*SecretSetItem, error) {
+func (UnimplementedRPCServer) QuerySecret(context.Context, *QuerySecretRequest) (*SecretSet, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QuerySecret not implemented")
 }
-func (UnimplementedRPCServer) DescribeSecret(context.Context, *DescribeSecretRequest) (*SecretSet, error) {
+func (UnimplementedRPCServer) DescribeSecret(context.Context, *DescribeSecretRequest) (*SecretSetItem, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DescribeSecret not implemented")
 }
 func (UnimplementedRPCServer) mustEmbedUnimplementedRPCServer() {}

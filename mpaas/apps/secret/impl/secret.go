@@ -3,6 +3,7 @@ package impl
 import (
 	"context"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/solodba/devcloud/mpaas/apps/secret"
@@ -65,11 +66,25 @@ func (i *impl) UpdateSecret(ctx context.Context, in *secret.UpdateSecretRequest)
 }
 
 // 查询Secret
-func (i *impl) QuerySecret(ctx context.Context, in *secret.QuerySecretRequest) (*secret.SecretSetItem, error) {
-	return nil, nil
+func (i *impl) QuerySecret(ctx context.Context, in *secret.QuerySecretRequest) (*secret.SecretSet, error) {
+	secretApi := i.clientSet.CoreV1().Secrets(in.Namespace)
+	k8sSecretList, err := secretApi.List(ctx, metav1.ListOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("get secret list error, err: %s", err.Error())
+	}
+	secretSet := secret.NewSecretSet()
+	for _, k8sConfigMap := range k8sSecretList.Items {
+		// 数据转换
+		secretRes := i.SecretK8s2ResItemConvert(k8sConfigMap)
+		if strings.Contains(secretRes.Name, in.Keyword) {
+			secretSet.AddItems(secretRes)
+		}
+	}
+	secretSet.Total = int64(len(secretSet.Items))
+	return secretSet, nil
 }
 
 // 查询Secret详情
-func (i *impl) DescribeSecret(ctx context.Context, in *secret.DescribeSecretRequest) (*secret.SecretSet, error) {
+func (i *impl) DescribeSecret(ctx context.Context, in *secret.DescribeSecretRequest) (*secret.SecretSetItem, error) {
 	return nil, nil
 }

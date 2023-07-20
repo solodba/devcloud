@@ -17,3 +17,15 @@ func NewDefaultSecret() *Secret {
 		Secret: NewCreateSecretRequest(),
 	}
 }
+
+// SecretSet初始化函数
+func NewSecretSet() *SecretSet {
+	return &SecretSet{
+		Items: make([]*SecretSetItem, 0),
+	}
+}
+
+// SecretSet添加方法
+func (s *SecretSet) AddItems(items ...*SecretSetItem) {
+	s.Items = append(s.Items, items...)
+}

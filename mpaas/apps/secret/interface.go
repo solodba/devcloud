@@ -25,3 +25,8 @@ func NewUpdateSecretRequest(req *CreateSecretRequest) *UpdateSecretRequest {
 		Secret: req,
 	}
 }
+
+// QuerySecretRequest结构体
+func NewQuerySecretRequest() *QuerySecretRequest {
+	return &QuerySecretRequest{}
+}

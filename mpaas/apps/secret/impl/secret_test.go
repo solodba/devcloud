@@ -64,3 +64,14 @@ func TestDescribeSecret(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(secret))
 }
+
+func TestDeleteSecret(t *testing.T) {
+	req := secret.NewDeleteSecretRequest()
+	req.Namespace = "test"
+	req.Name = "testsec"
+	secret, err := svc.DeleteSecret(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(secret))
+}

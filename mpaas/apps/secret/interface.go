@@ -35,3 +35,8 @@ func NewQuerySecretRequest() *QuerySecretRequest {
 func NewDescribeSecretRequest() *DescribeSecretRequest {
 	return &DescribeSecretRequest{}
 }
+
+// DeleteSecretRequest结构体
+func NewDeleteSecretRequest() *DeleteSecretRequest {
+	return &DeleteSecretRequest{}
+}

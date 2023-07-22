@@ -1,6 +1,8 @@
 package impl_test
 
 import (
+	"encoding/json"
+	"io/ioutil"
 	"testing"
 
 	"github.com/solodba/devcloud/mpaas/apps/node"
@@ -23,4 +25,21 @@ func TestDescribeNode(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Log(tools.MustToJson(node))
+}
+
+func TestUpdateNodeLabel(t *testing.T) {
+	req := node.NewUpdatedLabelRequest()
+	dj, err := ioutil.ReadFile("label.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	err = json.Unmarshal(dj, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = svc.UpdateNodeLabel(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log("更新" + req.Name + "节点标签成功")
 }

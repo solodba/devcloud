@@ -2,11 +2,13 @@ package impl
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"strings"
 
 	"github.com/solodba/devcloud/mpaas/apps/node"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/types"
 )
 
 // 查询Node集合
@@ -38,7 +40,25 @@ func (i *impl) DescribeNode(ctx context.Context, in *node.DescribeNodeRequest) (
 
 // 更新NodeLabel
 func (i *impl) UpdateNodeLabel(ctx context.Context, in *node.UpdatedLabelRequest) (*node.UpdatedLabelResponse, error) {
-	return nil, nil
+	labelMap := make(map[string]string, 0)
+	for _, label := range in.Labels {
+		labelMap[label.Key] = label.Value
+	}
+	labelMap["$patch"] = "replace"
+	patchData := map[string]any{
+		"metadata": map[string]any{
+			"labels": labelMap,
+		},
+	}
+	patchDataBytes, _ := json.Marshal(&patchData)
+	_, err := i.clientSet.CoreV1().Nodes().Patch(
+		context.TODO(),
+		in.Name,
+		types.StrategicMergePatchType,
+		patchDataBytes,
+		metav1.PatchOptions{},
+	)
+	return nil, err
 }
 
 // 更新NodeTaint

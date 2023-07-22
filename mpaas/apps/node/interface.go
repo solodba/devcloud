@@ -24,3 +24,8 @@ func NewDescribeNodeRequest(nodeName string) *DescribeNodeRequest {
 		Name: nodeName,
 	}
 }
+
+// UpdatedLabelRequest结构体初始化函数
+func NewUpdatedLabelRequest() *UpdatedLabelRequest {
+	return &UpdatedLabelRequest{}
+}

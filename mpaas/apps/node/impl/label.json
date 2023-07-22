@@ -1,0 +1,13 @@
+{
+    "name":"node1",
+    "labels":[
+        {
+            "key":"type",
+            "value":"ssd"
+        },
+        {
+            "key":"test",
+            "value":"test"
+        }
+    ]
+}

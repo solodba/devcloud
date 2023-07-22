@@ -44,8 +44,8 @@ func (i *impl) GetNodeResItem(nodeK8s corev1.Node) *node.NodeSetItem {
 }
 
 // 获取Node详情
-func (i *impl) GetNodeDetail(nodeK8s corev1.Node) *node.NodeSetItem {
-	nodeRes := i.GetNodeResItem(nodeK8s)
+func (i *impl) GetNodeDetail(nodeK8s *corev1.Node) *node.NodeSetItem {
+	nodeRes := i.GetNodeResItem(*nodeK8s)
 	// 计算label和taint
 	nodeRes.Taints = i.getTaintReq(nodeK8s.Spec.Taints)
 	nodeRes.Labels = i.mapToList(nodeK8s.Labels)

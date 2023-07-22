@@ -12,6 +12,15 @@ type Service interface {
 }
 
 // QueryNodeRequest结构体初始化函数
-func NewQueryNodeRequest() *QueryNodeRequest {
-	return &QueryNodeRequest{}
+func NewQueryNodeRequest(keyword string) *QueryNodeRequest {
+	return &QueryNodeRequest{
+		Keyword: keyword,
+	}
+}
+
+// DescribeNodeRequest结构体初始化函数
+func NewDescribeNodeRequest(nodeName string) *DescribeNodeRequest {
+	return &DescribeNodeRequest{
+		Name: nodeName,
+	}
 }

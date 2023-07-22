@@ -29,7 +29,11 @@ func (i *impl) QueryNode(ctx context.Context, in *node.QueryNodeRequest) (*node.
 
 // 查询Node详情
 func (i *impl) DescribeNode(ctx context.Context, in *node.DescribeNodeRequest) (*node.NodeSetItem, error) {
-	return nil, nil
+	k8sNode, err := i.clientSet.CoreV1().Nodes().Get(ctx, in.Name, metav1.GetOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("get node detail error, err: %s", err.Error())
+	}
+	return i.GetNodeDetail(k8sNode), nil
 }
 
 // 更新NodeLabel

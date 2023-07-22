@@ -1,5 +1,7 @@
 package pv
 
+import "github.com/emicklei/go-restful/v3"
+
 // 模块名称
 const (
 	AppName = "pv"
@@ -42,5 +44,12 @@ func (p *PVSet) AddItems(items ...*PVSetItem) {
 func NewQueryPVRequest(keyword string) *QueryPVRequest {
 	return &QueryPVRequest{
 		Keyword: keyword,
+	}
+}
+
+// 从restful获取参数初始化DeletePVRequest结构体
+func NewDeletePVRequestFromRestful(r *restful.Request) *DeletePVRequest {
+	return &DeletePVRequest{
+		Name: r.PathParameter("name"),
 	}
 }

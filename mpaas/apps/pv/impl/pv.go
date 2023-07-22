@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/solodba/devcloud/mpaas/apps/pv"
+	"go.mongodb.org/mongo-driver/bson"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -13,15 +14,39 @@ func (i *impl) CreatePV(ctx context.Context, in *pv.CreatePVRequest) (*pv.PV, er
 	k8sPV := i.PVReq2K8s(in)
 	pvApi := i.clientSet.CoreV1().PersistentVolumes()
 	if _, err := pvApi.Create(ctx, k8sPV, metav1.CreateOptions{}); err != nil {
-		return nil, fmt.Errorf("[namespace=%s, name=%s] PersistentVolume create fail", k8sPV.Namespace, k8sPV.Name)
+		return nil, fmt.Errorf("[name=%s] PersistentVolume create fail", k8sPV.Name)
 	}
 	pv := pv.NewPV(in)
+	// 写入到数据库
+	_, err := i.col.InsertOne(ctx, pv)
+	if err != nil {
+		return nil, fmt.Errorf("[name=%s] PersistentVolume insert mongodb fail, err: %s", k8sPV.Name, err.Error())
+	}
 	return pv, nil
 }
 
 // 删除PersistentVolume
 func (i *impl) DeletePV(ctx context.Context, in *pv.DeletePVRequest) (*pv.PV, error) {
-	return nil, nil
+	pvApi := i.clientSet.CoreV1().PersistentVolumes()
+	_, err := pvApi.Get(ctx, in.Name, metav1.GetOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("[name=%s] PersistentVolume not found", in.Name)
+	}
+	err = pvApi.Delete(ctx, in.Name, metav1.DeleteOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("[name=%s] PersistentVolume delete fail", in.Name)
+	}
+	filter := bson.M{"name": in.Name}
+	pvReq := pv.NewDefaultPV()
+	err = i.col.FindOne(ctx, filter).Decode(pvReq)
+	if err != nil {
+		return nil, fmt.Errorf("[name=%s] is not found in mongodb", in.Name)
+	}
+	_, err = i.col.DeleteOne(ctx, filter)
+	if err != nil {
+		return nil, fmt.Errorf("[name=%s] delete from mongodb fail", in.Name)
+	}
+	return pvReq, nil
 }
 
 // 查询PersistentVolume集合

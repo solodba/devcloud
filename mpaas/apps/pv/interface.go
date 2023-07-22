@@ -18,3 +18,10 @@ func NewCreatePVRequest() *CreatePVRequest {
 		AccessModes: make([]string, 0),
 	}
 }
+
+// DeletePVRequest结构体初始化函数
+func NewDeletePVRequest(name string) *DeletePVRequest {
+	return &DeletePVRequest{
+		Name: name,
+	}
+}

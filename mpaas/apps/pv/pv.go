@@ -11,3 +11,11 @@ func NewPV(req *CreatePVRequest) *PV {
 		PV:   req,
 	}
 }
+
+// PV结构体默认初始化函数
+func NewDefaultPV() *PV {
+	return &PV{
+		Meta: meta.NewMeta(),
+		PV:   NewCreatePVRequest(),
+	}
+}

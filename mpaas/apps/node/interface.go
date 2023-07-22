@@ -10,3 +10,8 @@ type Service interface {
 	// 嵌套Node GRPC接口
 	RPCServer
 }
+
+// QueryNodeRequest结构体初始化函数
+func NewQueryNodeRequest() *QueryNodeRequest {
+	return &QueryNodeRequest{}
+}

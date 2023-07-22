@@ -23,6 +23,7 @@ func (i *impl) QueryNode(ctx context.Context, in *node.QueryNodeRequest) (*node.
 			nodeResList.AddItems(nodeRes)
 		}
 	}
+	nodeResList.Total = int64(len(nodeResList.Items))
 	return nodeResList, nil
 }
 

@@ -3,6 +3,7 @@ package impl
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/solodba/devcloud/mpaas/apps/pv"
 	"go.mongodb.org/mongo-driver/bson"
@@ -51,5 +52,18 @@ func (i *impl) DeletePV(ctx context.Context, in *pv.DeletePVRequest) (*pv.PV, er
 
 // 查询PersistentVolume集合
 func (i *impl) QueryPV(ctx context.Context, in *pv.QueryPVRequest) (*pv.PVSet, error) {
-	return nil, nil
+	pvApi := i.clientSet.CoreV1().PersistentVolumes()
+	k8sPVList, err := pvApi.List(ctx, metav1.ListOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("get PersistentVolume list error, err: %s", err.Error())
+	}
+	pvResList := pv.NewPVSet()
+	for _, k8sPV := range k8sPVList.Items {
+		pvRes := i.PVK8s2Res(k8sPV)
+		if strings.Contains(pvRes.Name, in.Keyword) {
+			pvResList.AddItems(pvRes)
+		}
+	}
+	pvResList.Total = int64(len(pvResList.Items))
+	return pvResList, nil
 }

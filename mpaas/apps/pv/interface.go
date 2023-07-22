@@ -25,3 +25,22 @@ func NewDeletePVRequest(name string) *DeletePVRequest {
 		Name: name,
 	}
 }
+
+// PVSet结构体初始化函数
+func NewPVSet() *PVSet {
+	return &PVSet{
+		Items: make([]*PVSetItem, 0),
+	}
+}
+
+// PVSet结构体添加方法
+func (p *PVSet) AddItems(items ...*PVSetItem) {
+	p.Items = append(p.Items, items...)
+}
+
+// QueryPVRequest初始化函数
+func NewQueryPVRequest(keyword string) *QueryPVRequest {
+	return &QueryPVRequest{
+		Keyword: keyword,
+	}
+}

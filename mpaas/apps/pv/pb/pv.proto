@@ -84,7 +84,7 @@ message PVSetItem {
     // @gotags: bson:"storageClassName" json:"storageClassName"
     string StorageClassName = 8;
     // @gotags: bson:"age" json:"age"
-    string Age = 9;
+    int64 Age = 9;
     // @gotags: bson:"reason" json:"reason"
     string Reason = 10;
 }

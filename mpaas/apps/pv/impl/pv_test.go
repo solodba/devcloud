@@ -34,3 +34,12 @@ func TestDeletePV(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(pv))
 }
+
+func TestQueryPV(t *testing.T) {
+	req := pv.NewQueryPVRequest("test")
+	pvSet, err := svc.QueryPV(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(pvSet))
+}

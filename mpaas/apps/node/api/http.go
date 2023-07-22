@@ -53,7 +53,7 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 		Returns(200, "OK", node.UpdatedLabelResponse{}))
 
 	// 更新节点标签
-	ws.Route(ws.PUT("/taint").To(h.UpdateNodeLabel).
+	ws.Route(ws.PUT("/taint").To(h.UpdateNodeTaint).
 		Doc("更新节点污点").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
 		Reads(node.UpdatedTaintRequest{}).

@@ -1,0 +1,22 @@
+{
+    "name": "testpv",
+    "labels": [
+        {
+            "key": "pv",
+            "value": "testpv"
+        }
+    ],
+    "capacity": 100,
+    "accessModes": [
+        "ReadWriteOnce"
+    ],
+    "reClaimPolicy": "Recycle",
+    "volumeSource": {
+        "type": "nfs",
+        "nfsVolumeSource": {
+            "nfsPath": "/nfs/share/pv01",
+            "nfsServer": "10.0.0.14",
+            "nfsReadyOnly": false
+        }
+    }
+}

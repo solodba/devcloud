@@ -20,5 +20,6 @@ func (i *impl) QueryNamespace(ctx context.Context, in *namespace.QueryNamespaceR
 		namespace := i.NamespaceK8s2ResItemConvert(item)
 		namespaceSet.AddItems(namespace)
 	}
+	namespaceSet.Total = int64(len(namespaceSet.Items))
 	return namespaceSet, nil
 }

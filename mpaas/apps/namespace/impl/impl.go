@@ -1,7 +1,6 @@
 package impl
 
 import (
-	"github.com/solodba/devcloud/mpaas/apps/configmap"
 	"github.com/solodba/devcloud/mpaas/apps/namespace"
 	"github.com/solodba/devcloud/mpaas/conf"
 	"github.com/solodba/mcube/apps"
@@ -21,7 +20,7 @@ type impl struct {
 
 // 实现Ioc中心Name方法
 func (i *impl) Name() string {
-	return configmap.AppName
+	return namespace.AppName
 }
 
 // 实现Ioc中心Conf方法

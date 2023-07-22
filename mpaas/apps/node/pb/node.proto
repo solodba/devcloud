@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package codehorse.mpaas.node;
+
+option go_package = "github.com/solodba/devcloud/mpaas/apps/node";
+
+// NodeSet结构体
+message NodeSet {
+    // @gotags: bson:"total" json:"total"
+    int64 Total = 1;
+    // @gotags: bson:"Items" json:"Items"
+    repeated NodeSetItem Items = 2;
+}
+
+// NodeSetItem结构体
+message NodeSetItem {
+    // @gotags: bson:"name" json:"name"
+    string Name = 1;
+    // @gotags: bson:"status" json:"status"
+    string Status = 2;
+    // @gotags: bson:"age" json:"age"
+    string Age = 3;
+    // @gotags: bson:"internalIp" json:"internalIp"
+    string InternalIp = 4;
+    // @gotags: bson:"externalIp" json:"externalIp"
+    string ExternalIp = 5;
+    // @gotags: bson:"version" json:"version"
+    string Version = 6;
+    // @gotags: bson:"osImage" json:"osImage"
+    string OsImage = 7;
+    // @gotags: bson:"kernelVersion" json:"kernelVersion"
+    string KernelVersion = 8;
+    // @gotags: bson:"containerRuntime" json:"containerRuntime"
+    string ContainerRuntime  = 9;
+    // @gotags: bson:"labels" json:"labels"
+    repeated ListMapItem Labels = 10;
+    // @gotags: bson:"taints" json:"taints"
+    repeated Taint Taints = 11;
+}
+
+// 通用键值对结构体
+message ListMapItem {
+    // @gotags: bson:"key" json:"key"
+    string Key = 1;
+    // @gotags: bson:"value" json:"value"
+    string Value = 2;
+}
+
+// Taint结构体
+message Taint {
+    // @gotags: bson:"key" json:"key"
+    string Key = 1;
+    // @gotags: bson:"value" json:"value"
+    string Value = 2;
+    // @gotags: bson:"effect" json:"effect"
+    string Effect = 3;
+}

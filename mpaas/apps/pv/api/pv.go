@@ -35,5 +35,11 @@ func (h *handler) DeletePV(r *restful.Request, w *restful.Response) {
 
 // 查询PersistentVolume集合
 func (h *handler) QueryPV(r *restful.Request, w *restful.Response) {
-
+	req := pv.NewQueryPVRequestFromRestful(r)
+	pvSet, err := h.svc.QueryPV(r.Request.Context(), req)
+	if err != nil {
+		w.WriteEntity(response.NewFail(500, err.Error()))
+		return
+	}
+	w.WriteEntity(response.NewSuccess(200, pvSet))
 }

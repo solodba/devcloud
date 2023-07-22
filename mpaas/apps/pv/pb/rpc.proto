@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package codehorse.mpaas.pv;
+
+option go_package = "github.com/solodba/devcloud/mpaas/apps/pv";
+
+// 导入外部包
+import "apps/pv/pb/pv.proto";
+
+// PersistentVolume相关功能接口
+service RPC {
+    // 创建PersistentVolume
+    rpc CreatePV(CreatePVRequest) returns(PV);
+    // 删除PersistentVolume
+    rpc DeletePV(DeletePVRequest) returns(PV);
+    // 查询PersistentVolume集合
+    rpc QueryPV(QueryPVRequest) returns(PVSet);
+}
+
+// DeletePVRequest结构体
+message DeletePVRequest {
+    // @gotags: bson:"name" json:"name"
+    string Name = 1;
+    
+}
+
+// QueryPVRequest结构体
+message QueryPVRequest {
+    // @gotags: bson:"keyword" json:"keyword"
+    string Keyword = 1;
+}

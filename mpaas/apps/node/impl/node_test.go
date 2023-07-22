@@ -43,3 +43,20 @@ func TestUpdateNodeLabel(t *testing.T) {
 	}
 	t.Log("更新" + req.Name + "节点标签成功")
 }
+
+func TestUpdateNodeTaint(t *testing.T) {
+	req := node.NewUpdatedTaintRequest()
+	dj, err := ioutil.ReadFile("taint.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	err = json.Unmarshal(dj, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = svc.UpdateNodeTaint(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log("更新" + req.Name + "节点污点成功")
+}

@@ -29,3 +29,8 @@ func NewDescribeNodeRequest(nodeName string) *DescribeNodeRequest {
 func NewUpdatedLabelRequest() *UpdatedLabelRequest {
 	return &UpdatedLabelRequest{}
 }
+
+// UpdatedTaintRequest结构体初始化函数
+func NewUpdatedTaintRequest() *UpdatedTaintRequest {
+	return &UpdatedTaintRequest{}
+}

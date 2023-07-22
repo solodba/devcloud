@@ -63,5 +63,18 @@ func (i *impl) UpdateNodeLabel(ctx context.Context, in *node.UpdatedLabelRequest
 
 // 更新NodeTaint
 func (i *impl) UpdateNodeTaint(ctx context.Context, in *node.UpdatedTaintRequest) (*node.UpdatedTaintResponse, error) {
-	return nil, nil
+	patchData := map[string]any{
+		"spec": map[string]any{
+			"taints": in.Taints,
+		},
+	}
+	patchDataBytes, _ := json.Marshal(&patchData)
+	_, err := i.clientSet.CoreV1().Nodes().Patch(
+		context.TODO(),
+		in.Name,
+		types.StrategicMergePatchType,
+		patchDataBytes,
+		metav1.PatchOptions{},
+	)
+	return nil, err
 }

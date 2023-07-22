@@ -19,7 +19,7 @@ message NodeSetItem {
     // @gotags: bson:"status" json:"status"
     string Status = 2;
     // @gotags: bson:"age" json:"age"
-    string Age = 3;
+    int64 Age = 3;
     // @gotags: bson:"internalIp" json:"internalIp"
     string InternalIp = 4;
     // @gotags: bson:"externalIp" json:"externalIp"

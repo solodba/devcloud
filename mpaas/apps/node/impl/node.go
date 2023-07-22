@@ -2,13 +2,28 @@ package impl
 
 import (
 	"context"
+	"fmt"
+	"strings"
 
 	"github.com/solodba/devcloud/mpaas/apps/node"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 // 查询Node集合
 func (i *impl) QueryNode(ctx context.Context, in *node.QueryNodeRequest) (*node.NodeSet, error) {
-	return nil, nil
+	k8sNodeList, err := i.clientSet.CoreV1().Nodes().List(ctx, metav1.ListOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("get node list error, err: %s", err.Error())
+	}
+	nodeResList := node.NewNodeSet()
+	for _, item := range k8sNodeList.Items {
+		if strings.Contains(item.Name, in.Keyword) {
+			// 数据结构体转换
+			nodeRes := i.GetNodeResItem(item)
+			nodeResList.AddItems(nodeRes)
+		}
+	}
+	return nodeResList, nil
 }
 
 // 查询Node详情

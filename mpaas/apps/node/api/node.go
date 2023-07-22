@@ -48,5 +48,16 @@ func (h *handler) UpdateNodeLabel(r *restful.Request, w *restful.Response) {
 
 // 更新节点污点
 func (h *handler) UpdateNodeTaint(r *restful.Request, w *restful.Response) {
-
+	req := node.NewUpdatedTaintRequest()
+	err := r.ReadEntity(req)
+	if err != nil {
+		w.WriteEntity(response.NewFail(400, err.Error()))
+		return
+	}
+	_, err = h.svc.UpdateNodeTaint(r.Request.Context(), req)
+	if err != nil {
+		w.WriteEntity(response.NewFail(500, err.Error()))
+		return
+	}
+	w.WriteEntity(response.NewSuccess(200, fmt.Sprintf("[%s]节点污点更新成功", req.Name)))
 }

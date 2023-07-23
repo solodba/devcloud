@@ -23,7 +23,13 @@ func (h *handler) CreateSC(r *restful.Request, w *restful.Response) {
 
 // 删除StorageClass
 func (h *handler) DeleteSC(r *restful.Request, w *restful.Response) {
-
+	req := sc.NewDeleteSCRequestFromRestful(r)
+	sc, err := h.svc.DeleteSC(r.Request.Context(), req)
+	if err != nil {
+		w.WriteEntity(response.NewFail(500, err.Error()))
+		return
+	}
+	w.WriteEntity(response.NewSuccess(200, sc))
 }
 
 // 查询StorageClass集合

@@ -3,6 +3,7 @@ package sc
 import (
 	"strings"
 
+	"github.com/emicklei/go-restful/v3"
 	"github.com/solodba/devcloud/mpaas/conf"
 )
 
@@ -49,4 +50,11 @@ func (c *CreateSCRequest) ValidatePlugin(conf *conf.Config) bool {
 		}
 	}
 	return false
+}
+
+// 从restful解析参数初始化DeleteSCRequest结构体
+func NewDeleteSCRequestFromRestful(r *restful.Request) *DeleteSCRequest {
+	return &DeleteSCRequest{
+		Name: r.PathParameter("name"),
+	}
 }

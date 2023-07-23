@@ -34,3 +34,12 @@ func TestDeleteSC(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(sc))
 }
+
+func TestQuerySC(t *testing.T) {
+	req := sc.NewQuerySCRequest("tes")
+	scSet, err := svc.QuerySC(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(scSet))
+}

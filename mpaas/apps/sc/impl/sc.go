@@ -3,6 +3,7 @@ package impl
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/solodba/devcloud/mpaas/apps/sc"
 	"go.mongodb.org/mongo-driver/bson"
@@ -51,5 +52,18 @@ func (i *impl) DeleteSC(ctx context.Context, in *sc.DeleteSCRequest) (*sc.SC, er
 
 // 查询StorageClass集合
 func (i *impl) QuerySC(ctx context.Context, in *sc.QuerySCRequest) (*sc.SCSet, error) {
-	return nil, nil
+	scApi := i.clientSet.StorageV1().StorageClasses()
+	k8sSCList, err := scApi.List(ctx, metav1.ListOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("get StorageClass list error, err: %s", err.Error())
+	}
+	scResList := sc.NewSCSet()
+	for _, k8sSC := range k8sSCList.Items {
+		scRes := i.SCK8s2Res(k8sSC)
+		if strings.Contains(scRes.Name, in.Keyword) {
+			scResList.AddItems(scRes)
+		}
+	}
+	scResList.Total = int64(len(scResList.Items))
+	return scResList, nil
 }

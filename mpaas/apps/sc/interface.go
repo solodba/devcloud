@@ -26,3 +26,10 @@ func NewDeleteSCRequest(name string) *DeleteSCRequest {
 		Name: name,
 	}
 }
+
+// QuerySCRequest初始化函数
+func NewQuerySCRequest(keyword string) *QuerySCRequest {
+	return &QuerySCRequest{
+		Keyword: keyword,
+	}
+}

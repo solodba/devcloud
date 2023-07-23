@@ -17,3 +17,15 @@ func NewDefaultSC() *SC {
 		SC:   NewCreateSCRequest(),
 	}
 }
+
+// SCSet初始化函数
+func NewSCSet() *SCSet {
+	return &SCSet{
+		Items: make([]*SCSetItem, 0),
+	}
+}
+
+// SCSet添加方法
+func (s *SCSet) AddItems(items ...*SCSetItem) {
+	s.Items = append(s.Items, items...)
+}

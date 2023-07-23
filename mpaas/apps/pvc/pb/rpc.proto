@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package codehorse.mpaas.pvc;
+
+option go_package = "github.com/solodba/devcloud/mpaas/apps/pvc";
+
+// 导入外部包
+import "apps/pvc/pb/pvc.proto";
+
+// PersistentVolumeClaim相关功能接口
+service RPC {
+    // 创建PersistentVolumeClaim
+    rpc CreatePVC(CreatePVCRequest) returns(PVC);
+    // 删除PersistentVolumeClaim
+    rpc DeletePVC(DeletePVCRequest) returns(PVC);
+    // 查询PersistentVolumeClaim集合
+    rpc QueryPVC(QueryPVCRequest) returns(PVCSet);
+}
+
+// DeletePVCRequest结构体
+message DeletePVCRequest {
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 1;
+    // @gotags: bson:"name" json:"name"
+    string Name = 2;
+}
+
+// QueryPVCRequest结构体
+message QueryPVCRequest {
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 1;
+    // @gotags: bson:"keyword" json:"keyword"
+    string Keyword = 2;
+}

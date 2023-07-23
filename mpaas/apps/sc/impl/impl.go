@@ -18,6 +18,7 @@ type impl struct {
 	sc.UnimplementedRPCServer
 	col       *mongo.Collection
 	clientSet *kubernetes.Clientset
+	conf      *conf.Config
 }
 
 // 实现Ioc中心Name方法
@@ -27,6 +28,7 @@ func (i *impl) Name() string {
 
 // 实现Ioc中心Conf方法
 func (i *impl) Conf() error {
+	i.conf = conf.C()
 	db, err := conf.C().MongoDB.GetDB()
 	if err != nil {
 		return err

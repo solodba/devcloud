@@ -1,5 +1,11 @@
 package sc
 
+import (
+	"strings"
+
+	"github.com/solodba/devcloud/mpaas/conf"
+)
+
 // 模块名称
 const (
 	AppName = "sc"
@@ -32,4 +38,15 @@ func NewQuerySCRequest(keyword string) *QuerySCRequest {
 	return &QuerySCRequest{
 		Keyword: keyword,
 	}
+}
+
+// CreateSCRequest添加方法
+func (c *CreateSCRequest) ValidatePlugin(conf *conf.Config) bool {
+	provisionerList := strings.Split(conf.Plugin.Provisionser, ",")
+	for _, provisioner := range provisionerList {
+		if c.Provisioner == provisioner {
+			return true
+		}
+	}
+	return false
 }

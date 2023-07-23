@@ -58,11 +58,17 @@ type K8s struct {
 	clientSet  *kubernetes.Clientset
 }
 
+// Plugin结构体
+type Plugin struct {
+	Provisionser string `toml:"provisionser" env:"PLUGIN_PROVISIONSER"`
+}
+
 // 全局配置结构体
 type Config struct {
 	App     *App     `toml:"app"`
 	MongoDB *MongoDB `toml:"mongodb"`
 	K8s     *K8s     `toml:"k8s"`
+	Plugin  *Plugin  `toml:"plugin"`
 }
 
 // Http初始化函数
@@ -106,12 +112,18 @@ func NewDefaultK8s() *K8s {
 	}
 }
 
+// Plugin初始化函数
+func NewDefaultPlugin() *Plugin {
+	return &Plugin{}
+}
+
 // Config初始化函数
 func NewDefaultConfig() *Config {
 	return &Config{
 		App:     NewDefaultApp(),
 		MongoDB: NewDefaultMongoDB(),
 		K8s:     NewDefaultK8s(),
+		Plugin:  NewDefaultPlugin(),
 	}
 }
 

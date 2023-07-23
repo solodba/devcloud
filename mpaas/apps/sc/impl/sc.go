@@ -12,6 +12,9 @@ import (
 
 // 创建StorageClass
 func (i *impl) CreateSC(ctx context.Context, in *sc.CreateSCRequest) (*sc.SC, error) {
+	if !in.ValidatePlugin(i.conf) {
+		return nil, fmt.Errorf("[%s] provisioner is not support", in.Provisioner)
+	}
 	k8sSC := i.SCReq2K8s(in)
 	scApi := i.clientSet.StorageV1().StorageClasses()
 	if _, err := scApi.Create(ctx, k8sSC, metav1.CreateOptions{}); err != nil {

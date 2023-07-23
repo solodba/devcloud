@@ -39,3 +39,11 @@ func NewQueryPVCRequestFromRestful(r *restful.Request) *QueryPVCRequest {
 		Keyword:   r.QueryParameter("keyword"),
 	}
 }
+
+// 从restful解析参数初始化DeletePVCRequest结构体
+func NewDeletePVCRequestFromRestful(r *restful.Request) *DeletePVCRequest {
+	return &DeletePVCRequest{
+		Namespace: r.PathParameter("namespace"),
+		Name:      r.PathParameter("name"),
+	}
+}

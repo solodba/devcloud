@@ -9,3 +9,11 @@ func NewSC(req *CreateSCRequest) *SC {
 		SC:   req,
 	}
 }
+
+// SC默认初始化函数
+func NewDefaultSC() *SC {
+	return &SC{
+		Meta: meta.NewMeta(),
+		SC:   NewCreateSCRequest(),
+	}
+}

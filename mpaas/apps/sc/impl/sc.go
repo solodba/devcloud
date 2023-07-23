@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/solodba/devcloud/mpaas/apps/sc"
+	"go.mongodb.org/mongo-driver/bson"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -26,7 +27,26 @@ func (i *impl) CreateSC(ctx context.Context, in *sc.CreateSCRequest) (*sc.SC, er
 
 // 删除StorageClass
 func (i *impl) DeleteSC(ctx context.Context, in *sc.DeleteSCRequest) (*sc.SC, error) {
-	return nil, nil
+	scApi := i.clientSet.StorageV1().StorageClasses()
+	_, err := scApi.Get(ctx, in.Name, metav1.GetOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("[name=%s] StorageClass not found", in.Name)
+	}
+	err = scApi.Delete(ctx, in.Name, metav1.DeleteOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("[name=%s] StorageClass delete fail", in.Name)
+	}
+	filter := bson.M{"name": in.Name}
+	scReq := sc.NewDefaultSC()
+	err = i.col.FindOne(ctx, filter).Decode(scReq)
+	if err != nil {
+		return nil, fmt.Errorf("[name=%s] is not found in mongodb", in.Name)
+	}
+	_, err = i.col.DeleteOne(ctx, filter)
+	if err != nil {
+		return nil, fmt.Errorf("[name=%s] delete from mongodb fail", in.Name)
+	}
+	return scReq, nil
 }
 
 // 查询StorageClass集合

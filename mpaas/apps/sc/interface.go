@@ -19,3 +19,10 @@ func NewCreateSCRequest() *CreateSCRequest {
 		Parameters:   make([]*ListMapItem, 0),
 	}
 }
+
+// DeleteSCRequest初始化函数
+func NewDeleteSCRequest(name string) *DeleteSCRequest {
+	return &DeleteSCRequest{
+		Name: name,
+	}
+}

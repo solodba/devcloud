@@ -25,3 +25,12 @@ func TestCreateSC(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(sc))
 }
+
+func TestDeleteSC(t *testing.T) {
+	req := sc.NewDeleteSCRequest("testsc")
+	sc, err := svc.DeleteSC(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(sc))
+}

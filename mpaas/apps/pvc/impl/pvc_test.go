@@ -36,3 +36,14 @@ func TestDeletePVC(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(pvc))
 }
+
+func TestQueryPVC(t *testing.T) {
+	req := pvc.NewQueryPVCRequest()
+	req.Namespace = "test"
+	req.Keyword = "tes"
+	pvcSet, err := svc.QueryPVC(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(pvcSet))
+}

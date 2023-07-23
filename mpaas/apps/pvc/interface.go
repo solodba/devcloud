@@ -24,3 +24,8 @@ func NewCreatePVCRequest() *CreatePVCRequest {
 func NewDeletePVCRequest() *DeletePVCRequest {
 	return &DeletePVCRequest{}
 }
+
+// QueryPVCRequest初始化函数
+func NewQueryPVCRequest() *QueryPVCRequest {
+	return &QueryPVCRequest{}
+}

@@ -3,6 +3,7 @@ package impl
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/solodba/devcloud/mpaas/apps/pvc"
 	"go.mongodb.org/mongo-driver/bson"
@@ -51,5 +52,18 @@ func (i *impl) DeletePVC(ctx context.Context, in *pvc.DeletePVCRequest) (*pvc.PV
 
 // 查询PersistentVolumeClaim集合
 func (i *impl) QueryPVC(ctx context.Context, in *pvc.QueryPVCRequest) (*pvc.PVCSet, error) {
-	return nil, nil
+	pvcApi := i.clientSet.CoreV1().PersistentVolumeClaims(in.Namespace)
+	k8sPVCList, err := pvcApi.List(ctx, metav1.ListOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("get PersistentVolumeClaim list error, err: %s", err.Error())
+	}
+	pvcResList := pvc.NewPVCSet()
+	for _, k8sPVC := range k8sPVCList.Items {
+		pvcRes := i.PVCK8s2Res(k8sPVC)
+		if strings.Contains(pvcRes.Name, in.Keyword) {
+			pvcResList.AddItems(pvcRes)
+		}
+	}
+	pvcResList.Total = int64(len(pvcResList.Items))
+	return pvcResList, nil
 }

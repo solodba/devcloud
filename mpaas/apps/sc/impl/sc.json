@@ -1,0 +1,12 @@
+{
+    "name": "testsc",
+    "labels": [],
+    "provisioner": "cluster.local/nfs-subdir-external-provisioner",
+    "mountOptions": [
+        "nfsvers=4"
+    ],
+    "volumeBindingMode": "Immediate",
+    "reclaimPolicy": "Delete",
+    "allowVolumeExpansion": false,
+    "parameters": []
+}

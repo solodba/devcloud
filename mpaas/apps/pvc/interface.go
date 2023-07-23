@@ -19,3 +19,8 @@ func NewCreatePVCRequest() *CreatePVCRequest {
 		Selector:    make([]*ListMapItem, 0),
 	}
 }
+
+// DeletePVCRequest初始化函数
+func NewDeletePVCRequest() *DeletePVCRequest {
+	return &DeletePVCRequest{}
+}

@@ -11,3 +11,11 @@ func NewPVC(req *CreatePVCRequest) *PVC {
 		PVC:  req,
 	}
 }
+
+// PVC结构体默认初始化函数
+func NewDefaultPVC() *PVC {
+	return &PVC{
+		Meta: meta.NewMeta(),
+		PVC:  NewCreatePVCRequest(),
+	}
+}

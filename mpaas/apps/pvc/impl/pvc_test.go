@@ -25,3 +25,14 @@ func TestCreatePVC(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(pvc))
 }
+
+func TestDeletePVC(t *testing.T) {
+	req := pvc.NewDeletePVCRequest()
+	req.Namespace = "test"
+	req.Name = "testpvc"
+	pvc, err := svc.DeletePVC(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(pvc))
+}

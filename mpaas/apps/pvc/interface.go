@@ -1,5 +1,7 @@
 package pvc
 
+import "github.com/emicklei/go-restful/v3"
+
 // 模块名称
 const (
 	AppName = "pvc"
@@ -28,4 +30,12 @@ func NewDeletePVCRequest() *DeletePVCRequest {
 // QueryPVCRequest初始化函数
 func NewQueryPVCRequest() *QueryPVCRequest {
 	return &QueryPVCRequest{}
+}
+
+// 从restful解析参数初始化QueryPVCRequest结构体
+func NewQueryPVCRequestFromRestful(r *restful.Request) *QueryPVCRequest {
+	return &QueryPVCRequest{
+		Namespace: r.PathParameter("namespace"),
+		Keyword:   r.QueryParameter("keyword"),
+	}
 }

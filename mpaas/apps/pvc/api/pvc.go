@@ -29,5 +29,11 @@ func (h *handler) DeletePVC(r *restful.Request, w *restful.Response) {
 
 // 查询PersistentVolumeClaim集合
 func (h *handler) QueryPVC(r *restful.Request, w *restful.Response) {
-
+	req := pvc.NewQueryPVCRequestFromRestful(r)
+	pvcSet, err := h.svc.QueryPVC(r.Request.Context(), req)
+	if err != nil {
+		w.WriteEntity(response.NewFail(500, err.Error()))
+		return
+	}
+	w.WriteEntity(response.NewSuccess(200, pvcSet))
 }

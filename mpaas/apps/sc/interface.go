@@ -58,3 +58,10 @@ func NewDeleteSCRequestFromRestful(r *restful.Request) *DeleteSCRequest {
 		Name: r.PathParameter("name"),
 	}
 }
+
+// 从restful解析参数初始化QuerySCRequest结构体
+func NewQuerySCRequestFromRestful(r *restful.Request) *QuerySCRequest {
+	return &QuerySCRequest{
+		Keyword: r.QueryParameter("keyword"),
+	}
+}

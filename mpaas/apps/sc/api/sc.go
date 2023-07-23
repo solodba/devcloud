@@ -34,5 +34,11 @@ func (h *handler) DeleteSC(r *restful.Request, w *restful.Response) {
 
 // 查询StorageClass集合
 func (h *handler) QuerySC(r *restful.Request, w *restful.Response) {
-
+	req := sc.NewQuerySCRequestFromRestful(r)
+	scSet, err := h.svc.QuerySC(r.Request.Context(), req)
+	if err != nil {
+		w.WriteEntity(response.NewFail(500, err.Error()))
+		return
+	}
+	w.WriteEntity(response.NewSuccess(200, scSet))
 }

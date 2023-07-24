@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package codehorse.mpaas.deployment;
+
+option go_package = "github.com/solodba/devcloud/mpaas/apps/deployment";
+
+// 导入外部包
+import "apps/deployment/pb/deployment.proto";
+
+// Deployment相关功能接口
+service RPC {
+    // 创建Deployment
+    rpc CreateDeployment(CreateDeploymentRequest) returns(Deployment);
+    // 删除Deployment
+    rpc DeleteDeployment(DeleteDeploymentRequest) returns(CreateDeploymentRequest);
+    // 更新Deployment
+    rpc UpdateDeployment(UpdateDeploymentRequest) returns(Deployment);
+    // 查询Deployment
+    rpc QueryDeployment(QueryDeploymentRequest) returns(DeploymentSet);
+    // 查询Deployment详情
+    rpc DescribeDeployment(DescribeDeploymentRequest) returns(CreateDeploymentRequest);
+}
+
+// DeleteDeploymentRequest结构体
+message DeleteDeploymentRequest {
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 1;
+    // @gotags: bson:"name" json:"name"
+    string Name = 2;
+}
+
+// UpdateDeploymentRequest结构体
+message UpdateDeploymentRequest {
+    // @gotags: bson:"deployment" json:"deployment"
+    CreateDeploymentRequest Deployment = 1;
+}
+
+// QueryDeploymentRequest结构体
+message QueryDeploymentRequest {
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 1;
+    // @gotags: bson:"keyword" json:"keyword"
+    string Keyword = 2;
+}
+
+// DescribeDeploymentRequest结构体
+message DescribeDeploymentRequest {
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 1;
+    // @gotags: bson:"name" json:"name"
+    string Name = 2;
+}

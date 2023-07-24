@@ -23,7 +23,7 @@
             "dnsPolicy": "Default",
             "dnsConfig": {
                 "nameservers": [
-                    "8.8.8.8"
+                    "9.9.9.9"
                 ]
             },
             "hostAliases": [

@@ -9,3 +9,11 @@ func NewDeployment(req *CreateDeploymentRequest) *Deployment {
 		Deployment: req,
 	}
 }
+
+// Deployment默认初始化函数
+func NewDefaultDeployment() *Deployment {
+	return &Deployment{
+		Meta:       meta.NewMeta(),
+		Deployment: NewCreateDeploymentRequest(),
+	}
+}

@@ -25,3 +25,20 @@ func TestCreateDeployment(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(deployment))
 }
+
+func TestUpdateDeployment(t *testing.T) {
+	req := deployment.NewUpdateDeploymentRequest()
+	dj, err := ioutil.ReadFile("deployment.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	err = json.Unmarshal(dj, req.Deployment)
+	if err != nil {
+		t.Fatal(err)
+	}
+	deployment, err := svc.UpdateDeployment(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(deployment))
+}

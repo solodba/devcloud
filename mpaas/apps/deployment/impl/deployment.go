@@ -86,5 +86,10 @@ func (i *impl) QueryDeployment(ctx context.Context, in *deployment.QueryDeployme
 
 // 查询Deployment详情
 func (i *impl) DescribeDeployment(ctx context.Context, in *deployment.DescribeDeploymentRequest) (*deployment.CreateDeploymentRequest, error) {
-	return nil, nil
+	deploymentApi := i.clientSet.AppsV1().Deployments(in.Namespace)
+	k8sDeployment, err := deploymentApi.Get(ctx, in.Name, metav1.GetOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("get deployment detail error, err: %s", err.Error())
+	}
+	return i.DeploymentK8s2ReqConvert(k8sDeployment), nil
 }

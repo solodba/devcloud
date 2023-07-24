@@ -32,3 +32,8 @@ func NewUpdateDeploymentRequest() *UpdateDeploymentRequest {
 func NewQueryDeploymentRequest() *QueryDeploymentRequest {
 	return &QueryDeploymentRequest{}
 }
+
+// DescribeDeploymentRequest初始化函数
+func NewDescribeDeploymentRequest() *DescribeDeploymentRequest {
+	return &DescribeDeploymentRequest{}
+}

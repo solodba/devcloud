@@ -53,3 +53,14 @@ func TestQueryDeployment(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(deploymentSet))
 }
+
+func TestDescribeDeployment(t *testing.T) {
+	req := deployment.NewDescribeDeploymentRequest()
+	req.Namespace = "test"
+	req.Name = "nginx-deployment"
+	deployment, err := svc.DescribeDeployment(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(deployment))
+}

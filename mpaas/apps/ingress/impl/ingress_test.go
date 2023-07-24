@@ -25,3 +25,20 @@ func TestCreateIngress(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(ingress))
 }
+
+func TestUpdateIngress(t *testing.T) {
+	req := ingress.NewUpdateIngressRequest(ingress.NewCreateIngressRequest())
+	dj, err := ioutil.ReadFile("ingress.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	err = json.Unmarshal(dj, req.Ingress)
+	if err != nil {
+		t.Fatal(err)
+	}
+	ingress, err := svc.UpdateIngress(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(ingress))
+}

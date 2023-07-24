@@ -13,5 +13,15 @@ type Service interface {
 
 // CreateIngressRequest结构体初始化函数
 func NewCreateIngressRequest() *CreateIngressRequest {
-	return &CreateIngressRequest{}
+	return &CreateIngressRequest{
+		Labels: make([]*ListMapItem, 0),
+		Rules:  make([]*IngressRules, 0),
+	}
+}
+
+// UpdateIngressRequest结构体初始化函数
+func NewUpdateIngressRequest(req *CreateIngressRequest) *UpdateIngressRequest {
+	return &UpdateIngressRequest{
+		Ingress: req,
+	}
 }

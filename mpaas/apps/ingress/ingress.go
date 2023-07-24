@@ -9,3 +9,11 @@ func NewIngress(req *CreateIngressRequest) *Ingress {
 		Ingress: req,
 	}
 }
+
+// Ingress默认初始化函数
+func NewDefaultIngress() *Ingress {
+	return &Ingress{
+		Meta:    meta.NewMeta(),
+		Ingress: NewCreateIngressRequest(),
+	}
+}

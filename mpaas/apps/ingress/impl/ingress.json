@@ -9,7 +9,7 @@
     ],
     "rules": [
         {
-            "host": "foo.bar.cn.test",
+            "host": "foo.bar.cn",
             "value": {
                 "http": {
                     "paths": [

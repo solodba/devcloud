@@ -36,7 +36,24 @@ func (i *impl) CreateDeployment(ctx context.Context, in *deployment.CreateDeploy
 
 // 删除Deployment
 func (i *impl) DeleteDeployment(ctx context.Context, in *deployment.DeleteDeploymentRequest) (*deployment.CreateDeploymentRequest, error) {
-	return nil, nil
+	req := deployment.NewDescribeDeploymentRequest()
+	req.Namespace = in.Namespace
+	req.Name = in.Name
+	deployment, err := i.DescribeDeployment(ctx, req)
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] deployment not found", in.Namespace, in.Name)
+	}
+	deploymentApi := i.clientSet.AppsV1().Deployments(deployment.Base.Namespace)
+	err = deploymentApi.Delete(ctx, deployment.Base.Name, metav1.DeleteOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] deployment delete fail", deployment.Base.Namespace, deployment.Base.Name)
+	}
+	// 从库中删除
+	_, err = i.col.DeleteOne(ctx, bson.M{"base.name": deployment.Base.Name})
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] delete from mongodb fail", deployment.Base.Namespace, deployment.Base.Name)
+	}
+	return deployment, nil
 }
 
 // 更新Deployment

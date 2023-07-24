@@ -37,3 +37,8 @@ func NewQueryDeploymentRequest() *QueryDeploymentRequest {
 func NewDescribeDeploymentRequest() *DescribeDeploymentRequest {
 	return &DescribeDeploymentRequest{}
 }
+
+// DeleteDeploymentRequest初始化函数
+func NewDeleteDeploymentRequest() *DeleteDeploymentRequest {
+	return &DeleteDeploymentRequest{}
+}

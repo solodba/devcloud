@@ -64,3 +64,14 @@ func TestDescribeDeployment(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(deployment))
 }
+
+func TestDeleteDeployment(t *testing.T) {
+	req := deployment.NewDeleteDeploymentRequest()
+	req.Namespace = "test"
+	req.Name = "nginx-deployment"
+	deployment, err := svc.DeleteDeployment(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(deployment))
+}

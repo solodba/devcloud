@@ -1,6 +1,9 @@
 package pod
 
-import "github.com/emicklei/go-restful/v3"
+import (
+	"github.com/emicklei/go-restful/v3"
+	corev1 "k8s.io/api/core/v1"
+)
 
 // 模块名称
 const (
@@ -10,6 +13,8 @@ const (
 // 定义业务接口
 type Service interface {
 	RPCServer
+	PodReq2K8s(*Pod) *corev1.Pod
+	PodK8s2Req(*corev1.Pod) *Pod
 }
 
 // CreatePodRequest初始化函数

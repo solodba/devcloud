@@ -1,52 +1,52 @@
 package impl
 
 import (
+	"context"
+	"fmt"
+
 	"github.com/solodba/devcloud/mpaas/apps/deployment"
-	"github.com/solodba/devcloud/mpaas/conf"
-	"github.com/solodba/mcube/apps"
-	"go.mongodb.org/mongo-driver/mongo"
-	"google.golang.org/grpc"
-	"k8s.io/client-go/kubernetes"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-var (
-	svc = &impl{}
-)
-
-// 业务实现类
-type impl struct {
-	deployment.UnimplementedRPCServer
-	col       *mongo.Collection
-	clientSet *kubernetes.Clientset
-}
-
-// 实现Ioc中心Name方法
-func (i *impl) Name() string {
-	return deployment.AppName
-}
-
-// 实现Ioc中心Conf方法
-func (i *impl) Conf() error {
-	db, err := conf.C().MongoDB.GetDB()
-	if err != nil {
-		return err
+// 创建Deployment
+func (i *impl) CreateDeployment(ctx context.Context, in *deployment.CreateDeploymentRequest) (*deployment.Deployment, error) {
+	// Deployment转换
+	k8sDeployment := i.DeploymentReq2K8sConvert(in)
+	deploymentApi := i.clientSet.AppsV1().Deployments(k8sDeployment.Namespace)
+	// 判断Deployment是否存在
+	if getK8sDeployment, err := deploymentApi.Get(ctx, k8sDeployment.Name, metav1.GetOptions{}); err == nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] deployment already exists", getK8sDeployment.Namespace, getK8sDeployment.Name)
 	}
-	i.col = db.Collection("deployments")
-	clientSet, err := conf.C().K8s.GetK8sConn()
+	// 创建Deployment
+	_, err := deploymentApi.Create(ctx, k8sDeployment, metav1.CreateOptions{})
 	if err != nil {
-		return err
+		return nil, fmt.Errorf("[namespace=%s, name=%s] deployment create fail", k8sDeployment.Namespace, k8sDeployment.Name)
 	}
-	i.clientSet = clientSet
-	return nil
+	deployment := deployment.NewDeployment(in)
+	// 入库
+	_, err = i.col.InsertOne(ctx, deployment)
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] deployment insert mongodb fail, err: %s", k8sDeployment.Namespace, k8sDeployment.Name, err.Error())
+	}
+	return deployment, nil
 }
 
-// 实现Ioc中心RegistryHandler方法
-func (i *impl) RegistryHandler(s *grpc.Server) {
-	deployment.RegisterRPCServer(s, svc)
+// 删除Deployment
+func (i *impl) DeleteDeployment(ctx context.Context, in *deployment.DeleteDeploymentRequest) (*deployment.CreateDeploymentRequest, error) {
+	return nil, nil
 }
 
-// 注册到Ioc中心
-func init() {
-	apps.RegistryInternalApp(svc)
-	apps.RegistryGrpcApp(svc)
+// 更新Deployment
+func (i *impl) UpdateDeployment(ctx context.Context, in *deployment.UpdateDeploymentRequest) (*deployment.Deployment, error) {
+	return nil, nil
+}
+
+// 查询Deployment
+func (i *impl) QueryDeployment(ctx context.Context, in *deployment.QueryDeploymentRequest) (*deployment.DeploymentSet, error) {
+	return nil, nil
+}
+
+// 查询Deployment详情
+func (i *impl) DescribeDeployment(ctx context.Context, in *deployment.DescribeDeploymentRequest) (*deployment.CreateDeploymentRequest, error) {
+	return nil, nil
 }

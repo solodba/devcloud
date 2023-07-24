@@ -16,11 +16,11 @@ func (i *impl) CreateConfigMap(ctx context.Context, in *configmap.CreateConfigMa
 	// ConfigMap转换
 	k8sConfigMap := i.CmReq2K8s(in)
 	configmapApi := i.clientSet.CoreV1().ConfigMaps(k8sConfigMap.Namespace)
-	// 判断Service是否存在
-	if getSVC, err := configmapApi.Get(ctx, k8sConfigMap.Name, metav1.GetOptions{}); err == nil {
-		return nil, fmt.Errorf("[namespace=%s, name=%s] configmap already exists", getSVC.Namespace, getSVC.Name)
+	// 判断ConfigMap是否存在
+	if getK8sConfigMap, err := configmapApi.Get(ctx, k8sConfigMap.Name, metav1.GetOptions{}); err == nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] configmap already exists", getK8sConfigMap.Namespace, getK8sConfigMap.Name)
 	}
-	// 创建Service
+	// 创建ConfigMap
 	_, err := configmapApi.Create(ctx, k8sConfigMap, metav1.CreateOptions{})
 	if err != nil {
 		return nil, fmt.Errorf("[namespace=%s, name=%s] configmap create fail", k8sConfigMap.Namespace, k8sConfigMap.Name)

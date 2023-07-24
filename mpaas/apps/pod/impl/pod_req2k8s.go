@@ -372,6 +372,9 @@ func (i *impl) getK8sLabels(p *pod.Pod) map[string]string {
 // 获取Affinity,NodeSelector,NodeName
 func (i *impl) getNodeK8sScheduling(p *pod.Pod) (affinity *corev1.Affinity, nodeSelector map[string]string, nodeName string) {
 	nodeScheduling := p.NodeScheduling
+	if nodeScheduling == nil {
+		return
+	}
 	switch nodeScheduling.Type {
 	case SCHEDULING_NODENAME:
 		nodeName = nodeScheduling.NodeName

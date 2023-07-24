@@ -1,32 +1,55 @@
 package impl
 
 import (
-	"context"
-
 	"github.com/solodba/devcloud/mpaas/apps/deployment"
+	"github.com/solodba/devcloud/mpaas/apps/pod"
+	"github.com/solodba/devcloud/mpaas/conf"
+	"github.com/solodba/mcube/apps"
+	"go.mongodb.org/mongo-driver/mongo"
+	"google.golang.org/grpc"
+	"k8s.io/client-go/kubernetes"
 )
 
-// 创建Deployment
-func (i *impl) CreateDeployment(ctx context.Context, in *deployment.CreateDeploymentRequest) (*deployment.Deployment, error) {
-	return nil, nil
+var (
+	svc = &impl{}
+)
+
+// 业务实现类
+type impl struct {
+	deployment.UnimplementedRPCServer
+	col       *mongo.Collection
+	clientSet *kubernetes.Clientset
+	podSvc    pod.Service
 }
 
-// 删除Deployment
-func (i *impl) DeleteDeployment(ctx context.Context, in *deployment.DeleteDeploymentRequest) (*deployment.CreateDeploymentRequest, error) {
-	return nil, nil
+// 实现Ioc中心Name方法
+func (i *impl) Name() string {
+	return deployment.AppName
 }
 
-// 更新Deployment
-func (i *impl) UpdateDeployment(ctx context.Context, in *deployment.UpdateDeploymentRequest) (*deployment.Deployment, error) {
-	return nil, nil
+// 实现Ioc中心Conf方法
+func (i *impl) Conf() error {
+	db, err := conf.C().MongoDB.GetDB()
+	if err != nil {
+		return err
+	}
+	i.col = db.Collection("deployments")
+	clientSet, err := conf.C().K8s.GetK8sConn()
+	if err != nil {
+		return err
+	}
+	i.clientSet = clientSet
+	i.podSvc = apps.GetInternalApp(pod.AppName).(pod.Service)
+	return nil
 }
 
-// 查询Deployment
-func (i *impl) QueryDeployment(ctx context.Context, in *deployment.QueryDeploymentRequest) (*deployment.DeploymentSet, error) {
-	return nil, nil
+// 实现Ioc中心RegistryHandler方法
+func (i *impl) RegistryHandler(s *grpc.Server) {
+	deployment.RegisterRPCServer(s, svc)
 }
 
-// 查询Deployment详情
-func (i *impl) DescribeDeployment(ctx context.Context, in *deployment.DescribeDeploymentRequest) (*deployment.CreateDeploymentRequest, error) {
-	return nil, nil
+// 注册到Ioc中心
+func init() {
+	apps.RegistryInternalApp(svc)
+	apps.RegistryGrpcApp(svc)
 }

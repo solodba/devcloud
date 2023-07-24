@@ -10,3 +10,8 @@ type Service interface {
 	// 嵌套Deployment GRPC接口
 	RPCServer
 }
+
+// CreateDeploymentRequest初始化函数
+func NewCreateDeploymentRequest() *CreateDeploymentRequest {
+	return &CreateDeploymentRequest{}
+}

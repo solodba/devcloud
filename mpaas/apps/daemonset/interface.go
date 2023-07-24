@@ -1,6 +1,9 @@
 package daemonset
 
-import "github.com/solodba/devcloud/mpaas/apps/pod"
+import (
+	"github.com/emicklei/go-restful/v3"
+	"github.com/solodba/devcloud/mpaas/apps/pod"
+)
 
 // 模块名称
 const (
@@ -41,4 +44,28 @@ func NewQueryDaemonSetRequest() *QueryDaemonSetRequest {
 // DescribeDaemonSetRequest初始化函数
 func NewDescribeDaemonSetRequest() *DescribeDaemonSetRequest {
 	return &DescribeDaemonSetRequest{}
+}
+
+// 从restful获取参数初始化DeleteDaemonSetRequest
+func NewDeleteDaemonSetRequestFromRestful(r *restful.Request) *DeleteDaemonSetRequest {
+	return &DeleteDaemonSetRequest{
+		Namespace: r.PathParameter("namespace"),
+		Name:      r.PathParameter("name"),
+	}
+}
+
+// 从restful获取参数初始化QueryDaemonSetRequest
+func NewQueryDaemonSetRequestFromRestful(r *restful.Request) *QueryDaemonSetRequest {
+	return &QueryDaemonSetRequest{
+		Namespace: r.PathParameter("namespace"),
+		Keyword:   r.QueryParameter("keyword"),
+	}
+}
+
+// 从restful获取参数初始化DescribeDaemonSetRequest
+func NewDescribeDaemonSetRequestFromRestful(r *restful.Request) *DescribeDaemonSetRequest {
+	return &DescribeDaemonSetRequest{
+		Namespace: r.PathParameter("namespace"),
+		Name:      r.QueryParameter("name"),
+	}
 }

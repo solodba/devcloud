@@ -27,3 +27,8 @@ func NewUpdateDeploymentRequest() *UpdateDeploymentRequest {
 		Deployment: &CreateDeploymentRequest{},
 	}
 }
+
+// QueryDeploymentRequest初始化函数
+func NewQueryDeploymentRequest() *QueryDeploymentRequest {
+	return &QueryDeploymentRequest{}
+}

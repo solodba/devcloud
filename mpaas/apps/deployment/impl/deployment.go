@@ -3,6 +3,7 @@ package impl
 import (
 	"context"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/solodba/devcloud/mpaas/apps/deployment"
@@ -66,7 +67,21 @@ func (i *impl) UpdateDeployment(ctx context.Context, in *deployment.UpdateDeploy
 
 // 查询Deployment
 func (i *impl) QueryDeployment(ctx context.Context, in *deployment.QueryDeploymentRequest) (*deployment.DeploymentSet, error) {
-	return nil, nil
+	deploymentApi := i.clientSet.AppsV1().Deployments(in.Namespace)
+	k8sDeploymentList, err := deploymentApi.List(ctx, metav1.ListOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("get deoployment list error, err: %s", err.Error())
+	}
+	deploymentSet := deployment.NewDeploymentSet()
+	for _, k8sDeployment := range k8sDeploymentList.Items {
+		// 数据转换
+		deploymentRes := i.DeploymentK8s2ResConvert(&k8sDeployment)
+		if strings.Contains(deploymentRes.Name, in.Keyword) {
+			deploymentSet.AddItems(deploymentRes)
+		}
+	}
+	deploymentSet.Total = int64(len(deploymentSet.Items))
+	return deploymentSet, nil
 }
 
 // 查询Deployment详情

@@ -17,3 +17,15 @@ func NewDefaultDeployment() *Deployment {
 		Deployment: NewCreateDeploymentRequest(),
 	}
 }
+
+// DeploymentSet初始化函数
+func NewDeploymentSet() *DeploymentSet {
+	return &DeploymentSet{
+		Items: make([]*DeploymentSetItem, 0),
+	}
+}
+
+// DeploymentSet添加方法
+func (d *DeploymentSet) AddItems(items ...*DeploymentSetItem) {
+	d.Items = append(d.Items, items...)
+}

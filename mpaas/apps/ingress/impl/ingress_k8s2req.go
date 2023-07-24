@@ -6,7 +6,7 @@ import (
 )
 
 // K8S中结构体转换成自定义结构体
-func (i *impl) IngressK8s2ReqConvert(k8sIngress networkingv1.Ingress) *ingress.CreateIngressRequest {
+func (i *impl) IngressK8s2ReqConvert(k8sIngress *networkingv1.Ingress) *ingress.CreateIngressRequest {
 	return &ingress.CreateIngressRequest{
 		Name:      k8sIngress.Name,
 		Namespace: k8sIngress.Namespace,

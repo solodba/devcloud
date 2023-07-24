@@ -82,6 +82,11 @@ func (i *impl) QueryIngress(ctx context.Context, in *ingress.QueryIngressRequest
 }
 
 // 查询Ingress详情
-func (i *impl) DescribeIngress(ctx context.Context, in *ingress.DescribeIngressRequest) (*ingress.Ingress, error) {
-	return nil, nil
+func (i *impl) DescribeIngress(ctx context.Context, in *ingress.DescribeIngressRequest) (*ingress.CreateIngressRequest, error) {
+	ingressApi := i.clientSet.NetworkingV1().Ingresses(in.Namespace)
+	k8sIngress, err := ingressApi.Get(ctx, in.Name, metav1.GetOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("get ingress detail error, err: %s", err.Error())
+	}
+	return i.IngressK8s2ReqConvert(k8sIngress), nil
 }

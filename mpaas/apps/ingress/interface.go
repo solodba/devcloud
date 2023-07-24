@@ -30,3 +30,8 @@ func NewUpdateIngressRequest(req *CreateIngressRequest) *UpdateIngressRequest {
 func NewQueryIngressRequest() *QueryIngressRequest {
 	return &QueryIngressRequest{}
 }
+
+// DescribeIngressRequest初始化结构体函数
+func NewDescribeIngressRequest() *DescribeIngressRequest {
+	return &DescribeIngressRequest{}
+}

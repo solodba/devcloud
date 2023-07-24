@@ -39,7 +39,7 @@ type RPCClient interface {
 	// 查询Ingress
 	QueryIngress(ctx context.Context, in *QueryIngressRequest, opts ...grpc.CallOption) (*IngressSet, error)
 	// 查询Ingress详情
-	DescribeIngress(ctx context.Context, in *DescribeIngressRequest, opts ...grpc.CallOption) (*Ingress, error)
+	DescribeIngress(ctx context.Context, in *DescribeIngressRequest, opts ...grpc.CallOption) (*CreateIngressRequest, error)
 }
 
 type rPCClient struct {
@@ -86,8 +86,8 @@ func (c *rPCClient) QueryIngress(ctx context.Context, in *QueryIngressRequest, o
 	return out, nil
 }
 
-func (c *rPCClient) DescribeIngress(ctx context.Context, in *DescribeIngressRequest, opts ...grpc.CallOption) (*Ingress, error) {
-	out := new(Ingress)
+func (c *rPCClient) DescribeIngress(ctx context.Context, in *DescribeIngressRequest, opts ...grpc.CallOption) (*CreateIngressRequest, error) {
+	out := new(CreateIngressRequest)
 	err := c.cc.Invoke(ctx, RPC_DescribeIngress_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -108,7 +108,7 @@ type RPCServer interface {
 	// 查询Ingress
 	QueryIngress(context.Context, *QueryIngressRequest) (*IngressSet, error)
 	// 查询Ingress详情
-	DescribeIngress(context.Context, *DescribeIngressRequest) (*Ingress, error)
+	DescribeIngress(context.Context, *DescribeIngressRequest) (*CreateIngressRequest, error)
 	mustEmbedUnimplementedRPCServer()
 }
 
@@ -128,7 +128,7 @@ func (UnimplementedRPCServer) DeleteIngress(context.Context, *DeleteIngressReque
 func (UnimplementedRPCServer) QueryIngress(context.Context, *QueryIngressRequest) (*IngressSet, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QueryIngress not implemented")
 }
-func (UnimplementedRPCServer) DescribeIngress(context.Context, *DescribeIngressRequest) (*Ingress, error) {
+func (UnimplementedRPCServer) DescribeIngress(context.Context, *DescribeIngressRequest) (*CreateIngressRequest, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DescribeIngress not implemented")
 }
 func (UnimplementedRPCServer) mustEmbedUnimplementedRPCServer() {}

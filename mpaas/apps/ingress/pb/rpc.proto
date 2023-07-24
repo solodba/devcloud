@@ -18,7 +18,7 @@ service RPC {
     // 查询Ingress
     rpc QueryIngress(QueryIngressRequest) returns(IngressSet);
     // 查询Ingress详情
-    rpc DescribeIngress(DescribeIngressRequest) returns(Ingress);
+    rpc DescribeIngress(DescribeIngressRequest) returns(CreateIngressRequest);
 }
 
 // UpdateIngressRequest结构体

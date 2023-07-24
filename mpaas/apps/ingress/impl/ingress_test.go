@@ -53,3 +53,14 @@ func TestQueryIngress(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(ingressSet))
 }
+
+func TestDescribeIngress(t *testing.T) {
+	req := ingress.NewDescribeIngressRequest()
+	req.Namespace = "test"
+	req.Name = "test-ingress"
+	ingress, err := svc.DescribeIngress(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(ingress))
+}

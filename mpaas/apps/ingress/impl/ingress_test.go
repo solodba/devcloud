@@ -64,3 +64,14 @@ func TestDescribeIngress(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(ingress))
 }
+
+func TestDeleteIngress(t *testing.T) {
+	req := ingress.NewDeleteIngressRequest()
+	req.Namespace = "test"
+	req.Name = "test-ingress"
+	ingress, err := svc.DeleteIngress(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(ingress))
+}

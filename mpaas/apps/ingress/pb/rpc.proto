@@ -14,7 +14,7 @@ service RPC {
     // 更新Ingress
     rpc UpdateIngress(UpdateIngressRequest) returns(Ingress);
     // 删除Ingress
-    rpc DeleteIngress(DeleteIngressRequest) returns(Ingress);
+    rpc DeleteIngress(DeleteIngressRequest) returns(CreateIngressRequest);
     // 查询Ingress
     rpc QueryIngress(QueryIngressRequest) returns(IngressSet);
     // 查询Ingress详情

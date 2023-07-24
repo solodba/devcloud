@@ -58,8 +58,25 @@ func (i *impl) UpdateIngress(ctx context.Context, in *ingress.UpdateIngressReque
 }
 
 // 删除Ingress
-func (i *impl) DeleteIngress(ctx context.Context, in *ingress.DeleteIngressRequest) (*ingress.Ingress, error) {
-	return nil, nil
+func (i *impl) DeleteIngress(ctx context.Context, in *ingress.DeleteIngressRequest) (*ingress.CreateIngressRequest, error) {
+	req := ingress.NewDescribeIngressRequest()
+	req.Namespace = in.Namespace
+	req.Name = in.Name
+	ingress, err := i.DescribeIngress(ctx, req)
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] ingress not found", in.Namespace, in.Name)
+	}
+	ingressApi := i.clientSet.NetworkingV1().Ingresses(in.Namespace)
+	err = ingressApi.Delete(ctx, ingress.Name, metav1.DeleteOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] ingress delete fail", ingress.Namespace, ingress.Name)
+	}
+	// 从库中删除
+	_, err = i.col.DeleteOne(ctx, bson.M{"name": ingress.Name})
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] delete from mongodb fail", ingress.Namespace, ingress.Name)
+	}
+	return ingress, nil
 }
 
 // 查询Ingress

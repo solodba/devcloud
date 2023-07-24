@@ -35,7 +35,7 @@ type RPCClient interface {
 	// 更新Ingress
 	UpdateIngress(ctx context.Context, in *UpdateIngressRequest, opts ...grpc.CallOption) (*Ingress, error)
 	// 删除Ingress
-	DeleteIngress(ctx context.Context, in *DeleteIngressRequest, opts ...grpc.CallOption) (*Ingress, error)
+	DeleteIngress(ctx context.Context, in *DeleteIngressRequest, opts ...grpc.CallOption) (*CreateIngressRequest, error)
 	// 查询Ingress
 	QueryIngress(ctx context.Context, in *QueryIngressRequest, opts ...grpc.CallOption) (*IngressSet, error)
 	// 查询Ingress详情
@@ -68,8 +68,8 @@ func (c *rPCClient) UpdateIngress(ctx context.Context, in *UpdateIngressRequest,
 	return out, nil
 }
 
-func (c *rPCClient) DeleteIngress(ctx context.Context, in *DeleteIngressRequest, opts ...grpc.CallOption) (*Ingress, error) {
-	out := new(Ingress)
+func (c *rPCClient) DeleteIngress(ctx context.Context, in *DeleteIngressRequest, opts ...grpc.CallOption) (*CreateIngressRequest, error) {
+	out := new(CreateIngressRequest)
 	err := c.cc.Invoke(ctx, RPC_DeleteIngress_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -104,7 +104,7 @@ type RPCServer interface {
 	// 更新Ingress
 	UpdateIngress(context.Context, *UpdateIngressRequest) (*Ingress, error)
 	// 删除Ingress
-	DeleteIngress(context.Context, *DeleteIngressRequest) (*Ingress, error)
+	DeleteIngress(context.Context, *DeleteIngressRequest) (*CreateIngressRequest, error)
 	// 查询Ingress
 	QueryIngress(context.Context, *QueryIngressRequest) (*IngressSet, error)
 	// 查询Ingress详情
@@ -122,7 +122,7 @@ func (UnimplementedRPCServer) CreateIngress(context.Context, *CreateIngressReque
 func (UnimplementedRPCServer) UpdateIngress(context.Context, *UpdateIngressRequest) (*Ingress, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateIngress not implemented")
 }
-func (UnimplementedRPCServer) DeleteIngress(context.Context, *DeleteIngressRequest) (*Ingress, error) {
+func (UnimplementedRPCServer) DeleteIngress(context.Context, *DeleteIngressRequest) (*CreateIngressRequest, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteIngress not implemented")
 }
 func (UnimplementedRPCServer) QueryIngress(context.Context, *QueryIngressRequest) (*IngressSet, error) {

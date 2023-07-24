@@ -35,3 +35,8 @@ func NewQueryIngressRequest() *QueryIngressRequest {
 func NewDescribeIngressRequest() *DescribeIngressRequest {
 	return &DescribeIngressRequest{}
 }
+
+// DeleteIngressRequest结构体初始化函数
+func NewDeleteIngressRequest() *DeleteIngressRequest {
+	return &DeleteIngressRequest{}
+}

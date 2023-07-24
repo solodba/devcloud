@@ -3,6 +3,7 @@ package impl
 import (
 	"context"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/solodba/devcloud/mpaas/apps/ingress"
@@ -63,7 +64,21 @@ func (i *impl) DeleteIngress(ctx context.Context, in *ingress.DeleteIngressReque
 
 // 查询Ingress
 func (i *impl) QueryIngress(ctx context.Context, in *ingress.QueryIngressRequest) (*ingress.IngressSet, error) {
-	return nil, nil
+	ingressApi := i.clientSet.NetworkingV1().Ingresses(in.Namespace)
+	k8sIngressList, err := ingressApi.List(ctx, metav1.ListOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("get ingress list error, err: %s", err.Error())
+	}
+	ingressSet := ingress.NewIngressSet()
+	for _, k8sIngress := range k8sIngressList.Items {
+		// 数据转换
+		ingressRes := i.IngressK8s2ResConvert(k8sIngress)
+		if strings.Contains(ingressRes.Name, in.Keyword) {
+			ingressSet.AddItems(ingressRes)
+		}
+	}
+	ingressSet.Total = int64(len(ingressSet.Items))
+	return ingressSet, nil
 }
 
 // 查询Ingress详情

@@ -25,3 +25,8 @@ func NewUpdateIngressRequest(req *CreateIngressRequest) *UpdateIngressRequest {
 		Ingress: req,
 	}
 }
+
+// QueryIngressRequest初始化结构体函数
+func NewQueryIngressRequest() *QueryIngressRequest {
+	return &QueryIngressRequest{}
+}

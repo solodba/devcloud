@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package codehorse.mpaas.daemonset;
+
+option go_package = "github.com/solodba/devcloud/mpaas/apps/daemonset";
+
+// 导入外部包
+import "apps/daemonset/pb/daemonset.proto";
+
+// Deployment相关功能接口
+service RPC {
+    // 创建DaemonSet
+    rpc CreateDaemonSet(CreateDaemonSetRequest) returns(DaemonSet);
+    // 删除DaemonSet
+    rpc DeleteDaemonSet(DeleteDaemonSetRequest) returns(CreateDaemonSetRequest);
+    // 更新DaemonSet
+    rpc UpdateDaemonSet(UpdateDaemonSetRequest) returns(DaemonSet);
+    // 查询DaemonSet
+    rpc QueryDaemonSet(QueryDaemonSetRequest) returns(DaemonSetList);
+    // 查询DaemonSet详情
+    rpc DescribeDaemonSet(DescribeDaemonSetRequest) returns(CreateDaemonSetRequest);
+}
+
+// DeleteDaemonSetRequest结构体
+message DeleteDaemonSetRequest {
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 1;
+    // @gotags: bson:"name" json:"name"
+    string Name = 2;
+}
+
+// UpdateDaemonSetRequest结构体
+message UpdateDaemonSetRequest {
+    // @gotags: bson:"daemonset" json:"daemonset"
+    CreateDaemonSetRequest DaemonSet = 1;
+}
+
+// QueryDaemonSetRequest结构体
+message QueryDaemonSetRequest {
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 1;
+    // @gotags: bson:"keyword" json:"keyword"
+    string Keyword = 2;
+}
+
+// DescribeDaemonSetRequest结构体
+message DescribeDaemonSetRequest {
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 1;
+    // @gotags: bson:"name" json:"name"
+    string Name = 2;
+}

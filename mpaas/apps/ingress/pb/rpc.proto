@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package codehorse.mpaas.ingress;
+
+option go_package = "github.com/solodba/devcloud/mpaas/apps/ingress";
+
+// 导入外部包
+import "apps/ingress/pb/ingress.proto";
+
+// Ingress相关功能接口
+service RPC {
+    // 创建Ingress
+    rpc CreateIngress(CreateIngressRequest) returns(Ingress);
+    // 更新Ingress
+    rpc UpdateIngress(UpdateIngressRequest) returns(Ingress);
+    // 删除Ingress
+    rpc DeleteIngress(DeleteIngressRequest) returns(Ingress);
+    // 查询Ingress
+    rpc QueryIngress(QueryIngressRequest) returns(IngressSet);
+    // 查询Ingress详情
+    rpc DescribeIngress(DescribeIngressRequest) returns(Ingress);
+}
+
+// UpdateIngressRequest结构体
+message UpdateIngressRequest {
+    // @gotags: bson:"ingress" json:"ingress"
+    CreateIngressRequest Ingress = 1;
+}
+
+// DeleteIngressRequest结构体
+message DeleteIngressRequest {
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 1;
+    // @gotags: bson:"name" json:"name"
+    string Name = 2;
+}
+
+// QueryIngressRequest结构体
+message QueryIngressRequest {
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 1;
+    // @gotags: bson:"keyword" json:"keyword"
+    string Keyword = 2;
+}
+
+// DescribeIngressRequest结构体
+message DescribeIngressRequest {
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 1;
+    // @gotags: bson:"name" json:"name"
+    string Name = 2;
+}

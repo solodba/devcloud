@@ -52,16 +52,18 @@ message DaemonSetListItem {
     string Name = 1;
     // @gotags: bson:"namespace" json:"namespace"
     string Namespace = 2;
-    // @gotags: bson:"replicas" json:"replicas"
-    int32 Replicas = 3;
+    // @gotags: bson:"desired" json:"desired"
+    int32 Desired = 3;
+    // @gotags: bson:"current" json:"current"
+    int32 Current = 4;
     // @gotags: bson:"ready" json:"ready"
-    int32 Ready = 4;
+    int32 Ready = 5;
     // @gotags: bson:"upToDate" json:"upToDate"
-    int32 UpToDate = 5;
+    int32 UpToDate = 6;
     // @gotags: bson:"available" json:"available"
-    int32 Available = 6;
+    int32 Available = 7;
     // @gotags: bson:"age" json:"age"
-    int64 Age = 7;
+    int64 Age = 8;
 }
 
 // DaemonSetList结构体

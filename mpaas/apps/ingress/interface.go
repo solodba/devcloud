@@ -1,5 +1,7 @@
 package ingress
 
+import "github.com/emicklei/go-restful/v3"
+
 // 模块名
 const (
 	AppName = "ingress"
@@ -39,4 +41,28 @@ func NewDescribeIngressRequest() *DescribeIngressRequest {
 // DeleteIngressRequest结构体初始化函数
 func NewDeleteIngressRequest() *DeleteIngressRequest {
 	return &DeleteIngressRequest{}
+}
+
+// 从restful解析参数初始化DeleteIngressRequest
+func NewDeleteIngressRequestFromRestful(r *restful.Request) *DeleteIngressRequest {
+	return &DeleteIngressRequest{
+		Namespace: r.PathParameter("namespace"),
+		Name:      r.PathParameter("name"),
+	}
+}
+
+// 从restful解析参数初始化QueryIngressRequest
+func NewQueryIngressRequestFromRestful(r *restful.Request) *QueryIngressRequest {
+	return &QueryIngressRequest{
+		Namespace: r.PathParameter("namespace"),
+		Keyword:   r.QueryParameter("keyword"),
+	}
+}
+
+// 从restful解析参数初始化DescribeIngressRequest
+func NewDescribeIngressRequestFromRestful(r *restful.Request) *DescribeIngressRequest {
+	return &DescribeIngressRequest{
+		Namespace: r.PathParameter("namespace"),
+		Name:      r.QueryParameter("name"),
+	}
 }

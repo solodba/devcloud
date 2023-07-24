@@ -2,6 +2,7 @@ package all
 
 import (
 	_ "github.com/solodba/devcloud/mpaas/apps/configmap/api"
+	_ "github.com/solodba/devcloud/mpaas/apps/ingress/api"
 	_ "github.com/solodba/devcloud/mpaas/apps/namespace/api"
 	_ "github.com/solodba/devcloud/mpaas/apps/node/api"
 	_ "github.com/solodba/devcloud/mpaas/apps/pod/api"

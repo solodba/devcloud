@@ -46,8 +46,8 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 		Doc("删除ConfigMap").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
 		Reads(configmap.DeleteConfigMapRequest{}).
-		Writes(configmap.ConfigMapSetItem{}).
-		Returns(200, "OK", configmap.ConfigMapSetItem{}))
+		Writes(configmap.CreateConfigMapRequest{}).
+		Returns(200, "OK", configmap.CreateConfigMapRequest{}))
 
 	// 更新ConfigMap
 	ws.Route(ws.PUT("/").To(h.UpdateConfigMap).

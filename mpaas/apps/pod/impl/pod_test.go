@@ -11,7 +11,7 @@ import (
 
 func TestCreatePod(t *testing.T) {
 	req := pod.NewCreatePodRequest()
-	data, err := ioutil.ReadFile("pod_createorupdate.json")
+	data, err := ioutil.ReadFile("pod_createorupdate_volume.json")
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -221,32 +221,38 @@ func (i *impl) getK8sContainerProbe(podReqProbe *pod.ContainerProbe) *corev1.Pro
 			Path:        httpGet.Path,
 			HTTPHeaders: k8sHttpHeaders,
 		}
-		k8sProbe.InitialDelaySeconds = podReqProbe.ProbeTime.InitialDelaySeconds
-		k8sProbe.PeriodSeconds = podReqProbe.ProbeTime.PeriodSeconds
-		k8sProbe.TimeoutSeconds = podReqProbe.ProbeTime.TimeoutSeconds
-		k8sProbe.SuccessThreshold = podReqProbe.ProbeTime.SuccessThreshold
-		k8sProbe.FailureThreshold = podReqProbe.ProbeTime.FailureThreshold
+		if podReqProbe.ProbeTime != nil {
+			k8sProbe.InitialDelaySeconds = podReqProbe.ProbeTime.InitialDelaySeconds
+			k8sProbe.PeriodSeconds = podReqProbe.ProbeTime.PeriodSeconds
+			k8sProbe.TimeoutSeconds = podReqProbe.ProbeTime.TimeoutSeconds
+			k8sProbe.SuccessThreshold = podReqProbe.ProbeTime.SuccessThreshold
+			k8sProbe.FailureThreshold = podReqProbe.ProbeTime.FailureThreshold
+		}
 	case PROBE_TCP:
 		tcpSocket := podReqProbe.TcpSocket
 		k8sProbe.TCPSocket = &corev1.TCPSocketAction{
 			Host: tcpSocket.Host,
 			Port: intstr.FromInt(int(tcpSocket.Port)),
 		}
-		k8sProbe.InitialDelaySeconds = podReqProbe.ProbeTime.InitialDelaySeconds
-		k8sProbe.PeriodSeconds = podReqProbe.ProbeTime.PeriodSeconds
-		k8sProbe.TimeoutSeconds = podReqProbe.ProbeTime.TimeoutSeconds
-		k8sProbe.SuccessThreshold = podReqProbe.ProbeTime.SuccessThreshold
-		k8sProbe.FailureThreshold = podReqProbe.ProbeTime.FailureThreshold
+		if podReqProbe.ProbeTime != nil {
+			k8sProbe.InitialDelaySeconds = podReqProbe.ProbeTime.InitialDelaySeconds
+			k8sProbe.PeriodSeconds = podReqProbe.ProbeTime.PeriodSeconds
+			k8sProbe.TimeoutSeconds = podReqProbe.ProbeTime.TimeoutSeconds
+			k8sProbe.SuccessThreshold = podReqProbe.ProbeTime.SuccessThreshold
+			k8sProbe.FailureThreshold = podReqProbe.ProbeTime.FailureThreshold
+		}
 	case PROBE_EXEC:
 		exec := podReqProbe.Exec
 		k8sProbe.Exec = &corev1.ExecAction{
 			Command: exec.Command,
 		}
-		k8sProbe.InitialDelaySeconds = podReqProbe.ProbeTime.InitialDelaySeconds
-		k8sProbe.PeriodSeconds = podReqProbe.ProbeTime.PeriodSeconds
-		k8sProbe.TimeoutSeconds = podReqProbe.ProbeTime.TimeoutSeconds
-		k8sProbe.SuccessThreshold = podReqProbe.ProbeTime.SuccessThreshold
-		k8sProbe.FailureThreshold = podReqProbe.ProbeTime.FailureThreshold
+		if podReqProbe.ProbeTime != nil {
+			k8sProbe.InitialDelaySeconds = podReqProbe.ProbeTime.InitialDelaySeconds
+			k8sProbe.PeriodSeconds = podReqProbe.ProbeTime.PeriodSeconds
+			k8sProbe.TimeoutSeconds = podReqProbe.ProbeTime.TimeoutSeconds
+			k8sProbe.SuccessThreshold = podReqProbe.ProbeTime.SuccessThreshold
+			k8sProbe.FailureThreshold = podReqProbe.ProbeTime.FailureThreshold
+		}
 	}
 	return &k8sProbe
 }

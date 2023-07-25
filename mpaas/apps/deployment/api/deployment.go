@@ -14,12 +14,12 @@ func (h *handler) CreateDeployment(r *restful.Request, w *restful.Response) {
 		w.WriteEntity(response.NewFail(400, err.Error()))
 		return
 	}
-	configmap, err := h.svc.CreateDeployment(r.Request.Context(), req)
+	deployment, err := h.svc.CreateDeployment(r.Request.Context(), req)
 	if err != nil {
 		w.WriteEntity(response.NewFail(500, err.Error()))
 		return
 	}
-	w.WriteEntity(response.NewSuccess(200, configmap))
+	w.WriteEntity(response.NewSuccess(200, deployment))
 }
 
 // 删除Deployment

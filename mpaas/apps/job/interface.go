@@ -1,6 +1,9 @@
 package job
 
-import "github.com/solodba/devcloud/mpaas/apps/pod"
+import (
+	"github.com/emicklei/go-restful/v3"
+	"github.com/solodba/devcloud/mpaas/apps/pod"
+)
 
 // 模块名称
 const (
@@ -48,4 +51,28 @@ func NewDescribeJobRequest() *DescribeJobRequest {
 // DeleteJobRequest初始化函数
 func NewDeleteJobRequest() *DeleteJobRequest {
 	return &DeleteJobRequest{}
+}
+
+// 从restful解析参数初始化DeleteJobRequest
+func NewDeleteJobRequestFromRestful(r *restful.Request) *DeleteJobRequest {
+	return &DeleteJobRequest{
+		Namespace: r.PathParameter("namespace"),
+		Name:      r.PathParameter("name"),
+	}
+}
+
+// 从restful解析参数初始化QueryJobRequest
+func NewQueryJobRequestFromRestful(r *restful.Request) *QueryJobRequest {
+	return &QueryJobRequest{
+		Namespace: r.PathParameter("namespace"),
+		Keyword:   r.QueryParameter("keyword"),
+	}
+}
+
+// 从restful解析参数初始化DescribeJobRequest
+func NewDescribeJobRequestFromRestful(r *restful.Request) *DescribeJobRequest {
+	return &DescribeJobRequest{
+		Namespace: r.PathParameter("namespace"),
+		Name:      r.QueryParameter("name"),
+	}
 }

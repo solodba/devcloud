@@ -5,6 +5,7 @@ import (
 	_ "github.com/solodba/devcloud/mpaas/apps/daemonset/api"
 	_ "github.com/solodba/devcloud/mpaas/apps/deployment/api"
 	_ "github.com/solodba/devcloud/mpaas/apps/ingress/api"
+	_ "github.com/solodba/devcloud/mpaas/apps/job/api"
 	_ "github.com/solodba/devcloud/mpaas/apps/namespace/api"
 	_ "github.com/solodba/devcloud/mpaas/apps/node/api"
 	_ "github.com/solodba/devcloud/mpaas/apps/pod/api"

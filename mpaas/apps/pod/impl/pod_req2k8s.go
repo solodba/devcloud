@@ -56,20 +56,54 @@ func (i *impl) PodReq2K8s(p *pod.Pod) *corev1.Pod {
 			InitContainers: i.getK8sContainer(p.InitContainers),
 			Containers:     i.getK8sContainer(p.Containers),
 			Volumes:        i.getK8sVolumes(p),
-			DNSConfig: &corev1.PodDNSConfig{
-				Nameservers: p.NetWorking.DnsConfig.Nameservers,
-			},
-			DNSPolicy:     corev1.DNSPolicy(p.NetWorking.DnsPolicy),
-			HostAliases:   i.getK8sHostAlias(p),
-			Hostname:      p.NetWorking.HostName,
-			RestartPolicy: corev1.RestartPolicy(p.Base.RestartPolicy),
+			DNSConfig:      i.getK8sDnsConfig(p),
+			DNSPolicy:      i.getK8sDNSPolicy(p),
+			HostAliases:    i.getK8sHostAlias(p),
+			Hostname:       i.getK8sHostname(p),
+			RestartPolicy:  corev1.RestartPolicy(p.Base.RestartPolicy),
 		},
 	}
+}
+
+// Hostname转换
+func (i *impl) getK8sHostname(p *pod.Pod) string {
+	var k8sHostname string
+	if p.NetWorking == nil {
+		return k8sHostname
+	}
+	k8sHostname = p.NetWorking.HostName
+	return k8sHostname
+}
+
+// DNSConfig转换
+func (i *impl) getK8sDnsConfig(p *pod.Pod) *corev1.PodDNSConfig {
+	if p.NetWorking == nil {
+		return nil
+	}
+	if p.NetWorking.DnsConfig == nil {
+		return nil
+	}
+	return &corev1.PodDNSConfig{
+		Nameservers: p.NetWorking.DnsConfig.Nameservers,
+	}
+}
+
+// DNSPolicy转换
+func (i *impl) getK8sDNSPolicy(p *pod.Pod) corev1.DNSPolicy {
+	var k8sDnsPolicy corev1.DNSPolicy
+	if p.NetWorking == nil {
+		return k8sDnsPolicy
+	}
+	k8sDnsPolicy = corev1.DNSPolicy(p.NetWorking.DnsPolicy)
+	return k8sDnsPolicy
 }
 
 // HostAliases转换
 func (i *impl) getK8sHostAlias(p *pod.Pod) []corev1.HostAlias {
 	podK8sHostAliases := make([]corev1.HostAlias, 0)
+	if p.NetWorking == nil {
+		return podK8sHostAliases
+	}
 	for _, item := range p.NetWorking.HostAliases {
 		podK8sHostAliases = append(podK8sHostAliases, corev1.HostAlias{
 			IP:        item.Key,

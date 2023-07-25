@@ -12,6 +12,7 @@ import (
 	_ "github.com/solodba/devcloud/mpaas/apps/pvc/api"
 	_ "github.com/solodba/devcloud/mpaas/apps/sc/api"
 	_ "github.com/solodba/devcloud/mpaas/apps/secret/api"
+	_ "github.com/solodba/devcloud/mpaas/apps/statefulset/api"
 	_ "github.com/solodba/devcloud/mpaas/apps/svc/api"
 	_ "github.com/solodba/devcloud/mpaas/apps/test/api"
 )

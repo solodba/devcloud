@@ -1,6 +1,9 @@
 package statefulset
 
-import pod "github.com/solodba/devcloud/mpaas/apps/pod"
+import (
+	"github.com/emicklei/go-restful/v3"
+	pod "github.com/solodba/devcloud/mpaas/apps/pod"
+)
 
 // 模块名
 const (
@@ -49,4 +52,28 @@ func NewQueryStatefulSetRequest() *QueryStatefulSetRequest {
 // DescribeStatefulSetRequest初始化函数
 func NewDescribeStatefulSetRequest() *DescribeStatefulSetRequest {
 	return &DescribeStatefulSetRequest{}
+}
+
+// 从restful解析参数初始化DeleteStatefulSetRequest
+func NewDeleteStatefulSetRequestFromRestful(r *restful.Request) *DeleteStatefulSetRequest {
+	return &DeleteStatefulSetRequest{
+		Namespace: r.PathParameter("namespace"),
+		Name:      r.PathParameter("name"),
+	}
+}
+
+// 从restful解析参数初始化QueryStatefulSetRequest
+func NewQueryStatefulSetRequestFromRestful(r *restful.Request) *QueryStatefulSetRequest {
+	return &QueryStatefulSetRequest{
+		Namespace: r.PathParameter("namespace"),
+		Keyword:   r.QueryParameter("keyword"),
+	}
+}
+
+// 从restful解析参数初始化DescribeStatefulSetRequest
+func NewDescribeStatefulSetRequestFromRestful(r *restful.Request) *DescribeStatefulSetRequest {
+	return &DescribeStatefulSetRequest{
+		Namespace: r.PathParameter("namespace"),
+		Name:      r.QueryParameter("name"),
+	}
 }

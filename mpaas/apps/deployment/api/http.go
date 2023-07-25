@@ -59,7 +59,7 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 
 	// 查询Deployment
 	ws.Route(ws.GET("/{namespace}").To(h.QueryOrDescribeDeployment).
-		Doc("查询ConfigMap").
+		Doc("查询Deployment").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
 		Reads(deployment.QueryDeploymentRequest{}).
 		Writes(deployment.DeploymentSet{}).

@@ -27,3 +27,10 @@ func NewCreateJobRequest() *CreateJobRequest {
 		},
 	}
 }
+
+// UpdateJobRequest初始化函数
+func NewUpdateJobRequest() *UpdateJobRequest {
+	return &UpdateJobRequest{
+		Job: NewCreateJobRequest(),
+	}
+}

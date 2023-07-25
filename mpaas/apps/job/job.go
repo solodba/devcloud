@@ -9,3 +9,11 @@ func NewJob(req *CreateJobRequest) *Job {
 		Job:  req,
 	}
 }
+
+// Job默认初始化函数
+func NewDefaultJob() *Job {
+	return &Job{
+		Meta: meta.NewMeta(),
+		Job:  NewCreateJobRequest(),
+	}
+}

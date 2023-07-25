@@ -29,7 +29,7 @@
                 "command": [
                     "/bin/sh",
                     "-c",
-                    "echo Hello Job"
+                    "echo Hello Job Test"
                 ]
             }
         ]

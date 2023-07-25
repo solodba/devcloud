@@ -2,10 +2,17 @@ package impl
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"strings"
+	"time"
 
 	"github.com/solodba/devcloud/mpaas/apps/job"
+	"go.mongodb.org/mongo-driver/bson"
+	batchv1 "k8s.io/api/batch/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/watch"
+	"k8s.io/utils/pointer"
 )
 
 // 创建Job
@@ -38,7 +45,99 @@ func (i *impl) DeleteJob(ctx context.Context, in *job.DeleteJobRequest) (*job.Cr
 
 // 修改Job
 func (i *impl) UpdateJob(ctx context.Context, in *job.UpdateJobRequest) (*job.Job, error) {
-	return nil, nil
+	k8sJob := i.JobReq2K8sConvert(in.Job)
+	jobApi := i.clientSet.BatchV1().Jobs(in.Job.Base.Namespace)
+	getK8sJob, err := jobApi.Get(ctx, in.Job.Base.Name, metav1.GetOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] job not found", in.Job.Base.Namespace, in.Job.Base.Name)
+	}
+	// 更新Job
+	//参数校验
+	jobCopy := *k8sJob
+	vJobName := k8sJob.Name + "-validate"
+	jobCopy.Name = vJobName
+	_, err = jobApi.Create(ctx, &jobCopy, metav1.CreateOptions{
+		DryRun: []string{metav1.DryRunAll},
+	})
+	if err != nil {
+		return nil, err
+	}
+	//开启监听
+	var labelSelector []string
+	for k, v := range getK8sJob.Labels {
+		labelSelector = append(labelSelector, fmt.Sprintf("%s=%s", k, v))
+	}
+	var podLabelSelector []string
+	for k, v := range getK8sJob.Spec.Template.Labels {
+		podLabelSelector = append(podLabelSelector, fmt.Sprintf("%s=%s", k, v))
+	}
+	watcher, errin := jobApi.Watch(ctx, metav1.ListOptions{
+		LabelSelector: strings.Join(labelSelector, ","),
+	})
+	if errin != nil {
+		return nil, errin
+	}
+	notify := make(chan error)
+	go func(thisJob *batchv1.Job, notify chan error) {
+		//监听删除信号后，创建
+		for {
+			select {
+			case e := <-watcher.ResultChan():
+				switch e.Type {
+				case watch.Deleted:
+					//删除关联Pod
+					if list, errx := i.clientSet.CoreV1().Pods(getK8sJob.Namespace).
+						List(ctx, metav1.ListOptions{
+							LabelSelector: strings.Join(podLabelSelector, ","),
+						}); errx == nil {
+						for _, item := range list.Items {
+							//delete pod
+							background := metav1.DeletePropagationBackground
+							err = i.clientSet.CoreV1().Pods(item.Namespace).Delete(ctx, item.Name, metav1.DeleteOptions{
+								GracePeriodSeconds: pointer.Int64Ptr(0),
+								PropagationPolicy:  &background,
+							})
+						}
+					}
+					_, errin = jobApi.Create(ctx, thisJob, metav1.CreateOptions{})
+					notify <- errin
+					return
+				}
+			case <-time.After(5 * time.Second):
+				notify <- errors.New("更新Job超时")
+				return
+				//fmt.Println("timeout")
+			}
+		}
+	}(k8sJob, notify)
+	//删除
+	background := metav1.DeletePropagationForeground
+	err = jobApi.Delete(ctx, k8sJob.Name, metav1.DeleteOptions{
+		PropagationPolicy: &background,
+	})
+	if err != nil {
+		return nil, err
+	}
+	//监听删除后重新创建的信息
+	select {
+	case errx := <-notify:
+		if errx != nil {
+			return nil, errx
+		}
+	}
+	job := job.NewDefaultJob()
+	err = i.col.FindOne(ctx, bson.M{"base.name": k8sJob.Name}).Decode(job)
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] not found in mongodb, err: %s", k8sJob.Namespace, k8sJob.Name, err.Error())
+	}
+	job.Meta.UpdatedAt = time.Now().Unix()
+	job.Job = in.Job
+	// 入库
+	_, err = i.col.UpdateOne(ctx, bson.M{"base.name": k8sJob.Name}, bson.M{"$set": job})
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] update in mongodb, err: %s", k8sJob.Namespace, k8sJob.Name, err.Error())
+	}
+	return job, nil
 }
 
 // 查询Job

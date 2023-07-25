@@ -25,3 +25,20 @@ func TestCreateJob(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(job))
 }
+
+func TestUpdateJob(t *testing.T) {
+	req := job.NewUpdateJobRequest()
+	dj, err := ioutil.ReadFile("job.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	err = json.Unmarshal(dj, req.Job)
+	if err != nil {
+		t.Fatal(err)
+	}
+	job, err := svc.UpdateJob(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(job))
+}

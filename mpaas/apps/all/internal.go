@@ -2,6 +2,7 @@ package all
 
 import (
 	_ "github.com/solodba/devcloud/mpaas/apps/configmap/impl"
+	_ "github.com/solodba/devcloud/mpaas/apps/cronjob/impl"
 	_ "github.com/solodba/devcloud/mpaas/apps/daemonset/impl"
 	_ "github.com/solodba/devcloud/mpaas/apps/deployment/impl"
 	_ "github.com/solodba/devcloud/mpaas/apps/ingress/impl"

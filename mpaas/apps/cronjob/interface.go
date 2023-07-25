@@ -1,6 +1,7 @@
 package cronjob
 
 import (
+	"github.com/emicklei/go-restful/v3"
 	"github.com/solodba/devcloud/mpaas/apps/pod"
 	"github.com/solodba/mcube/pb/meta"
 )
@@ -59,4 +60,28 @@ func NewDescribeCronJobRequest() *DescribeCronJobRequest {
 // DeleteCronJobRequest初始化函数
 func NewDeleteCronJobRequest() *DeleteCronJobRequest {
 	return &DeleteCronJobRequest{}
+}
+
+// 从restful解析参数初始化DeleteCronJobRequest
+func NewDeleteCronJobRequestFromRestful(r *restful.Request) *DeleteCronJobRequest {
+	return &DeleteCronJobRequest{
+		Namespace: r.PathParameter("namespace"),
+		Name:      r.PathParameter("name"),
+	}
+}
+
+// 从restful解析参数初始化QueryCronJobRequest
+func NewQueryCronJobRequestFromRestful(r *restful.Request) *QueryCronJobRequest {
+	return &QueryCronJobRequest{
+		Namespace: r.PathParameter("namespace"),
+		Keyword:   r.QueryParameter("keyword"),
+	}
+}
+
+// 从restful解析参数初始化DescribeCronJobRequest
+func NewDescribeCronJobRequestFromRestful(r *restful.Request) *DescribeCronJobRequest {
+	return &DescribeCronJobRequest{
+		Namespace: r.PathParameter("namespace"),
+		Name:      r.QueryParameter("name"),
+	}
 }

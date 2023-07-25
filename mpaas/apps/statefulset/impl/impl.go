@@ -2,6 +2,7 @@ package impl
 
 import (
 	"github.com/solodba/devcloud/mpaas/apps/pod"
+	"github.com/solodba/devcloud/mpaas/apps/pvc"
 	"github.com/solodba/devcloud/mpaas/apps/statefulset"
 	"github.com/solodba/devcloud/mpaas/conf"
 	"github.com/solodba/mcube/apps"
@@ -20,6 +21,7 @@ type impl struct {
 	col       *mongo.Collection
 	clientSet *kubernetes.Clientset
 	podSvc    pod.Service
+	pvcSvc    pvc.Service
 }
 
 // 实现Ioc中心Name方法
@@ -40,6 +42,8 @@ func (i *impl) Conf() error {
 	}
 	i.clientSet = clientSet
 	i.podSvc = apps.GetInternalApp(pod.AppName).(pod.Service)
+	// 次奥, 麻痹的忘记初始化pvcSvc, 所以后面一直调用不到
+	i.pvcSvc = apps.GetInternalApp(pvc.AppName).(pvc.Service)
 	return nil
 }
 

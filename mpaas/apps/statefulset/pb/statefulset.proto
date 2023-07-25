@@ -32,7 +32,7 @@ message Base {
     // @gotags: bson:"serviceName" json:"serviceName"
     string ServiceName = 6;
     // @gotags: bson:"volumeClaimTemplates" json:"volumeClaimTemplates"
-    pvc.CreatePVCRequest VolumeClaimTemplates = 7;
+    repeated pvc.CreatePVCRequest VolumeClaimTemplates = 7;
 }
 
 // 通用键值对结构体

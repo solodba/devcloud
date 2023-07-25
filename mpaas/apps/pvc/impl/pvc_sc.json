@@ -1,0 +1,15 @@
+{
+    "name": "testpvc",
+    "namespace": "test",
+    "labels": [
+        {
+            "key": "pvc",
+            "value": "testpvc"
+        }
+    ],
+    "accessModes": [
+        "ReadWriteOnce"
+    ],
+    "capacity": 100,
+    "storageClassName": "nfs-client"
+}

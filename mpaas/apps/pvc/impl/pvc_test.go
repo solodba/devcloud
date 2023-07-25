@@ -11,7 +11,7 @@ import (
 
 func TestCreatePVC(t *testing.T) {
 	req := pvc.NewCreatePVCRequest()
-	dj, err := ioutil.ReadFile("pvc.json")
+	dj, err := ioutil.ReadFile("pvc_sc.json")
 	if err != nil {
 		t.Fatal(err)
 	}

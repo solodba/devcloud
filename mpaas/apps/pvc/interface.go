@@ -1,6 +1,9 @@
 package pvc
 
-import "github.com/emicklei/go-restful/v3"
+import (
+	"github.com/emicklei/go-restful/v3"
+	corev1 "k8s.io/api/core/v1"
+)
 
 // 模块名称
 const (
@@ -11,6 +14,9 @@ const (
 type Service interface {
 	// 嵌套PersistentVolumeClaim GRPC接口
 	RPCServer
+	// 转换方法
+	PVCReq2K8s(*CreatePVCRequest) *corev1.PersistentVolumeClaim
+	PVCK8s2Req(corev1.PersistentVolumeClaim) *CreatePVCRequest
 }
 
 // CreatePVCRequest初始化函数

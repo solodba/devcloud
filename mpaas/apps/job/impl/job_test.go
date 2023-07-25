@@ -42,3 +42,14 @@ func TestUpdateJob(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(job))
 }
+
+func TestQuertJob(t *testing.T) {
+	req := job.NewQueryJobRequest()
+	req.Namespace = "test"
+	req.Keyword = "nginx-job"
+	jobSet, err := svc.QueryJob(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(jobSet))
+}

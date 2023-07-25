@@ -34,3 +34,8 @@ func NewUpdateJobRequest() *UpdateJobRequest {
 		Job: NewCreateJobRequest(),
 	}
 }
+
+// QueryJobRequest初始化函数
+func NewQueryJobRequest() *QueryJobRequest {
+	return &QueryJobRequest{}
+}

@@ -142,7 +142,21 @@ func (i *impl) UpdateJob(ctx context.Context, in *job.UpdateJobRequest) (*job.Jo
 
 // 查询Job
 func (i *impl) QueryJob(ctx context.Context, in *job.QueryJobRequest) (*job.JobSet, error) {
-	return nil, nil
+	jobApi := i.clientSet.BatchV1().Jobs(in.Namespace)
+	k8sJobList, err := jobApi.List(ctx, metav1.ListOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("get job list error, err: %s", err.Error())
+	}
+	jobSet := job.NewJobSet()
+	for _, k8sJob := range k8sJobList.Items {
+		// 数据转换
+		jobRes := i.JobK8s2ResConvert(k8sJob)
+		if strings.Contains(jobRes.Name, in.Keyword) {
+			jobSet.AddItems(jobRes)
+		}
+	}
+	jobSet.Total = int64(len(jobSet.Items))
+	return jobSet, nil
 }
 
 // 查询Job详情

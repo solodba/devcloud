@@ -42,3 +42,14 @@ func TestUpdateStatefulSet(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(statefulset))
 }
+
+func TestQueryStatefulSet(t *testing.T) {
+	req := statefulset.NewQueryStatefulSetRequest()
+	req.Namespace = "test"
+	req.Keyword = "nginx"
+	statefulSetSet, err := svc.QueryStatefulSet(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(statefulSetSet))
+}

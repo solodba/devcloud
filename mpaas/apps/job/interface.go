@@ -44,3 +44,8 @@ func NewQueryJobRequest() *QueryJobRequest {
 func NewDescribeJobRequest() *DescribeJobRequest {
 	return &DescribeJobRequest{}
 }
+
+// DeleteJobRequest初始化函数
+func NewDeleteJobRequest() *DeleteJobRequest {
+	return &DeleteJobRequest{}
+}

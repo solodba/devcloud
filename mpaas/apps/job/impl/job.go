@@ -40,7 +40,81 @@ func (i *impl) CreateJob(ctx context.Context, in *job.CreateJobRequest) (*job.Jo
 
 // 删除Job
 func (i *impl) DeleteJob(ctx context.Context, in *job.DeleteJobRequest) (*job.CreateJobRequest, error) {
-	return nil, nil
+	req := job.NewDescribeJobRequest()
+	req.Namespace = in.Namespace
+	req.Name = in.Name
+	job, err := i.DescribeJob(ctx, req)
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] job not found", in.Namespace, in.Name)
+	}
+	jobApi := i.clientSet.BatchV1().Jobs(job.Base.Namespace)
+	jobK8s, err := jobApi.Get(ctx, job.Base.Name, metav1.GetOptions{})
+	if err != nil {
+		return nil, err
+	}
+	//开启监听
+	var labelSelector []string
+	for k, v := range jobK8s.Labels {
+		labelSelector = append(labelSelector, fmt.Sprintf("%s=%s", k, v))
+	}
+	watcher, err := jobApi.Watch(ctx, metav1.ListOptions{
+		LabelSelector: strings.Join(labelSelector, ","),
+	})
+	if err != nil {
+		return nil, err
+	}
+	var podLabelSelector []string
+	for k, v := range jobK8s.Spec.Template.Labels {
+		podLabelSelector = append(podLabelSelector, fmt.Sprintf("%s=%s", k, v))
+	}
+	err = jobApi.Delete(ctx, job.Base.Name, metav1.DeleteOptions{})
+	if err != nil {
+		return nil, err
+	}
+	notify := make(chan error)
+	go func(thisJob *batchv1.Job, notify chan error) {
+		//监听删除信号后，创建
+		for {
+			select {
+			case e := <-watcher.ResultChan():
+				switch e.Type {
+				case watch.Deleted:
+					//删除关联Pod
+					if list, errx := i.clientSet.CoreV1().Pods(jobK8s.Namespace).
+						List(ctx, metav1.ListOptions{
+							LabelSelector: strings.Join(podLabelSelector, ","),
+						}); errx == nil {
+						//清理job关联的Pod
+						for _, item := range list.Items {
+							//delete pod
+							background := metav1.DeletePropagationBackground
+							err = i.clientSet.CoreV1().Pods(item.Namespace).Delete(ctx, item.Name, metav1.DeleteOptions{
+								GracePeriodSeconds: pointer.Int64Ptr(0),
+								PropagationPolicy:  &background,
+							})
+						}
+					}
+					notify <- nil
+					return
+				}
+			case <-time.After(5 * time.Second):
+				notify <- errors.New("删除Job超时")
+				return
+			}
+		}
+	}(jobK8s, notify)
+	select {
+	case errx := <-notify:
+		if errx != nil {
+			return nil, errx
+		}
+	}
+	// 从库中删除
+	_, err = i.col.DeleteOne(ctx, bson.M{"base.name": job.Base.Name})
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] delete from mongodb fail", job.Base.Namespace, job.Base.Name)
+	}
+	return job, nil
 }
 
 // 修改Job

@@ -64,3 +64,14 @@ func TestDescribeJob(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(job))
 }
+
+func TestDeleteJob(t *testing.T) {
+	req := job.NewDeleteJobRequest()
+	req.Namespace = "test"
+	req.Name = "nginx-job"
+	job, err := svc.DeleteJob(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(job))
+}

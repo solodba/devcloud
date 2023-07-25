@@ -38,7 +38,7 @@ func (i *impl) CreateCronJob(ctx context.Context, in *cronjob.CreateCronJobReque
 }
 
 // 删除CronJob
-func (i *impl) DeleteCronJob(ctx context.Context, in *cronjob.DeleteCronJobRequest) (*cronjob.CronJob, error) {
+func (i *impl) DeleteCronJob(ctx context.Context, in *cronjob.DeleteCronJobRequest) (*cronjob.CreateCronJobRequest, error) {
 	return nil, nil
 }
 
@@ -147,6 +147,11 @@ func (i *impl) QueryCronJob(ctx context.Context, in *cronjob.QueryCronJobRequest
 }
 
 // 查询CronJob详情
-func (i *impl) DescribeCronJob(ctx context.Context, in *cronjob.DescribeCronJobRequest) (*cronjob.CronJob, error) {
-	return nil, nil
+func (i *impl) DescribeCronJob(ctx context.Context, in *cronjob.DescribeCronJobRequest) (*cronjob.CreateCronJobRequest, error) {
+	cronJobApi := i.clientSet.BatchV1().CronJobs(in.Namespace)
+	k8sCronJob, err := cronJobApi.Get(ctx, in.Name, metav1.GetOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("get cronjob detail error, err: %s", err.Error())
+	}
+	return i.CronJobK8s2ReqConvert(k8sCronJob), nil
 }

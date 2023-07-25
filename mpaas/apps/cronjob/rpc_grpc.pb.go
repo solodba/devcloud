@@ -33,13 +33,13 @@ type RPCClient interface {
 	// 创建CronJob
 	CreateCronJob(ctx context.Context, in *CreateCronJobRequest, opts ...grpc.CallOption) (*CronJob, error)
 	// 删除CronJob
-	DeleteCronJob(ctx context.Context, in *DeleteCronJobRequest, opts ...grpc.CallOption) (*CronJob, error)
+	DeleteCronJob(ctx context.Context, in *DeleteCronJobRequest, opts ...grpc.CallOption) (*CreateCronJobRequest, error)
 	// 修改CronJob
 	UpdateCronJob(ctx context.Context, in *UpdateCronJobRequest, opts ...grpc.CallOption) (*CronJob, error)
 	// 查询CronJob
 	QueryCronJob(ctx context.Context, in *QueryCronJobRequest, opts ...grpc.CallOption) (*CronJobSet, error)
 	// 查询CronJob详情
-	DescribeCronJob(ctx context.Context, in *DescribeCronJobRequest, opts ...grpc.CallOption) (*CronJob, error)
+	DescribeCronJob(ctx context.Context, in *DescribeCronJobRequest, opts ...grpc.CallOption) (*CreateCronJobRequest, error)
 }
 
 type rPCClient struct {
@@ -59,8 +59,8 @@ func (c *rPCClient) CreateCronJob(ctx context.Context, in *CreateCronJobRequest,
 	return out, nil
 }
 
-func (c *rPCClient) DeleteCronJob(ctx context.Context, in *DeleteCronJobRequest, opts ...grpc.CallOption) (*CronJob, error) {
-	out := new(CronJob)
+func (c *rPCClient) DeleteCronJob(ctx context.Context, in *DeleteCronJobRequest, opts ...grpc.CallOption) (*CreateCronJobRequest, error) {
+	out := new(CreateCronJobRequest)
 	err := c.cc.Invoke(ctx, RPC_DeleteCronJob_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -86,8 +86,8 @@ func (c *rPCClient) QueryCronJob(ctx context.Context, in *QueryCronJobRequest, o
 	return out, nil
 }
 
-func (c *rPCClient) DescribeCronJob(ctx context.Context, in *DescribeCronJobRequest, opts ...grpc.CallOption) (*CronJob, error) {
-	out := new(CronJob)
+func (c *rPCClient) DescribeCronJob(ctx context.Context, in *DescribeCronJobRequest, opts ...grpc.CallOption) (*CreateCronJobRequest, error) {
+	out := new(CreateCronJobRequest)
 	err := c.cc.Invoke(ctx, RPC_DescribeCronJob_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -102,13 +102,13 @@ type RPCServer interface {
 	// 创建CronJob
 	CreateCronJob(context.Context, *CreateCronJobRequest) (*CronJob, error)
 	// 删除CronJob
-	DeleteCronJob(context.Context, *DeleteCronJobRequest) (*CronJob, error)
+	DeleteCronJob(context.Context, *DeleteCronJobRequest) (*CreateCronJobRequest, error)
 	// 修改CronJob
 	UpdateCronJob(context.Context, *UpdateCronJobRequest) (*CronJob, error)
 	// 查询CronJob
 	QueryCronJob(context.Context, *QueryCronJobRequest) (*CronJobSet, error)
 	// 查询CronJob详情
-	DescribeCronJob(context.Context, *DescribeCronJobRequest) (*CronJob, error)
+	DescribeCronJob(context.Context, *DescribeCronJobRequest) (*CreateCronJobRequest, error)
 	mustEmbedUnimplementedRPCServer()
 }
 
@@ -119,7 +119,7 @@ type UnimplementedRPCServer struct {
 func (UnimplementedRPCServer) CreateCronJob(context.Context, *CreateCronJobRequest) (*CronJob, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateCronJob not implemented")
 }
-func (UnimplementedRPCServer) DeleteCronJob(context.Context, *DeleteCronJobRequest) (*CronJob, error) {
+func (UnimplementedRPCServer) DeleteCronJob(context.Context, *DeleteCronJobRequest) (*CreateCronJobRequest, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteCronJob not implemented")
 }
 func (UnimplementedRPCServer) UpdateCronJob(context.Context, *UpdateCronJobRequest) (*CronJob, error) {
@@ -128,7 +128,7 @@ func (UnimplementedRPCServer) UpdateCronJob(context.Context, *UpdateCronJobReque
 func (UnimplementedRPCServer) QueryCronJob(context.Context, *QueryCronJobRequest) (*CronJobSet, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QueryCronJob not implemented")
 }
-func (UnimplementedRPCServer) DescribeCronJob(context.Context, *DescribeCronJobRequest) (*CronJob, error) {
+func (UnimplementedRPCServer) DescribeCronJob(context.Context, *DescribeCronJobRequest) (*CreateCronJobRequest, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DescribeCronJob not implemented")
 }
 func (UnimplementedRPCServer) mustEmbedUnimplementedRPCServer() {}

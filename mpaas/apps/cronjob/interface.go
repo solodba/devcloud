@@ -50,3 +50,8 @@ func NewUpdateCronJobRequest() *UpdateCronJobRequest {
 func NewQueryCronJobRequest() *QueryCronJobRequest {
 	return &QueryCronJobRequest{}
 }
+
+// DescribeCronJobRequest初始化函数
+func NewDescribeCronJobRequest() *DescribeCronJobRequest {
+	return &DescribeCronJobRequest{}
+}

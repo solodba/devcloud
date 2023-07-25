@@ -12,13 +12,13 @@ service RPC {
     // 创建CronJob
     rpc CreateCronJob(CreateCronJobRequest) returns(CronJob);
     // 删除CronJob
-    rpc DeleteCronJob(DeleteCronJobRequest) returns(CronJob);
+    rpc DeleteCronJob(DeleteCronJobRequest) returns(CreateCronJobRequest);
     // 修改CronJob
     rpc UpdateCronJob(UpdateCronJobRequest) returns(CronJob);
     // 查询CronJob
     rpc QueryCronJob(QueryCronJobRequest) returns(CronJobSet);
     // 查询CronJob详情
-    rpc DescribeCronJob(DescribeCronJobRequest) returns(CronJob);
+    rpc DescribeCronJob(DescribeCronJobRequest) returns(CreateCronJobRequest);
 }
 
 // DeleteCronJobRequest结构体

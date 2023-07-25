@@ -39,7 +39,62 @@ func (i *impl) CreateCronJob(ctx context.Context, in *cronjob.CreateCronJobReque
 
 // 删除CronJob
 func (i *impl) DeleteCronJob(ctx context.Context, in *cronjob.DeleteCronJobRequest) (*cronjob.CreateCronJobRequest, error) {
-	return nil, nil
+	req := cronjob.NewDescribeCronJobRequest()
+	req.Namespace = in.Namespace
+	req.Name = in.Name
+	cronjob, err := i.DescribeCronJob(ctx, req)
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] cronjob not found", in.Namespace, in.Name)
+	}
+	cronJobApi := i.clientSet.BatchV1().CronJobs(cronjob.Base.Namespace)
+	cronJobK8s, err := cronJobApi.Get(ctx, cronjob.Base.Name, metav1.GetOptions{})
+	if err != nil {
+		return nil, err
+	}
+	//开启监听
+	var labelSelector []string
+	for k, v := range cronJobK8s.Labels {
+		labelSelector = append(labelSelector, fmt.Sprintf("%s=%s", k, v))
+	}
+	watcher, err := cronJobApi.Watch(ctx, metav1.ListOptions{
+		LabelSelector: strings.Join(labelSelector, ","),
+	})
+	if err != nil {
+		return nil, err
+	}
+	err = cronJobApi.Delete(ctx, cronjob.Base.Name, metav1.DeleteOptions{})
+	if err != nil {
+		return nil, err
+	}
+	notify := make(chan error)
+	go func(thisJob *batchv1.CronJob, notify chan error) {
+		//监听删除信号后，创建
+		for {
+			select {
+			case e := <-watcher.ResultChan():
+				switch e.Type {
+				case watch.Deleted:
+					notify <- nil
+					return
+				}
+			case <-time.After(5 * time.Second):
+				notify <- errors.New("删除CronJob超时")
+				return
+			}
+		}
+	}(cronJobK8s, notify)
+	select {
+	case errx := <-notify:
+		if errx != nil {
+			return nil, errx
+		}
+	}
+	// 从库中删除
+	_, err = i.col.DeleteOne(ctx, bson.M{"base.name": cronjob.Base.Name})
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] delete from mongodb fail", cronjob.Base.Namespace, cronjob.Base.Name)
+	}
+	return cronjob, nil
 }
 
 // 修改CronJob

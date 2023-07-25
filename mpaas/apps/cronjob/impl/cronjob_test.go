@@ -64,3 +64,14 @@ func TestDescribeJob(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(cronjob))
 }
+
+func TestDeleteCronJob(t *testing.T) {
+	req := cronjob.NewDeleteCronJobRequest()
+	req.Namespace = "test"
+	req.Name = "nginx-cronjob"
+	cronjob, err := svc.DeleteCronJob(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(cronjob))
+}

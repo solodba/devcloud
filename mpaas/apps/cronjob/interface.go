@@ -55,3 +55,8 @@ func NewQueryCronJobRequest() *QueryCronJobRequest {
 func NewDescribeCronJobRequest() *DescribeCronJobRequest {
 	return &DescribeCronJobRequest{}
 }
+
+// DeleteCronJobRequest初始化函数
+func NewDeleteCronJobRequest() *DeleteCronJobRequest {
+	return &DeleteCronJobRequest{}
+}

@@ -27,5 +27,18 @@ func TestCreateStatefulSet(t *testing.T) {
 }
 
 func TestUpdateStatefulSet(t *testing.T) {
-
+	req := statefulset.NewUpdateStatefulSetRequest()
+	dj, err := ioutil.ReadFile("statefulset.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	err = json.Unmarshal(dj, req.StatefulSet)
+	if err != nil {
+		t.Fatal(err)
+	}
+	statefulset, err := svc.UpdateStatefulSet(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(statefulset))
 }

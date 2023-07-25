@@ -36,7 +36,9 @@ func NewDeleteStatefulSetRequest() *DeleteStatefulSetRequest {
 
 // UpdateStatefulSetRequest初始化函数
 func NewUpdateStatefulSetRequest() *UpdateStatefulSetRequest {
-	return &UpdateStatefulSetRequest{}
+	return &UpdateStatefulSetRequest{
+		StatefulSet: NewCreateStatefulSetRequest(),
+	}
 }
 
 // QueryStatefulSetRequest初始化函数

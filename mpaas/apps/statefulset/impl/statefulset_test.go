@@ -53,3 +53,14 @@ func TestQueryStatefulSet(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(statefulSetSet))
 }
+
+func TestDescribeStatefulSet(t *testing.T) {
+	req := statefulset.NewDescribeStatefulSetRequest()
+	req.Namespace = "test"
+	req.Name = "nginx-statefulset"
+	statefulset, err := svc.DescribeStatefulSet(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(statefulset))
+}

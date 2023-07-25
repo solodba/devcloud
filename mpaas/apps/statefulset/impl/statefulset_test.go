@@ -64,3 +64,14 @@ func TestDescribeStatefulSet(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(statefulset))
 }
+
+func TestDeleteStatefulSet(t *testing.T) {
+	req := statefulset.NewDeleteStatefulSetRequest()
+	req.Namespace = "test"
+	req.Name = "nginx-statefulset"
+	statefulset, err := svc.DeleteStatefulSet(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(statefulset))
+}

@@ -39,3 +39,8 @@ func NewUpdateJobRequest() *UpdateJobRequest {
 func NewQueryJobRequest() *QueryJobRequest {
 	return &QueryJobRequest{}
 }
+
+// DescribeJobRequest初始化函数
+func NewDescribeJobRequest() *DescribeJobRequest {
+	return &DescribeJobRequest{}
+}

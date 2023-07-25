@@ -161,5 +161,22 @@ func (i *impl) QueryJob(ctx context.Context, in *job.QueryJobRequest) (*job.JobS
 
 // 查询Job详情
 func (i *impl) DescribeJob(ctx context.Context, in *job.DescribeJobRequest) (*job.CreateJobRequest, error) {
-	return nil, nil
+	jobApi := i.clientSet.BatchV1().Jobs(in.Namespace)
+	k8sJob, err := jobApi.Get(ctx, in.Name, metav1.GetOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("get job detail error, err: %s", err.Error())
+	}
+	jobReq := i.JobK8s2ReqConvert(k8sJob)
+	jobReqLables := make([]*job.ListMapItem, 0)
+	for _, label := range jobReq.Base.Labels {
+		if strings.Contains(label.Key, "controller-uid") {
+			continue
+		}
+		if strings.Contains(label.Key, "job-name") {
+			continue
+		}
+		jobReqLables = append(jobReqLables, label)
+	}
+	jobReq.Base.Labels = jobReqLables
+	return jobReq, nil
 }

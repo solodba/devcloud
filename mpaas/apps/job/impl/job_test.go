@@ -53,3 +53,14 @@ func TestQuertJob(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(jobSet))
 }
+
+func TestDescribeJob(t *testing.T) {
+	req := job.NewDescribeJobRequest()
+	req.Namespace = "test"
+	req.Name = "nginx-job"
+	job, err := svc.DescribeJob(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(job))
+}

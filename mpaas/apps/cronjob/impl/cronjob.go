@@ -129,7 +129,21 @@ func (i *impl) UpdateCronJob(ctx context.Context, in *cronjob.UpdateCronJobReque
 
 // 查询CronJob
 func (i *impl) QueryCronJob(ctx context.Context, in *cronjob.QueryCronJobRequest) (*cronjob.CronJobSet, error) {
-	return nil, nil
+	cronJobApi := i.clientSet.BatchV1().CronJobs(in.Namespace)
+	k8sCronJobList, err := cronJobApi.List(ctx, metav1.ListOptions{})
+	if err != nil {
+		return nil, fmt.Errorf("get cronjob list error, err: %s", err.Error())
+	}
+	cronJobSet := cronjob.NewCronJobSet()
+	for _, k8sCronJob := range k8sCronJobList.Items {
+		// 数据转换
+		cronJobRes := i.CronJobK8s2ResConvert(k8sCronJob)
+		if strings.Contains(cronJobRes.Name, in.Keyword) {
+			cronJobSet.AddItems(cronJobRes)
+		}
+	}
+	cronJobSet.Total = int64(len(cronJobSet.Items))
+	return cronJobSet, nil
 }
 
 // 查询CronJob详情

@@ -45,3 +45,8 @@ func NewUpdateCronJobRequest() *UpdateCronJobRequest {
 		CronJob: NewCreateCronJobRequest(),
 	}
 }
+
+// QueryCronJobRequest初始化函数
+func NewQueryCronJobRequest() *QueryCronJobRequest {
+	return &QueryCronJobRequest{}
+}

@@ -42,3 +42,14 @@ func TestUpdateCronJob(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(cronjob))
 }
+
+func TestQueryCronJob(t *testing.T) {
+	req := cronjob.NewQueryCronJobRequest()
+	req.Namespace = "test"
+	req.Keyword = "nginx"
+	cronjobSet, err := svc.QueryCronJob(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(cronjobSet))
+}

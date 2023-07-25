@@ -25,3 +25,20 @@ func TestCreateCronJob(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(cronjob))
 }
+
+func TestUpdateCronJob(t *testing.T) {
+	req := cronjob.NewUpdateCronJobRequest()
+	dj, err := ioutil.ReadFile("cronjob.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	err = json.Unmarshal(dj, req.CronJob)
+	if err != nil {
+		t.Fatal(err)
+	}
+	cronjob, err := svc.UpdateCronJob(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(cronjob))
+}

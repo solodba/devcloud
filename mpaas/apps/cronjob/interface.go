@@ -38,3 +38,10 @@ func NewCreateCronJobRequest() *CreateCronJobRequest {
 		},
 	}
 }
+
+// UpdateCronJobRequest初始化函数
+func NewUpdateCronJobRequest() *UpdateCronJobRequest {
+	return &UpdateCronJobRequest{
+		CronJob: NewCreateCronJobRequest(),
+	}
+}

@@ -11,3 +11,11 @@ func NewCronJob(req *CreateCronJobRequest) *CronJob {
 		CronJob: req,
 	}
 }
+
+// CronJob默认初始化结构体
+func NewDefaultCronJob() *CronJob {
+	return &CronJob{
+		Meta:    meta.NewMeta(),
+		CronJob: NewCreateCronJobRequest(),
+	}
+}

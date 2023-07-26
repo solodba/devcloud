@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+package codehorse.mkube.job;
+
+option go_package = "github.com/solodba/devcloud/mkube/apps/job";
+
+// 导入外部包
+import "apps/pod/pb/pod.proto";
+import "common/pb/github.com/solodba/mcube/pb/meta/meta.proto";
+
+// JobBase结构体
+message JobBase {
+    // @gotags: bson:"name" json:"name"
+    string Name = 1;
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 2;
+    // @gotags: bson:"labels" json:"labels"
+    repeated ListMapItem Labels = 3;
+    // @gotags: bson:"completions" json:"completions"
+    int32 Completions = 4;
+}
+
+// CreateJobRequest结构体
+message CreateJobRequest {
+    // @gotags: bson:"base" json:"base"
+    JobBase Base = 1;
+     // @gotags: bson:"template" json:"template"
+     pod.Pod Template = 2;
+}
+
+// 通用键值对结构体
+message ListMapItem {
+    // @gotags: bson:"key" json:"key"
+    string Key = 1;
+    // @gotags: bson:"value" json:"value"
+    string Value = 2;
+}
+
+// Job结构体
+message Job {
+    // @gotags: bson:",inline" json:"meta"
+    codehorse.mcube.meta.Meta Meta = 1;
+    // @gotags: bson:",inline" json:"job"
+    CreateJobRequest Job = 2;
+}
+
+// JobSetItem结构体
+message JobSetItem {
+    // @gotags: bson:"name" json:"name"
+    string Name = 1;
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 2;
+    // @gotags: bson:"completions" json:"completions"
+    int32 Completions = 3;
+    // @gotags: bson:"succeeded" json:"succeeded"
+    int32 Succeeded = 4;
+    // @gotags: bson:"duration" json:"duration"
+    int64 Duration = 5;
+    // @gotags: bson:"age" json:"age"
+    int64 Age = 6;
+}
+
+// JobSet结构体
+message JobSet {
+    // @gotags: bson:"total" json:"total"
+    int64 Total = 1;
+    // @gotags: bson:"items" json:"items"
+    repeated JobSetItem Items = 2;
+}

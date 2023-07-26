@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+package codehorse.mkube.pv;
+
+option go_package = "github.com/solodba/devcloud/mkube/apps/pv";
+
+// 导入外部包
+import "common/pb/github.com/solodba/mcube/pb/meta/meta.proto";
+
+// CreatePVRequest结构体
+message CreatePVRequest {
+    // @gotags: bson:"name" json:"name"
+    string Name = 1;
+    // @gotags: bson:"labels" json:"labels"
+    repeated ListMapItem Labels = 2;
+    // @gotags: bson:"capacity" json:"capacity"
+    int32 Capacity = 3;
+    // @gotags: bson:"accessModes" json:"accessModes"
+    repeated string AccessModes = 4;
+    // @gotags: bson:"reClaimPolicy" json:"reClaimPolicy"
+    string ReClaimPolicy = 5;
+    // @gotags: bson:"volumeSource" json:"volumeSource"
+    VolumeSource VolumeSource = 6;
+}
+
+// NfsVolumeSource结构体
+message NfsVolumeSource {
+    // @gotags: bson:"nfsServer" json:"nfsServer"
+    string NfsServer = 1;
+    // @gotags: bson:"nfsPath" json:"nfsPath"
+    string NfsPath = 2;
+    // @gotags: bson:"nfsReadOnly" json:"nfsReadOnly"
+    bool NfsReadOnly = 3;
+}
+
+// VolumeSource结构体
+message VolumeSource {
+    // @gotags: bson:"type" json:"type"
+    string Type = 1;
+    // @gotags: bson:"nfsVolumeSource" json:"nfsVolumeSource"
+    NfsVolumeSource NfsVolumeSource = 2;
+}
+
+// 通用键值对结构体
+message ListMapItem {
+    // @gotags: bson:"key" json:"key"
+    string Key = 1;
+    // @gotags: bson:"value" json:"value"
+    string Value = 2;
+}
+
+// PV结构体
+message PV {
+    // @gotags: bson:",inline" json:"meta"
+    codehorse.mcube.meta.Meta Meta = 1;
+    // @gotags: bson:",inline" json:"pv"
+    CreatePVRequest PV = 2;
+}
+
+// PVSet结构体
+message PVSet {
+    // @gotags: bson:"total" json:"total"
+    int64 Total = 1;
+    // @gotags: bson:"items" json:"items"
+    repeated PVSetItem Items = 2;
+}
+
+// PVSetItem结构体
+message PVSetItem {
+    // @gotags: bson:"name" json:"name"
+    string Name = 1;
+    // @gotags: bson:"labels" json:"labels"
+    repeated ListMapItem Labels = 2;
+    // @gotags: bson:"capacity" json:"capacity"
+    int32 Capacity = 3;
+    // @gotags: bson:"accessModes" json:"accessModes"
+    repeated string AccessModes = 4;
+    // @gotags: bson:"reClaimPolicy" json:"reClaimPolicy"
+    string ReClaimPolicy = 5;
+    // @gotags: bson:"status" json:"status"
+    string Status = 6;
+    // @gotags: bson:"claim" json:"claim"
+    string Claim = 7;
+    // @gotags: bson:"storageClassName" json:"storageClassName"
+    string StorageClassName = 8;
+    // @gotags: bson:"age" json:"age"
+    int64 Age = 9;
+    // @gotags: bson:"reason" json:"reason"
+    string Reason = 10;
+}

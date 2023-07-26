@@ -1,0 +1,20 @@
+[app]
+name = "mkube"
+
+[app.http]
+host = "127.0.0.1"
+port = 8882
+
+[app.grpc]
+host = "127.0.0.1"
+port = 8883
+
+[mongodb]
+username = ""
+password = ""
+endpoints = ["175.27.242.200:27017"]
+database = "mkube"
+authsource = "mkube"
+
+[k8s]
+kubeconfig = "test/config"

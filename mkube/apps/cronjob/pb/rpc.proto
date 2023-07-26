@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package codehorse.mkube.cronjob;
+
+option go_package = "github.com/solodba/devcloud/mkube/apps/cronjob";
+
+// 导入外部包
+import "apps/cronjob/pb/cronjob.proto";
+
+// CronJob相关功能接口
+service RPC {
+    // 创建CronJob
+    rpc CreateCronJob(CreateCronJobRequest) returns(CronJob);
+    // 删除CronJob
+    rpc DeleteCronJob(DeleteCronJobRequest) returns(CreateCronJobRequest);
+    // 修改CronJob
+    rpc UpdateCronJob(UpdateCronJobRequest) returns(CronJob);
+    // 查询CronJob
+    rpc QueryCronJob(QueryCronJobRequest) returns(CronJobSet);
+    // 查询CronJob详情
+    rpc DescribeCronJob(DescribeCronJobRequest) returns(CreateCronJobRequest);
+}
+
+// DeleteCronJobRequest结构体
+message DeleteCronJobRequest {
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 1;
+    // @gotags: bson:"name" json:"name"
+    string Name = 2;
+}
+
+// UpdateCronJobRequest结构体
+message UpdateCronJobRequest {
+    // @gotags: bson:"cronjob" json:"cronjob"
+    CreateCronJobRequest CronJob = 1;
+}
+
+// QueryCronJobRequest结构体
+message QueryCronJobRequest {
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 1;
+    // @gotags: bson:"keyword" json:"keyword"
+    string Keyword = 2;
+}
+
+// DescribeCronJobRequest结构体
+message DescribeCronJobRequest {
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 1;
+    // @gotags: bson:"name" json:"name"
+    string Name = 2;
+}

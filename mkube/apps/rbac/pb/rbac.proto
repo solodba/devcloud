@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+package codehorse.mkube.rbac;
+
+option go_package = "github.com/solodba/devcloud/mkube/apps/rbac";
+
+
+// Response结构体
+message Response {
+}
+
+// ServiceAccountSetItem结构体
+message ServiceAccountSetItem {
+   // @gotags: bson:"name" json:"name"
+   string Name = 1;
+   // @gotags: bson:"namespace" json:"namespace"
+   string Namespace = 2;
+   // @gotags: bson:"age" json:"age"
+   int64 Age = 3;
+}
+
+// ServiceAccountSet结构体
+message ServiceAccountSet {
+    // @gotags: bson:"total" json:"total"
+    int64 Total = 1;
+    // @gotags: bson:"items" json:"items"
+    repeated ServiceAccountSetItem Items = 2;
+}
+
+// ClusterRoleSetItem结构体
+message ClusterRoleSetItem {
+    // @gotags: bson:"name" json:"name"
+    string Name = 1;
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 2;
+    // @gotags: bson:"age" json:"age"
+    int64 Age = 3;
+}
+
+// ClusterRoleSet结构体
+message ClusterRoleSet {
+    // @gotags: bson:"total" json:"total"
+    int64 Total = 1;
+    // @gotags: bson:"items" json:"items"
+    repeated ClusterRoleSetItem Items = 2;
+}
+
+// RoleSetItem结构体
+message RoleSetItem {
+    // @gotags: bson:"name" json:"name"
+    string Name = 1;
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 2;
+    // @gotags: bson:"age" json:"age"
+    int64 Age = 3;
+}
+
+// RoleSet结构体
+message RoleSet {
+    // @gotags: bson:"total" json:"total"
+    int64 Total = 1;
+    // @gotags: bson:"items" json:"items"
+    repeated RoleSetItem Items = 2;
+}
+
+// RoleBindingSetItem结构体
+message RoleBindingSetItem {
+    // @gotags: bson:"name" json:"name"
+    string Name = 1;
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 2;
+    // @gotags: bson:"age" json:"age"
+    int64 Age = 3;
+}
+
+// RoleBindingSet结构体
+message RoleBindingSet {
+    // @gotags: bson:"total" json:"total"
+    int64 Total = 1;
+    // @gotags: bson:"items" json:"items"
+    repeated RoleBindingSetItem Items = 2;
+}

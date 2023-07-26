@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/solodba/devcloud/mpaas/apps/rbac"
-	"github.com/solodba/devcloud/mpaas/test/tools"
+	"github.com/solodba/devcloud/mpaas/common"
 	rbacv1 "k8s.io/api/rbac/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -182,7 +182,7 @@ func (i *impl) CreateOrUpdateRb(ctx context.Context, in *rbac.RoleBinding) (*rba
 			ObjectMeta: metav1.ObjectMeta{
 				Name:      in.Name,
 				Namespace: in.Namespace,
-				Labels:    tools.ToMap(in.Labels),
+				Labels:    common.ToMap(in.Labels),
 			},
 			Subjects: func(saList []*rbac.ServiceAccount) []rbacv1.Subject {
 				subjects := make([]rbacv1.Subject, len(saList))
@@ -221,7 +221,7 @@ func (i *impl) CreateOrUpdateRb(ctx context.Context, in *rbac.RoleBinding) (*rba
 			ObjectMeta: metav1.ObjectMeta{
 				Name:      in.Name,
 				Namespace: in.Namespace,
-				Labels:    tools.ToMap(in.Labels),
+				Labels:    common.ToMap(in.Labels),
 			},
 			Subjects: func(saList []*rbac.ServiceAccount) []rbacv1.Subject {
 				subjects := make([]rbacv1.Subject, len(saList))
@@ -328,7 +328,7 @@ func (i *impl) GetRbDetail(ctx context.Context, in *rbac.GetRbDetailRequest) (*r
 		}
 		rbReq.Name = rbK8s.Name
 		rbReq.Namespace = rbK8s.Namespace
-		rbReq.Labels = tools.ToList(rbK8s.Labels)
+		rbReq.Labels = common.ToList(rbK8s.Labels)
 		rbReq.RoleRef = rbK8s.RoleRef.Name
 		rbReq.Subjects = func(subjects []rbacv1.Subject) []*rbac.ServiceAccount {
 			saList := make([]*rbac.ServiceAccount, len(subjects))
@@ -348,7 +348,7 @@ func (i *impl) GetRbDetail(ctx context.Context, in *rbac.GetRbDetailRequest) (*r
 		}
 		rbReq.Name = rbK8s.Name
 		rbReq.Namespace = rbK8s.Namespace
-		rbReq.Labels = tools.ToList(rbK8s.Labels)
+		rbReq.Labels = common.ToList(rbK8s.Labels)
 		rbReq.RoleRef = rbK8s.RoleRef.Name
 		rbReq.Subjects = func(subjects []rbacv1.Subject) []*rbac.ServiceAccount {
 			saList := make([]*rbac.ServiceAccount, len(subjects))

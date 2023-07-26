@@ -1,4 +1,4 @@
-package tools
+package common
 
 import "github.com/solodba/devcloud/mpaas/apps/rbac"
 

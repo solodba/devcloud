@@ -12,7 +12,7 @@ port = 8883
 [mongodb]
 username = ""
 password = ""
-endpoints = ["146.56.241.184:27017"]
+endpoints = ["192.168.1.130:27017"]
 database = "mkube"
 authsource = "mkube"
 
@@ -21,3 +21,10 @@ kubeconfig = "etc/config"
 
 [plugin]
 provisionser = "cluster.local/nfs-subdir-external-provisioner"
+
+[harbor]
+scheme = "https"
+username = "admin"
+password = "Harbor12345"
+host = "192.168.1.130"
+cacerts = "etc/ca.crt"

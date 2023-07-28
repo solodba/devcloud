@@ -2,6 +2,7 @@ package conf
 
 import (
 	"fmt"
+	"net/http"
 	"sync"
 
 	"github.com/solodba/mcube/logger"
@@ -63,12 +64,24 @@ type Plugin struct {
 	Provisionser string `toml:"provisionser" env:"PLUGIN_PROVISIONSER"`
 }
 
+// Harbor结构体
+type Harbor struct {
+	Scheme   string `toml:"scheme" env:"HARBOR_SCHEME"`
+	Username string `toml:"username" env:"HARBOR_USERNAME"`
+	Password string `toml:"password" env:"HARBOR_PASSWORD"`
+	Host     string `toml:"host" env:"HARBOR_HOST"`
+	CaCerts  string `toml:"cacerts" env:"HARBOR_CACERTS"`
+	lock     sync.Mutex
+	client   *http.Client
+}
+
 // 全局配置结构体
 type Config struct {
 	App     *App     `toml:"app"`
 	MongoDB *MongoDB `toml:"mongodb"`
 	K8s     *K8s     `toml:"k8s"`
 	Plugin  *Plugin  `toml:"plugin"`
+	Harbor  *Harbor  `toml:"harbor"`
 }
 
 // Http初始化函数
@@ -117,6 +130,16 @@ func NewDefaultPlugin() *Plugin {
 	return &Plugin{}
 }
 
+// Harbor初始化函数
+func NewDefaultHarbor() *Harbor {
+	return &Harbor{
+		Scheme:   "https",
+		Username: "test",
+		Password: "test",
+		Host:     "127.0.0.1",
+	}
+}
+
 // Config初始化函数
 func NewDefaultConfig() *Config {
 	return &Config{
@@ -124,6 +147,7 @@ func NewDefaultConfig() *Config {
 		MongoDB: NewDefaultMongoDB(),
 		K8s:     NewDefaultK8s(),
 		Plugin:  NewDefaultPlugin(),
+		Harbor:  NewDefaultHarbor(),
 	}
 }
 

@@ -18,6 +18,13 @@ func TestLoadConfigFromToml(t *testing.T) {
 	t.Log(conf.C().MongoDB.GetDB())
 	t.Log(conf.C().K8s)
 	t.Log(conf.C().K8s.GetK8sConn())
+	t.Log(conf.C().Harbor.Scheme)
+	t.Log(conf.C().Harbor.Username)
+	t.Log(conf.C().Harbor.Password)
+	t.Log(conf.C().Harbor.Host)
+	t.Log(conf.C().Harbor.CaCerts)
+	t.Log(conf.C().Harbor.GetHarborCaCerts())
+	t.Log(conf.C().Harbor.InitHarborClient())
 }
 
 func TestLoadConfigFromEnv(t *testing.T) {
@@ -32,4 +39,11 @@ func TestLoadConfigFromEnv(t *testing.T) {
 	t.Log(conf.C().MongoDB.GetDB())
 	t.Log(conf.C().K8s)
 	t.Log(conf.C().K8s.GetK8sConn())
+	t.Log(conf.C().Harbor.Scheme)
+	t.Log(conf.C().Harbor.Username)
+	t.Log(conf.C().Harbor.Password)
+	t.Log(conf.C().Harbor.Host)
+	t.Log(conf.C().Harbor.CaCerts)
+	t.Log(conf.C().Harbor.GetHarborCaCerts())
+	t.Log(conf.C().Harbor.InitHarborClient())
 }

@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package codehorse.mkube.harbor;
+
+option go_package = "github.com/solodba/devcloud/mkube/apps/harbor";
+
+// Page结构体
+message Page {
+    // @gotags: bson:"currentPage" json:"currentPage"
+    int64 CurrentPage = 1;
+    // @gotags: bson:"pageSize" json:"pageSize"
+    int64 PageSize = 2;
+    // @gotags: bson:"totalCount" json:"totalCount"
+    int64 TotalCount = 3;
+    // @gotags: bson:"totalPage" json:"totalPage"
+    int64 TotalPage  = 4;
+}
+
+// Projects结构体
+message Projects {
+    // @gotags: bson:",inline" json:"page"
+    Page page = 1;
+    // @gotags: bson:",inline" json:"data"
+    ProjectData Data = 2;
+}
+
+// ProjectData结构体
+message ProjectData {
+    // @gotags: bson:"creation_time" json:"creation_time"
+    string CreationTime = 1;
+    // @gotags: bson:"current_user_role_id" json:"current_user_role_id"
+    int64 CurrentUserRoleID = 2;
+    // @gotags: bson:"current_user_role_ids" json:"current_user_role_ids"
+    repeated int64 CurrentUserRoleIds = 3;
+    // @gotags: bson:"cve_allowlist" json:"cve_allowlist"
+    CveAllowlist CveAllowlist = 4;
+    // @gotags: bson:"metadata" json:"metadata"
+    Metadata Metadata = 5;
+    // @gotags: bson:"name" json:"name"
+    string Name = 6;
+    // @gotags: bson:"owner_id" json:"owner_id"
+    int64 OwnerID = 7;
+    // @gotags: bson:"owner_name" json:"owner_name"
+    string OwnerName = 8;
+    // @gotags: bson:"project_id" json:"project_id"
+    int64 ProjectID = 9;
+    // @gotags: bson:"repo_count" json:"repo_count"
+    int64 RepoCount = 10;
+    // @gotags: bson:"update_time" json:"update_time"
+    string UpdateTime = 11;
+}
+
+// CveAllowlist结构体
+message CveAllowlist {
+   // @gotags: bson:"creation_time" json:"creation_time"
+   string CreationTime = 1;
+   // @gotags: bson:"id" json:"id"
+   int64 ID = 2;
+   // @gotags: bson:"items" json:"items"
+   repeated string Items = 3;
+   // @gotags: bson:"project_id" json:"project_id"
+   int64 ProjectID = 4;
+   // @gotags: bson:"update_time" json:"update_time"
+   string UpdateTime = 5;
+}
+
+// Metadata结构体
+message Metadata {
+    // @gotags: bson:"public" json:"public"
+    string Public = 1;
+}

@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package codehorse.mkube.harbor;
+
+option go_package = "github.com/solodba/devcloud/mkube/apps/harbor";
+
+// 导入外部包
+import "apps/harbor/pb/harbor.proto";
+
+// Harbor相关功能接口
+service RPC {
+    // 获取Harbor Projects
+    rpc QueryProjects(QueryProjectsRequest) returns(Projects);
+}
+
+// QueryProjectsRequest结构体
+message QueryProjectsRequest {
+    // @gotags: bson:"curpage" json:"curpage"
+    int64 CurPage = 1;
+    // @gotags: bson:"pagesize" json:"pagesize"
+    int64 PageSize = 2;
+    // @gotags: bson:"keyword" json:"keyword"
+    string Keyword = 3;
+}

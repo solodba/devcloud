@@ -5,6 +5,7 @@ import (
 	_ "github.com/solodba/devcloud/mkube/apps/cronjob/impl"
 	_ "github.com/solodba/devcloud/mkube/apps/daemonset/impl"
 	_ "github.com/solodba/devcloud/mkube/apps/deployment/impl"
+	_ "github.com/solodba/devcloud/mkube/apps/harbor/impl"
 	_ "github.com/solodba/devcloud/mkube/apps/ingress/impl"
 	_ "github.com/solodba/devcloud/mkube/apps/job/impl"
 	_ "github.com/solodba/devcloud/mkube/apps/namespace/impl"

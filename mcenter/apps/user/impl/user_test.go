@@ -9,8 +9,8 @@ import (
 
 func TestCreateUser(t *testing.T) {
 	req := user.NewCreateUserRequest()
-	req.Username = "test6"
-	req.Password = "test6"
+	req.Username = "test"
+	req.Password = "test"
 	userIns, err := svc.CreateUser(ctx, req)
 	if err != nil {
 		t.Fatal(err)

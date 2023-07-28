@@ -21,7 +21,7 @@ message Projects {
     // @gotags: bson:",inline" json:"page"
     Page page = 1;
     // @gotags: bson:",inline" json:"data"
-    ProjectData Data = 2;
+    repeated ProjectData Data = 2;
 }
 
 // ProjectData结构体

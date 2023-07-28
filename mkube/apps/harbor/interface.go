@@ -10,3 +10,8 @@ type Service interface {
 	// 嵌套Harbor GRPC接口
 	RPCServer
 }
+
+// QueryProjectsRequest初始化函数
+func NewQueryProjectsRequest() *QueryProjectsRequest {
+	return &QueryProjectsRequest{}
+}

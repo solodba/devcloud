@@ -77,3 +77,8 @@ func NewQueryRepositoriesRequestFromRestful(r *restful.Request) (*QueryRepositor
 		Keyword:     r.QueryParameter("keyword"),
 	}, nil
 }
+
+// QueryArtifactsRequest初始化函数
+func NewQueryArtifactsRequest() *QueryArtifactsRequest {
+	return &QueryArtifactsRequest{}
+}

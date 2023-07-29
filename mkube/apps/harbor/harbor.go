@@ -42,3 +42,35 @@ func NewRepositories(curPage, pageSize int64) *Repositories {
 func NewRepositoryData() *RepositoryData {
 	return &RepositoryData{}
 }
+
+// Artifacts初始化函数
+func NewArtifacts(curPage, pageSize int64) *Artifacts {
+	page := NewPage()
+	page.CurrentPage = curPage
+	page.PageSize = pageSize
+	return &Artifacts{
+		Page: page,
+		Data: make([]*ArtifactData, 0),
+	}
+}
+
+// ArtifactData初始化函数
+func NewArtifactData() *ArtifactData {
+	return &ArtifactData{
+		Accessories:   &Accessories{},
+		AdditionLinks: &AdditionLinks{},
+		ExtraAttrs: &ExtraAttrs{
+			Config: &Config{
+				Entrypoint: make([]string, 0),
+				Env:        make([]string, 0),
+				ExposedPorts: &ExposedPorts{
+					Tcp: &Tcp{},
+				},
+				Labels: &Labels{},
+			},
+		},
+		Labels:     &ArtifactDataLabels{},
+		References: &References{},
+		Tags:       make([]*Tags, 0),
+	}
+}

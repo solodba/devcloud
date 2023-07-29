@@ -13,6 +13,8 @@ service RPC {
     rpc QueryProjects(QueryProjectsRequest) returns(Projects);
     // 获取Harbor Respositories
     rpc QueryRepositories(QueryRepositoriesRequest) returns(Repositories);
+    // 获取Harbor Artifacts
+    rpc QueryArtifacts(QueryArtifactsRequest) returns(Artifacts);
 }
 
 // QueryProjectsRequest结构体
@@ -35,4 +37,18 @@ message QueryRepositoriesRequest {
     int64 PageSize = 3;
     // @gotags: bson:"keyword" json:"keyword"
     string Keyword = 4;
+}
+
+// QueryArtifactsRequest结构体
+message QueryArtifactsRequest {
+    // @gotags: bson:"curpage" json:"curpage"
+    int64 CurPage = 1;
+    // @gotags: bson:"pagesize" json:"pagesize"
+    int64 PageSize = 2;
+    // @gotags: bson:"keyword" json:"keyword"
+    string Keyword = 3;
+    // @gotags: bson:"projectName" json:"projectName"
+    string ProjectName = 4;
+    // @gotags: bson:"repositoryName" json:"repositoryName"
+    string RepositoryName = 5;
 }

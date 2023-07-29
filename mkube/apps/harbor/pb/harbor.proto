@@ -95,3 +95,149 @@ message RepositoryData {
     // @gotags: bson:"update_time" json:"update_time"
     string UpdateTime = 7;
 }
+
+// Artifacts结构体
+message Artifacts {
+    // @gotags: bson:",inline" json:"page"
+    Page page = 1;
+    // @gotags: bson:",inline" json:"data"
+    repeated ArtifactData Data = 2;
+}
+
+// ArtifactData结构体
+message ArtifactData {
+    // @gotags: bson:"accessories" json:"accessories"
+    Accessories Accessories = 1;
+    // @gotags: bson:"host" json:"host"
+    string Host = 2;
+    // @gotags: bson:"addition_links" json:"addition_links"
+    AdditionLinks AdditionLinks = 3;
+    // @gotags: bson:"digest" json:"digest"
+    string Digest = 4;
+    // @gotags: bson:"extra_attrs" json:"extra_attrs"
+    ExtraAttrs ExtraAttrs = 5;
+    // @gotags: bson:"icon" json:"icon"
+    string Icon = 6;
+    // @gotags: bson:"id" json:"id"
+    int64 Id = 7;
+    // @gotags: bson:"labels" json:"labels"
+    ArtifactDataLabels Labels = 8;
+    // @gotags: bson:"manifest_media_type" json:"manifest_media_type"
+    string ManifestMediaType = 9;
+    // @gotags: bson:"media_type" json:"media_type"
+    string MediaType = 10;
+    // @gotags: bson:"project_id" json:"project_id"
+    int64 ProjectId = 11;
+    // @gotags: bson:"pull_time" json:"pull_time"
+    string PullTime = 12;
+    // @gotags: bson:"push_time" json:"push_time"
+    string PushTime = 13;
+    // @gotags: bson:"references" json:"references"
+    References References = 14;
+    // @gotags: bson:"repository_id" json:"repository_id"
+    int64 RepositoryId = 15;
+    // @gotags: bson:"size" json:"size"
+    int64 Size = 16;
+    // @gotags: bson:"tags" json:"tags"
+    repeated Tags Tags = 17;
+    // @gotags: bson:"type" json:"type"
+    string Type = 18;
+}
+
+// Tags结构体
+message Tags {
+    // @gotags: bson:"artifact_id" json:"artifact_id"
+    int64 ArtifactId = 1;
+    // @gotags: bson:"id" json:"id"
+    int64 Id = 2;
+    // @gotags: bson:"immutable" json:"immutable"
+    bool Immutable = 3;
+    // @gotags: bson:"name" json:"name"
+    string Name = 4;
+    // @gotags: bson:"pull_time" json:"pull_time"
+    string PullTime = 5;
+    // @gotags: bson:"push_time" json:"push_time"
+    string PushTime = 6;
+    // @gotags: bson:"repository_id" json:"repository_id"
+    int64 RepositoryId  = 7;
+    // @gotags: bson:"signed" json:"signed"
+    bool Signed = 8;
+}
+
+// References结构体
+message References {
+}
+
+// ArtifactDataLabels结构体
+message ArtifactDataLabels {
+}
+
+// ExtraAttrs结构体
+message ExtraAttrs {
+    // @gotags: bson:"architecture" json:"architecture"
+    string Architecture = 1;
+    // @gotags: bson:"author" json:"author"
+    string Author = 2;
+    // @gotags: bson:"config" json:"config"
+    Config Config = 3;
+    // @gotags: bson:"created" json:"created"
+    string Created = 4;
+    // @gotags: bson:"os" json:"os"
+    string Os = 5;
+}
+
+// Config结构体
+message Config {
+    // @gotags: bson:"Entrypoint" json:"Entrypoint"
+    repeated string Entrypoint = 1;
+    // @gotags: bson:"Env" json:"Env"
+    repeated string Env = 2;
+    // @gotags: bson:"ExposedPorts" json:"ExposedPorts"
+    ExposedPorts ExposedPorts = 3;
+    // @gotags: bson:"Labels" json:"Labels"
+    Labels Labels = 4;
+    // @gotags: bson:"WorkingDir" json:"WorkingDir"
+    string WorkingDir = 5;
+}
+
+// Labels结构体
+message Labels {
+    // @gotags: bson:"MAINTAINER" json:"MAINTAINER"
+    string MAINTAINER = 1;
+    // @gotags: bson:"org.opencontainers.image.created" json:"org.opencontainers.image.created"
+    string OrgOpencontainersImageCreated = 2;
+    // @gotags: bson:"org.opencontainers.image.revision" json:"org.opencontainers.image.revision"
+    string OrgOpencontainersImageRevision = 3;
+    // @gotags: bson:"org.opencontainers.image.source" json:"org.opencontainers.image.source"
+    string OrgOpencontainersImageSource = 4;
+    // @gotags: bson:"org.opencontainers.image.url" json:"org.opencontainers.image.url"
+    string OrgOpencontainersImageUrl = 5;
+}
+
+// ExposedPorts结构体
+message ExposedPorts {
+    // @gotags: bson:"8082/tcp" json:"8082/tcp"
+    Tcp Tcp = 1;
+}
+
+// Tcp 结构体
+message Tcp {
+}
+
+// Accessories结构体
+message Accessories {
+}
+
+// AdditionLinks结构体
+message AdditionLinks {
+    // @gotags: bson:"build_history" json:"build_history"
+    BuildHistory BuildHistory = 1;
+}
+
+// BuildHistory结构体
+message BuildHistory {
+    // @gotags: bson:"absolute" json:"absolute"
+    bool Absolute = 1;
+    // @gotags: bson:"href" json:"href"
+    string Href = 2;
+}

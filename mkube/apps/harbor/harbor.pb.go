@@ -588,6 +588,945 @@ func (x *RepositoryData) GetUpdateTime() string {
 	return ""
 }
 
+// Artifacts结构体
+type Artifacts struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// @gotags: bson:",inline" json:"page"
+	Page *Page `protobuf:"bytes,1,opt,name=page,proto3" json:"page" bson:",inline"`
+	// @gotags: bson:",inline" json:"data"
+	Data []*ArtifactData `protobuf:"bytes,2,rep,name=Data,proto3" json:"data" bson:",inline"`
+}
+
+func (x *Artifacts) Reset() {
+	*x = Artifacts{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_apps_harbor_pb_harbor_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Artifacts) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Artifacts) ProtoMessage() {}
+
+func (x *Artifacts) ProtoReflect() protoreflect.Message {
+	mi := &file_apps_harbor_pb_harbor_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Artifacts.ProtoReflect.Descriptor instead.
+func (*Artifacts) Descriptor() ([]byte, []int) {
+	return file_apps_harbor_pb_harbor_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *Artifacts) GetPage() *Page {
+	if x != nil {
+		return x.Page
+	}
+	return nil
+}
+
+func (x *Artifacts) GetData() []*ArtifactData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+// ArtifactData结构体
+type ArtifactData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// @gotags: bson:"accessories" json:"accessories"
+	Accessories *Accessories `protobuf:"bytes,1,opt,name=Accessories,proto3" json:"accessories" bson:"accessories"`
+	// @gotags: bson:"host" json:"host"
+	Host string `protobuf:"bytes,2,opt,name=Host,proto3" json:"host" bson:"host"`
+	// @gotags: bson:"addition_links" json:"addition_links"
+	AdditionLinks *AdditionLinks `protobuf:"bytes,3,opt,name=AdditionLinks,proto3" json:"addition_links" bson:"addition_links"`
+	// @gotags: bson:"digest" json:"digest"
+	Digest string `protobuf:"bytes,4,opt,name=Digest,proto3" json:"digest" bson:"digest"`
+	// @gotags: bson:"extra_attrs" json:"extra_attrs"
+	ExtraAttrs *ExtraAttrs `protobuf:"bytes,5,opt,name=ExtraAttrs,proto3" json:"extra_attrs" bson:"extra_attrs"`
+	// @gotags: bson:"icon" json:"icon"
+	Icon string `protobuf:"bytes,6,opt,name=Icon,proto3" json:"icon" bson:"icon"`
+	// @gotags: bson:"id" json:"id"
+	Id int64 `protobuf:"varint,7,opt,name=Id,proto3" json:"id" bson:"id"`
+	// @gotags: bson:"labels" json:"labels"
+	Labels *ArtifactDataLabels `protobuf:"bytes,8,opt,name=Labels,proto3" json:"labels" bson:"labels"`
+	// @gotags: bson:"manifest_media_type" json:"manifest_media_type"
+	ManifestMediaType string `protobuf:"bytes,9,opt,name=ManifestMediaType,proto3" json:"manifest_media_type" bson:"manifest_media_type"`
+	// @gotags: bson:"media_type" json:"media_type"
+	MediaType string `protobuf:"bytes,10,opt,name=MediaType,proto3" json:"media_type" bson:"media_type"`
+	// @gotags: bson:"project_id" json:"project_id"
+	ProjectId int64 `protobuf:"varint,11,opt,name=ProjectId,proto3" json:"project_id" bson:"project_id"`
+	// @gotags: bson:"pull_time" json:"pull_time"
+	PullTime string `protobuf:"bytes,12,opt,name=PullTime,proto3" json:"pull_time" bson:"pull_time"`
+	// @gotags: bson:"push_time" json:"push_time"
+	PushTime string `protobuf:"bytes,13,opt,name=PushTime,proto3" json:"push_time" bson:"push_time"`
+	// @gotags: bson:"references" json:"references"
+	References *References `protobuf:"bytes,14,opt,name=References,proto3" json:"references" bson:"references"`
+	// @gotags: bson:"repository_id" json:"repository_id"
+	RepositoryId int64 `protobuf:"varint,15,opt,name=RepositoryId,proto3" json:"repository_id" bson:"repository_id"`
+	// @gotags: bson:"size" json:"size"
+	Size int64 `protobuf:"varint,16,opt,name=Size,proto3" json:"size" bson:"size"`
+	// @gotags: bson:"tags" json:"tags"
+	Tags []*Tags `protobuf:"bytes,17,rep,name=Tags,proto3" json:"tags" bson:"tags"`
+	// @gotags: bson:"type" json:"type"
+	Type string `protobuf:"bytes,18,opt,name=Type,proto3" json:"type" bson:"type"`
+}
+
+func (x *ArtifactData) Reset() {
+	*x = ArtifactData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_apps_harbor_pb_harbor_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ArtifactData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ArtifactData) ProtoMessage() {}
+
+func (x *ArtifactData) ProtoReflect() protoreflect.Message {
+	mi := &file_apps_harbor_pb_harbor_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ArtifactData.ProtoReflect.Descriptor instead.
+func (*ArtifactData) Descriptor() ([]byte, []int) {
+	return file_apps_harbor_pb_harbor_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *ArtifactData) GetAccessories() *Accessories {
+	if x != nil {
+		return x.Accessories
+	}
+	return nil
+}
+
+func (x *ArtifactData) GetHost() string {
+	if x != nil {
+		return x.Host
+	}
+	return ""
+}
+
+func (x *ArtifactData) GetAdditionLinks() *AdditionLinks {
+	if x != nil {
+		return x.AdditionLinks
+	}
+	return nil
+}
+
+func (x *ArtifactData) GetDigest() string {
+	if x != nil {
+		return x.Digest
+	}
+	return ""
+}
+
+func (x *ArtifactData) GetExtraAttrs() *ExtraAttrs {
+	if x != nil {
+		return x.ExtraAttrs
+	}
+	return nil
+}
+
+func (x *ArtifactData) GetIcon() string {
+	if x != nil {
+		return x.Icon
+	}
+	return ""
+}
+
+func (x *ArtifactData) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *ArtifactData) GetLabels() *ArtifactDataLabels {
+	if x != nil {
+		return x.Labels
+	}
+	return nil
+}
+
+func (x *ArtifactData) GetManifestMediaType() string {
+	if x != nil {
+		return x.ManifestMediaType
+	}
+	return ""
+}
+
+func (x *ArtifactData) GetMediaType() string {
+	if x != nil {
+		return x.MediaType
+	}
+	return ""
+}
+
+func (x *ArtifactData) GetProjectId() int64 {
+	if x != nil {
+		return x.ProjectId
+	}
+	return 0
+}
+
+func (x *ArtifactData) GetPullTime() string {
+	if x != nil {
+		return x.PullTime
+	}
+	return ""
+}
+
+func (x *ArtifactData) GetPushTime() string {
+	if x != nil {
+		return x.PushTime
+	}
+	return ""
+}
+
+func (x *ArtifactData) GetReferences() *References {
+	if x != nil {
+		return x.References
+	}
+	return nil
+}
+
+func (x *ArtifactData) GetRepositoryId() int64 {
+	if x != nil {
+		return x.RepositoryId
+	}
+	return 0
+}
+
+func (x *ArtifactData) GetSize() int64 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+func (x *ArtifactData) GetTags() []*Tags {
+	if x != nil {
+		return x.Tags
+	}
+	return nil
+}
+
+func (x *ArtifactData) GetType() string {
+	if x != nil {
+		return x.Type
+	}
+	return ""
+}
+
+// Tags结构体
+type Tags struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// @gotags: bson:"artifact_id" json:"artifact_id"
+	ArtifactId int64 `protobuf:"varint,1,opt,name=ArtifactId,proto3" json:"artifact_id" bson:"artifact_id"`
+	// @gotags: bson:"id" json:"id"
+	Id int64 `protobuf:"varint,2,opt,name=Id,proto3" json:"id" bson:"id"`
+	// @gotags: bson:"immutable" json:"immutable"
+	Immutable bool `protobuf:"varint,3,opt,name=Immutable,proto3" json:"immutable" bson:"immutable"`
+	// @gotags: bson:"name" json:"name"
+	Name string `protobuf:"bytes,4,opt,name=Name,proto3" json:"name" bson:"name"`
+	// @gotags: bson:"pull_time" json:"pull_time"
+	PullTime string `protobuf:"bytes,5,opt,name=PullTime,proto3" json:"pull_time" bson:"pull_time"`
+	// @gotags: bson:"push_time" json:"push_time"
+	PushTime string `protobuf:"bytes,6,opt,name=PushTime,proto3" json:"push_time" bson:"push_time"`
+	// @gotags: bson:"repository_id" json:"repository_id"
+	RepositoryId int64 `protobuf:"varint,7,opt,name=RepositoryId,proto3" json:"repository_id" bson:"repository_id"`
+	// @gotags: bson:"signed" json:"signed"
+	Signed bool `protobuf:"varint,8,opt,name=Signed,proto3" json:"signed" bson:"signed"`
+}
+
+func (x *Tags) Reset() {
+	*x = Tags{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_apps_harbor_pb_harbor_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Tags) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Tags) ProtoMessage() {}
+
+func (x *Tags) ProtoReflect() protoreflect.Message {
+	mi := &file_apps_harbor_pb_harbor_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Tags.ProtoReflect.Descriptor instead.
+func (*Tags) Descriptor() ([]byte, []int) {
+	return file_apps_harbor_pb_harbor_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *Tags) GetArtifactId() int64 {
+	if x != nil {
+		return x.ArtifactId
+	}
+	return 0
+}
+
+func (x *Tags) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *Tags) GetImmutable() bool {
+	if x != nil {
+		return x.Immutable
+	}
+	return false
+}
+
+func (x *Tags) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *Tags) GetPullTime() string {
+	if x != nil {
+		return x.PullTime
+	}
+	return ""
+}
+
+func (x *Tags) GetPushTime() string {
+	if x != nil {
+		return x.PushTime
+	}
+	return ""
+}
+
+func (x *Tags) GetRepositoryId() int64 {
+	if x != nil {
+		return x.RepositoryId
+	}
+	return 0
+}
+
+func (x *Tags) GetSigned() bool {
+	if x != nil {
+		return x.Signed
+	}
+	return false
+}
+
+// References结构体
+type References struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *References) Reset() {
+	*x = References{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_apps_harbor_pb_harbor_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *References) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*References) ProtoMessage() {}
+
+func (x *References) ProtoReflect() protoreflect.Message {
+	mi := &file_apps_harbor_pb_harbor_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use References.ProtoReflect.Descriptor instead.
+func (*References) Descriptor() ([]byte, []int) {
+	return file_apps_harbor_pb_harbor_proto_rawDescGZIP(), []int{10}
+}
+
+// ArtifactDataLabels结构体
+type ArtifactDataLabels struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *ArtifactDataLabels) Reset() {
+	*x = ArtifactDataLabels{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_apps_harbor_pb_harbor_proto_msgTypes[11]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ArtifactDataLabels) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ArtifactDataLabels) ProtoMessage() {}
+
+func (x *ArtifactDataLabels) ProtoReflect() protoreflect.Message {
+	mi := &file_apps_harbor_pb_harbor_proto_msgTypes[11]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ArtifactDataLabels.ProtoReflect.Descriptor instead.
+func (*ArtifactDataLabels) Descriptor() ([]byte, []int) {
+	return file_apps_harbor_pb_harbor_proto_rawDescGZIP(), []int{11}
+}
+
+// ExtraAttrs结构体
+type ExtraAttrs struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// @gotags: bson:"architecture" json:"architecture"
+	Architecture string `protobuf:"bytes,1,opt,name=Architecture,proto3" json:"architecture" bson:"architecture"`
+	// @gotags: bson:"author" json:"author"
+	Author string `protobuf:"bytes,2,opt,name=Author,proto3" json:"author" bson:"author"`
+	// @gotags: bson:"config" json:"config"
+	Config *Config `protobuf:"bytes,3,opt,name=Config,proto3" json:"config" bson:"config"`
+	// @gotags: bson:"created" json:"created"
+	Created string `protobuf:"bytes,4,opt,name=Created,proto3" json:"created" bson:"created"`
+	// @gotags: bson:"os" json:"os"
+	Os string `protobuf:"bytes,5,opt,name=Os,proto3" json:"os" bson:"os"`
+}
+
+func (x *ExtraAttrs) Reset() {
+	*x = ExtraAttrs{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_apps_harbor_pb_harbor_proto_msgTypes[12]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ExtraAttrs) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExtraAttrs) ProtoMessage() {}
+
+func (x *ExtraAttrs) ProtoReflect() protoreflect.Message {
+	mi := &file_apps_harbor_pb_harbor_proto_msgTypes[12]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExtraAttrs.ProtoReflect.Descriptor instead.
+func (*ExtraAttrs) Descriptor() ([]byte, []int) {
+	return file_apps_harbor_pb_harbor_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *ExtraAttrs) GetArchitecture() string {
+	if x != nil {
+		return x.Architecture
+	}
+	return ""
+}
+
+func (x *ExtraAttrs) GetAuthor() string {
+	if x != nil {
+		return x.Author
+	}
+	return ""
+}
+
+func (x *ExtraAttrs) GetConfig() *Config {
+	if x != nil {
+		return x.Config
+	}
+	return nil
+}
+
+func (x *ExtraAttrs) GetCreated() string {
+	if x != nil {
+		return x.Created
+	}
+	return ""
+}
+
+func (x *ExtraAttrs) GetOs() string {
+	if x != nil {
+		return x.Os
+	}
+	return ""
+}
+
+// Config结构体
+type Config struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// @gotags: bson:"Entrypoint" json:"Entrypoint"
+	Entrypoint []string `protobuf:"bytes,1,rep,name=Entrypoint,proto3" json:"Entrypoint" bson:"Entrypoint"`
+	// @gotags: bson:"Env" json:"Env"
+	Env []string `protobuf:"bytes,2,rep,name=Env,proto3" json:"Env" bson:"Env"`
+	// @gotags: bson:"ExposedPorts" json:"ExposedPorts"
+	ExposedPorts *ExposedPorts `protobuf:"bytes,3,opt,name=ExposedPorts,proto3" json:"ExposedPorts" bson:"ExposedPorts"`
+	// @gotags: bson:"Labels" json:"Labels"
+	Labels *Labels `protobuf:"bytes,4,opt,name=Labels,proto3" json:"Labels" bson:"Labels"`
+	// @gotags: bson:"WorkingDir" json:"WorkingDir"
+	WorkingDir string `protobuf:"bytes,5,opt,name=WorkingDir,proto3" json:"WorkingDir" bson:"WorkingDir"`
+}
+
+func (x *Config) Reset() {
+	*x = Config{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_apps_harbor_pb_harbor_proto_msgTypes[13]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Config) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Config) ProtoMessage() {}
+
+func (x *Config) ProtoReflect() protoreflect.Message {
+	mi := &file_apps_harbor_pb_harbor_proto_msgTypes[13]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Config.ProtoReflect.Descriptor instead.
+func (*Config) Descriptor() ([]byte, []int) {
+	return file_apps_harbor_pb_harbor_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *Config) GetEntrypoint() []string {
+	if x != nil {
+		return x.Entrypoint
+	}
+	return nil
+}
+
+func (x *Config) GetEnv() []string {
+	if x != nil {
+		return x.Env
+	}
+	return nil
+}
+
+func (x *Config) GetExposedPorts() *ExposedPorts {
+	if x != nil {
+		return x.ExposedPorts
+	}
+	return nil
+}
+
+func (x *Config) GetLabels() *Labels {
+	if x != nil {
+		return x.Labels
+	}
+	return nil
+}
+
+func (x *Config) GetWorkingDir() string {
+	if x != nil {
+		return x.WorkingDir
+	}
+	return ""
+}
+
+// Labels结构体
+type Labels struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// @gotags: bson:"MAINTAINER" json:"MAINTAINER"
+	MAINTAINER string `protobuf:"bytes,1,opt,name=MAINTAINER,proto3" json:"MAINTAINER" bson:"MAINTAINER"`
+	// @gotags: bson:"org.opencontainers.image.created" json:"org.opencontainers.image.created"
+	OrgOpencontainersImageCreated string `protobuf:"bytes,2,opt,name=OrgOpencontainersImageCreated,proto3" json:"org.opencontainers.image.created" bson:"org.opencontainers.image.created"`
+	// @gotags: bson:"org.opencontainers.image.revision" json:"org.opencontainers.image.revision"
+	OrgOpencontainersImageRevision string `protobuf:"bytes,3,opt,name=OrgOpencontainersImageRevision,proto3" json:"org.opencontainers.image.revision" bson:"org.opencontainers.image.revision"`
+	// @gotags: bson:"org.opencontainers.image.source" json:"org.opencontainers.image.source"
+	OrgOpencontainersImageSource string `protobuf:"bytes,4,opt,name=OrgOpencontainersImageSource,proto3" json:"org.opencontainers.image.source" bson:"org.opencontainers.image.source"`
+	// @gotags: bson:"org.opencontainers.image.url" json:"org.opencontainers.image.url"
+	OrgOpencontainersImageUrl string `protobuf:"bytes,5,opt,name=OrgOpencontainersImageUrl,proto3" json:"org.opencontainers.image.url" bson:"org.opencontainers.image.url"`
+}
+
+func (x *Labels) Reset() {
+	*x = Labels{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_apps_harbor_pb_harbor_proto_msgTypes[14]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Labels) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Labels) ProtoMessage() {}
+
+func (x *Labels) ProtoReflect() protoreflect.Message {
+	mi := &file_apps_harbor_pb_harbor_proto_msgTypes[14]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Labels.ProtoReflect.Descriptor instead.
+func (*Labels) Descriptor() ([]byte, []int) {
+	return file_apps_harbor_pb_harbor_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *Labels) GetMAINTAINER() string {
+	if x != nil {
+		return x.MAINTAINER
+	}
+	return ""
+}
+
+func (x *Labels) GetOrgOpencontainersImageCreated() string {
+	if x != nil {
+		return x.OrgOpencontainersImageCreated
+	}
+	return ""
+}
+
+func (x *Labels) GetOrgOpencontainersImageRevision() string {
+	if x != nil {
+		return x.OrgOpencontainersImageRevision
+	}
+	return ""
+}
+
+func (x *Labels) GetOrgOpencontainersImageSource() string {
+	if x != nil {
+		return x.OrgOpencontainersImageSource
+	}
+	return ""
+}
+
+func (x *Labels) GetOrgOpencontainersImageUrl() string {
+	if x != nil {
+		return x.OrgOpencontainersImageUrl
+	}
+	return ""
+}
+
+// ExposedPorts结构体
+type ExposedPorts struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// @gotags: bson:"8082/tcp" json:"8082/tcp"
+	Tcp *Tcp `protobuf:"bytes,1,opt,name=Tcp,proto3" json:"8082/tcp" bson:"8082/tcp"`
+}
+
+func (x *ExposedPorts) Reset() {
+	*x = ExposedPorts{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_apps_harbor_pb_harbor_proto_msgTypes[15]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ExposedPorts) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExposedPorts) ProtoMessage() {}
+
+func (x *ExposedPorts) ProtoReflect() protoreflect.Message {
+	mi := &file_apps_harbor_pb_harbor_proto_msgTypes[15]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExposedPorts.ProtoReflect.Descriptor instead.
+func (*ExposedPorts) Descriptor() ([]byte, []int) {
+	return file_apps_harbor_pb_harbor_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *ExposedPorts) GetTcp() *Tcp {
+	if x != nil {
+		return x.Tcp
+	}
+	return nil
+}
+
+// Tcp 结构体
+type Tcp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *Tcp) Reset() {
+	*x = Tcp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_apps_harbor_pb_harbor_proto_msgTypes[16]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Tcp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Tcp) ProtoMessage() {}
+
+func (x *Tcp) ProtoReflect() protoreflect.Message {
+	mi := &file_apps_harbor_pb_harbor_proto_msgTypes[16]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Tcp.ProtoReflect.Descriptor instead.
+func (*Tcp) Descriptor() ([]byte, []int) {
+	return file_apps_harbor_pb_harbor_proto_rawDescGZIP(), []int{16}
+}
+
+// Accessories结构体
+type Accessories struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *Accessories) Reset() {
+	*x = Accessories{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_apps_harbor_pb_harbor_proto_msgTypes[17]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Accessories) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Accessories) ProtoMessage() {}
+
+func (x *Accessories) ProtoReflect() protoreflect.Message {
+	mi := &file_apps_harbor_pb_harbor_proto_msgTypes[17]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Accessories.ProtoReflect.Descriptor instead.
+func (*Accessories) Descriptor() ([]byte, []int) {
+	return file_apps_harbor_pb_harbor_proto_rawDescGZIP(), []int{17}
+}
+
+// AdditionLinks结构体
+type AdditionLinks struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// @gotags: bson:"build_history" json:"build_history"
+	BuildHistory *BuildHistory `protobuf:"bytes,1,opt,name=BuildHistory,proto3" json:"build_history" bson:"build_history"`
+}
+
+func (x *AdditionLinks) Reset() {
+	*x = AdditionLinks{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_apps_harbor_pb_harbor_proto_msgTypes[18]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AdditionLinks) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AdditionLinks) ProtoMessage() {}
+
+func (x *AdditionLinks) ProtoReflect() protoreflect.Message {
+	mi := &file_apps_harbor_pb_harbor_proto_msgTypes[18]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AdditionLinks.ProtoReflect.Descriptor instead.
+func (*AdditionLinks) Descriptor() ([]byte, []int) {
+	return file_apps_harbor_pb_harbor_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *AdditionLinks) GetBuildHistory() *BuildHistory {
+	if x != nil {
+		return x.BuildHistory
+	}
+	return nil
+}
+
+// BuildHistory结构体
+type BuildHistory struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// @gotags: bson:"absolute" json:"absolute"
+	Absolute bool `protobuf:"varint,1,opt,name=Absolute,proto3" json:"absolute" bson:"absolute"`
+	// @gotags: bson:"href" json:"href"
+	Href string `protobuf:"bytes,2,opt,name=Href,proto3" json:"href" bson:"href"`
+}
+
+func (x *BuildHistory) Reset() {
+	*x = BuildHistory{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_apps_harbor_pb_harbor_proto_msgTypes[19]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *BuildHistory) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BuildHistory) ProtoMessage() {}
+
+func (x *BuildHistory) ProtoReflect() protoreflect.Message {
+	mi := &file_apps_harbor_pb_harbor_proto_msgTypes[19]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BuildHistory.ProtoReflect.Descriptor instead.
+func (*BuildHistory) Descriptor() ([]byte, []int) {
+	return file_apps_harbor_pb_harbor_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *BuildHistory) GetAbsolute() bool {
+	if x != nil {
+		return x.Absolute
+	}
+	return false
+}
+
+func (x *BuildHistory) GetHref() string {
+	if x != nil {
+		return x.Href
+	}
+	return ""
+}
+
 var File_apps_harbor_pb_harbor_proto protoreflect.FileDescriptor
 
 var file_apps_harbor_pb_harbor_proto_rawDesc = []byte{
@@ -671,11 +1610,140 @@ var file_apps_harbor_pb_harbor_proto_rawDesc = []byte{
 	0x09, 0x50, 0x75, 0x6c, 0x6c, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x06, 0x20, 0x01, 0x28, 0x03,
 	0x52, 0x09, 0x50, 0x75, 0x6c, 0x6c, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x1e, 0x0a, 0x0a, 0x55,
 	0x70, 0x64, 0x61, 0x74, 0x65, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x0a, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x54, 0x69, 0x6d, 0x65, 0x42, 0x2f, 0x5a, 0x2d, 0x67,
-	0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x73, 0x6f, 0x6c, 0x6f, 0x64, 0x62,
-	0x61, 0x2f, 0x64, 0x65, 0x76, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x6d, 0x6b, 0x75, 0x62, 0x65,
-	0x2f, 0x61, 0x70, 0x70, 0x73, 0x2f, 0x68, 0x61, 0x72, 0x62, 0x6f, 0x72, 0x62, 0x06, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x33,
+	0x0a, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x54, 0x69, 0x6d, 0x65, 0x22, 0x77, 0x0a, 0x09, 0x41,
+	0x72, 0x74, 0x69, 0x66, 0x61, 0x63, 0x74, 0x73, 0x12, 0x30, 0x0a, 0x04, 0x70, 0x61, 0x67, 0x65,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x63, 0x6f, 0x64, 0x65, 0x68, 0x6f, 0x72,
+	0x73, 0x65, 0x2e, 0x6d, 0x6b, 0x75, 0x62, 0x65, 0x2e, 0x68, 0x61, 0x72, 0x62, 0x6f, 0x72, 0x2e,
+	0x50, 0x61, 0x67, 0x65, 0x52, 0x04, 0x70, 0x61, 0x67, 0x65, 0x12, 0x38, 0x0a, 0x04, 0x44, 0x61,
+	0x74, 0x61, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x24, 0x2e, 0x63, 0x6f, 0x64, 0x65, 0x68,
+	0x6f, 0x72, 0x73, 0x65, 0x2e, 0x6d, 0x6b, 0x75, 0x62, 0x65, 0x2e, 0x68, 0x61, 0x72, 0x62, 0x6f,
+	0x72, 0x2e, 0x41, 0x72, 0x74, 0x69, 0x66, 0x61, 0x63, 0x74, 0x44, 0x61, 0x74, 0x61, 0x52, 0x04,
+	0x44, 0x61, 0x74, 0x61, 0x22, 0xde, 0x05, 0x0a, 0x0c, 0x41, 0x72, 0x74, 0x69, 0x66, 0x61, 0x63,
+	0x74, 0x44, 0x61, 0x74, 0x61, 0x12, 0x45, 0x0a, 0x0b, 0x41, 0x63, 0x63, 0x65, 0x73, 0x73, 0x6f,
+	0x72, 0x69, 0x65, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x23, 0x2e, 0x63, 0x6f, 0x64,
+	0x65, 0x68, 0x6f, 0x72, 0x73, 0x65, 0x2e, 0x6d, 0x6b, 0x75, 0x62, 0x65, 0x2e, 0x68, 0x61, 0x72,
+	0x62, 0x6f, 0x72, 0x2e, 0x41, 0x63, 0x63, 0x65, 0x73, 0x73, 0x6f, 0x72, 0x69, 0x65, 0x73, 0x52,
+	0x0b, 0x41, 0x63, 0x63, 0x65, 0x73, 0x73, 0x6f, 0x72, 0x69, 0x65, 0x73, 0x12, 0x12, 0x0a, 0x04,
+	0x48, 0x6f, 0x73, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x48, 0x6f, 0x73, 0x74,
+	0x12, 0x4b, 0x0a, 0x0d, 0x41, 0x64, 0x64, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x4c, 0x69, 0x6e, 0x6b,
+	0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x25, 0x2e, 0x63, 0x6f, 0x64, 0x65, 0x68, 0x6f,
+	0x72, 0x73, 0x65, 0x2e, 0x6d, 0x6b, 0x75, 0x62, 0x65, 0x2e, 0x68, 0x61, 0x72, 0x62, 0x6f, 0x72,
+	0x2e, 0x41, 0x64, 0x64, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x4c, 0x69, 0x6e, 0x6b, 0x73, 0x52, 0x0d,
+	0x41, 0x64, 0x64, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x4c, 0x69, 0x6e, 0x6b, 0x73, 0x12, 0x16, 0x0a,
+	0x06, 0x44, 0x69, 0x67, 0x65, 0x73, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x44,
+	0x69, 0x67, 0x65, 0x73, 0x74, 0x12, 0x42, 0x0a, 0x0a, 0x45, 0x78, 0x74, 0x72, 0x61, 0x41, 0x74,
+	0x74, 0x72, 0x73, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x63, 0x6f, 0x64, 0x65,
+	0x68, 0x6f, 0x72, 0x73, 0x65, 0x2e, 0x6d, 0x6b, 0x75, 0x62, 0x65, 0x2e, 0x68, 0x61, 0x72, 0x62,
+	0x6f, 0x72, 0x2e, 0x45, 0x78, 0x74, 0x72, 0x61, 0x41, 0x74, 0x74, 0x72, 0x73, 0x52, 0x0a, 0x45,
+	0x78, 0x74, 0x72, 0x61, 0x41, 0x74, 0x74, 0x72, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x49, 0x63, 0x6f,
+	0x6e, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x49, 0x63, 0x6f, 0x6e, 0x12, 0x0e, 0x0a,
+	0x02, 0x49, 0x64, 0x18, 0x07, 0x20, 0x01, 0x28, 0x03, 0x52, 0x02, 0x49, 0x64, 0x12, 0x42, 0x0a,
+	0x06, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x18, 0x08, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2a, 0x2e,
+	0x63, 0x6f, 0x64, 0x65, 0x68, 0x6f, 0x72, 0x73, 0x65, 0x2e, 0x6d, 0x6b, 0x75, 0x62, 0x65, 0x2e,
+	0x68, 0x61, 0x72, 0x62, 0x6f, 0x72, 0x2e, 0x41, 0x72, 0x74, 0x69, 0x66, 0x61, 0x63, 0x74, 0x44,
+	0x61, 0x74, 0x61, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x52, 0x06, 0x4c, 0x61, 0x62, 0x65, 0x6c,
+	0x73, 0x12, 0x2c, 0x0a, 0x11, 0x4d, 0x61, 0x6e, 0x69, 0x66, 0x65, 0x73, 0x74, 0x4d, 0x65, 0x64,
+	0x69, 0x61, 0x54, 0x79, 0x70, 0x65, 0x18, 0x09, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x4d, 0x61,
+	0x6e, 0x69, 0x66, 0x65, 0x73, 0x74, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x54, 0x79, 0x70, 0x65, 0x12,
+	0x1c, 0x0a, 0x09, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x54, 0x79, 0x70, 0x65, 0x18, 0x0a, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x09, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1c, 0x0a,
+	0x09, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x49, 0x64, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x03,
+	0x52, 0x09, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x49, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x50,
+	0x75, 0x6c, 0x6c, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x50,
+	0x75, 0x6c, 0x6c, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x50, 0x75, 0x73, 0x68, 0x54,
+	0x69, 0x6d, 0x65, 0x18, 0x0d, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x50, 0x75, 0x73, 0x68, 0x54,
+	0x69, 0x6d, 0x65, 0x12, 0x42, 0x0a, 0x0a, 0x52, 0x65, 0x66, 0x65, 0x72, 0x65, 0x6e, 0x63, 0x65,
+	0x73, 0x18, 0x0e, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x63, 0x6f, 0x64, 0x65, 0x68, 0x6f,
+	0x72, 0x73, 0x65, 0x2e, 0x6d, 0x6b, 0x75, 0x62, 0x65, 0x2e, 0x68, 0x61, 0x72, 0x62, 0x6f, 0x72,
+	0x2e, 0x52, 0x65, 0x66, 0x65, 0x72, 0x65, 0x6e, 0x63, 0x65, 0x73, 0x52, 0x0a, 0x52, 0x65, 0x66,
+	0x65, 0x72, 0x65, 0x6e, 0x63, 0x65, 0x73, 0x12, 0x22, 0x0a, 0x0c, 0x52, 0x65, 0x70, 0x6f, 0x73,
+	0x69, 0x74, 0x6f, 0x72, 0x79, 0x49, 0x64, 0x18, 0x0f, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0c, 0x52,
+	0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x6f, 0x72, 0x79, 0x49, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x53,
+	0x69, 0x7a, 0x65, 0x18, 0x10, 0x20, 0x01, 0x28, 0x03, 0x52, 0x04, 0x53, 0x69, 0x7a, 0x65, 0x12,
+	0x30, 0x0a, 0x04, 0x54, 0x61, 0x67, 0x73, 0x18, 0x11, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1c, 0x2e,
+	0x63, 0x6f, 0x64, 0x65, 0x68, 0x6f, 0x72, 0x73, 0x65, 0x2e, 0x6d, 0x6b, 0x75, 0x62, 0x65, 0x2e,
+	0x68, 0x61, 0x72, 0x62, 0x6f, 0x72, 0x2e, 0x54, 0x61, 0x67, 0x73, 0x52, 0x04, 0x54, 0x61, 0x67,
+	0x73, 0x12, 0x12, 0x0a, 0x04, 0x54, 0x79, 0x70, 0x65, 0x18, 0x12, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x04, 0x54, 0x79, 0x70, 0x65, 0x22, 0xdc, 0x01, 0x0a, 0x04, 0x54, 0x61, 0x67, 0x73, 0x12, 0x1e,
+	0x0a, 0x0a, 0x41, 0x72, 0x74, 0x69, 0x66, 0x61, 0x63, 0x74, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x03, 0x52, 0x0a, 0x41, 0x72, 0x74, 0x69, 0x66, 0x61, 0x63, 0x74, 0x49, 0x64, 0x12, 0x0e,
+	0x0a, 0x02, 0x49, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x02, 0x49, 0x64, 0x12, 0x1c,
+	0x0a, 0x09, 0x49, 0x6d, 0x6d, 0x75, 0x74, 0x61, 0x62, 0x6c, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x08, 0x52, 0x09, 0x49, 0x6d, 0x6d, 0x75, 0x74, 0x61, 0x62, 0x6c, 0x65, 0x12, 0x12, 0x0a, 0x04,
+	0x4e, 0x61, 0x6d, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x4e, 0x61, 0x6d, 0x65,
+	0x12, 0x1a, 0x0a, 0x08, 0x50, 0x75, 0x6c, 0x6c, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x05, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x08, 0x50, 0x75, 0x6c, 0x6c, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x1a, 0x0a, 0x08,
+	0x50, 0x75, 0x73, 0x68, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08,
+	0x50, 0x75, 0x73, 0x68, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x22, 0x0a, 0x0c, 0x52, 0x65, 0x70, 0x6f,
+	0x73, 0x69, 0x74, 0x6f, 0x72, 0x79, 0x49, 0x64, 0x18, 0x07, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0c,
+	0x52, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x6f, 0x72, 0x79, 0x49, 0x64, 0x12, 0x16, 0x0a, 0x06,
+	0x53, 0x69, 0x67, 0x6e, 0x65, 0x64, 0x18, 0x08, 0x20, 0x01, 0x28, 0x08, 0x52, 0x06, 0x53, 0x69,
+	0x67, 0x6e, 0x65, 0x64, 0x22, 0x0c, 0x0a, 0x0a, 0x52, 0x65, 0x66, 0x65, 0x72, 0x65, 0x6e, 0x63,
+	0x65, 0x73, 0x22, 0x14, 0x0a, 0x12, 0x41, 0x72, 0x74, 0x69, 0x66, 0x61, 0x63, 0x74, 0x44, 0x61,
+	0x74, 0x61, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x22, 0xaa, 0x01, 0x0a, 0x0a, 0x45, 0x78, 0x74,
+	0x72, 0x61, 0x41, 0x74, 0x74, 0x72, 0x73, 0x12, 0x22, 0x0a, 0x0c, 0x41, 0x72, 0x63, 0x68, 0x69,
+	0x74, 0x65, 0x63, 0x74, 0x75, 0x72, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x41,
+	0x72, 0x63, 0x68, 0x69, 0x74, 0x65, 0x63, 0x74, 0x75, 0x72, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x41,
+	0x75, 0x74, 0x68, 0x6f, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x41, 0x75, 0x74,
+	0x68, 0x6f, 0x72, 0x12, 0x36, 0x0a, 0x06, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x63, 0x6f, 0x64, 0x65, 0x68, 0x6f, 0x72, 0x73, 0x65, 0x2e,
+	0x6d, 0x6b, 0x75, 0x62, 0x65, 0x2e, 0x68, 0x61, 0x72, 0x62, 0x6f, 0x72, 0x2e, 0x43, 0x6f, 0x6e,
+	0x66, 0x69, 0x67, 0x52, 0x06, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x12, 0x18, 0x0a, 0x07, 0x43,
+	0x72, 0x65, 0x61, 0x74, 0x65, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x43, 0x72,
+	0x65, 0x61, 0x74, 0x65, 0x64, 0x12, 0x0e, 0x0a, 0x02, 0x4f, 0x73, 0x18, 0x05, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x02, 0x4f, 0x73, 0x22, 0xdc, 0x01, 0x0a, 0x06, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67,
+	0x12, 0x1e, 0x0a, 0x0a, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x18, 0x01,
+	0x20, 0x03, 0x28, 0x09, 0x52, 0x0a, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x70, 0x6f, 0x69, 0x6e, 0x74,
+	0x12, 0x10, 0x0a, 0x03, 0x45, 0x6e, 0x76, 0x18, 0x02, 0x20, 0x03, 0x28, 0x09, 0x52, 0x03, 0x45,
+	0x6e, 0x76, 0x12, 0x48, 0x0a, 0x0c, 0x45, 0x78, 0x70, 0x6f, 0x73, 0x65, 0x64, 0x50, 0x6f, 0x72,
+	0x74, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x24, 0x2e, 0x63, 0x6f, 0x64, 0x65, 0x68,
+	0x6f, 0x72, 0x73, 0x65, 0x2e, 0x6d, 0x6b, 0x75, 0x62, 0x65, 0x2e, 0x68, 0x61, 0x72, 0x62, 0x6f,
+	0x72, 0x2e, 0x45, 0x78, 0x70, 0x6f, 0x73, 0x65, 0x64, 0x50, 0x6f, 0x72, 0x74, 0x73, 0x52, 0x0c,
+	0x45, 0x78, 0x70, 0x6f, 0x73, 0x65, 0x64, 0x50, 0x6f, 0x72, 0x74, 0x73, 0x12, 0x36, 0x0a, 0x06,
+	0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x63,
+	0x6f, 0x64, 0x65, 0x68, 0x6f, 0x72, 0x73, 0x65, 0x2e, 0x6d, 0x6b, 0x75, 0x62, 0x65, 0x2e, 0x68,
+	0x61, 0x72, 0x62, 0x6f, 0x72, 0x2e, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x52, 0x06, 0x4c, 0x61,
+	0x62, 0x65, 0x6c, 0x73, 0x12, 0x1e, 0x0a, 0x0a, 0x57, 0x6f, 0x72, 0x6b, 0x69, 0x6e, 0x67, 0x44,
+	0x69, 0x72, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x57, 0x6f, 0x72, 0x6b, 0x69, 0x6e,
+	0x67, 0x44, 0x69, 0x72, 0x22, 0xb8, 0x02, 0x0a, 0x06, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x12,
+	0x1e, 0x0a, 0x0a, 0x4d, 0x41, 0x49, 0x4e, 0x54, 0x41, 0x49, 0x4e, 0x45, 0x52, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0a, 0x4d, 0x41, 0x49, 0x4e, 0x54, 0x41, 0x49, 0x4e, 0x45, 0x52, 0x12,
+	0x44, 0x0a, 0x1d, 0x4f, 0x72, 0x67, 0x4f, 0x70, 0x65, 0x6e, 0x63, 0x6f, 0x6e, 0x74, 0x61, 0x69,
+	0x6e, 0x65, 0x72, 0x73, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x64,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x1d, 0x4f, 0x72, 0x67, 0x4f, 0x70, 0x65, 0x6e, 0x63,
+	0x6f, 0x6e, 0x74, 0x61, 0x69, 0x6e, 0x65, 0x72, 0x73, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x43, 0x72,
+	0x65, 0x61, 0x74, 0x65, 0x64, 0x12, 0x46, 0x0a, 0x1e, 0x4f, 0x72, 0x67, 0x4f, 0x70, 0x65, 0x6e,
+	0x63, 0x6f, 0x6e, 0x74, 0x61, 0x69, 0x6e, 0x65, 0x72, 0x73, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x52,
+	0x65, 0x76, 0x69, 0x73, 0x69, 0x6f, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x1e, 0x4f,
+	0x72, 0x67, 0x4f, 0x70, 0x65, 0x6e, 0x63, 0x6f, 0x6e, 0x74, 0x61, 0x69, 0x6e, 0x65, 0x72, 0x73,
+	0x49, 0x6d, 0x61, 0x67, 0x65, 0x52, 0x65, 0x76, 0x69, 0x73, 0x69, 0x6f, 0x6e, 0x12, 0x42, 0x0a,
+	0x1c, 0x4f, 0x72, 0x67, 0x4f, 0x70, 0x65, 0x6e, 0x63, 0x6f, 0x6e, 0x74, 0x61, 0x69, 0x6e, 0x65,
+	0x72, 0x73, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x18, 0x04, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x1c, 0x4f, 0x72, 0x67, 0x4f, 0x70, 0x65, 0x6e, 0x63, 0x6f, 0x6e, 0x74,
+	0x61, 0x69, 0x6e, 0x65, 0x72, 0x73, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x53, 0x6f, 0x75, 0x72, 0x63,
+	0x65, 0x12, 0x3c, 0x0a, 0x19, 0x4f, 0x72, 0x67, 0x4f, 0x70, 0x65, 0x6e, 0x63, 0x6f, 0x6e, 0x74,
+	0x61, 0x69, 0x6e, 0x65, 0x72, 0x73, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x55, 0x72, 0x6c, 0x18, 0x05,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x19, 0x4f, 0x72, 0x67, 0x4f, 0x70, 0x65, 0x6e, 0x63, 0x6f, 0x6e,
+	0x74, 0x61, 0x69, 0x6e, 0x65, 0x72, 0x73, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x55, 0x72, 0x6c, 0x22,
+	0x3d, 0x0a, 0x0c, 0x45, 0x78, 0x70, 0x6f, 0x73, 0x65, 0x64, 0x50, 0x6f, 0x72, 0x74, 0x73, 0x12,
+	0x2d, 0x0a, 0x03, 0x54, 0x63, 0x70, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x63,
+	0x6f, 0x64, 0x65, 0x68, 0x6f, 0x72, 0x73, 0x65, 0x2e, 0x6d, 0x6b, 0x75, 0x62, 0x65, 0x2e, 0x68,
+	0x61, 0x72, 0x62, 0x6f, 0x72, 0x2e, 0x54, 0x63, 0x70, 0x52, 0x03, 0x54, 0x63, 0x70, 0x22, 0x05,
+	0x0a, 0x03, 0x54, 0x63, 0x70, 0x22, 0x0d, 0x0a, 0x0b, 0x41, 0x63, 0x63, 0x65, 0x73, 0x73, 0x6f,
+	0x72, 0x69, 0x65, 0x73, 0x22, 0x59, 0x0a, 0x0d, 0x41, 0x64, 0x64, 0x69, 0x74, 0x69, 0x6f, 0x6e,
+	0x4c, 0x69, 0x6e, 0x6b, 0x73, 0x12, 0x48, 0x0a, 0x0c, 0x42, 0x75, 0x69, 0x6c, 0x64, 0x48, 0x69,
+	0x73, 0x74, 0x6f, 0x72, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x24, 0x2e, 0x63, 0x6f,
+	0x64, 0x65, 0x68, 0x6f, 0x72, 0x73, 0x65, 0x2e, 0x6d, 0x6b, 0x75, 0x62, 0x65, 0x2e, 0x68, 0x61,
+	0x72, 0x62, 0x6f, 0x72, 0x2e, 0x42, 0x75, 0x69, 0x6c, 0x64, 0x48, 0x69, 0x73, 0x74, 0x6f, 0x72,
+	0x79, 0x52, 0x0c, 0x42, 0x75, 0x69, 0x6c, 0x64, 0x48, 0x69, 0x73, 0x74, 0x6f, 0x72, 0x79, 0x22,
+	0x3e, 0x0a, 0x0c, 0x42, 0x75, 0x69, 0x6c, 0x64, 0x48, 0x69, 0x73, 0x74, 0x6f, 0x72, 0x79, 0x12,
+	0x1a, 0x0a, 0x08, 0x41, 0x62, 0x73, 0x6f, 0x6c, 0x75, 0x74, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x08, 0x52, 0x08, 0x41, 0x62, 0x73, 0x6f, 0x6c, 0x75, 0x74, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x48,
+	0x72, 0x65, 0x66, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x48, 0x72, 0x65, 0x66, 0x42,
+	0x2f, 0x5a, 0x2d, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x73, 0x6f,
+	0x6c, 0x6f, 0x64, 0x62, 0x61, 0x2f, 0x64, 0x65, 0x76, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x6d,
+	0x6b, 0x75, 0x62, 0x65, 0x2f, 0x61, 0x70, 0x70, 0x73, 0x2f, 0x68, 0x61, 0x72, 0x62, 0x6f, 0x72,
+	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -690,28 +1758,54 @@ func file_apps_harbor_pb_harbor_proto_rawDescGZIP() []byte {
 	return file_apps_harbor_pb_harbor_proto_rawDescData
 }
 
-var file_apps_harbor_pb_harbor_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_apps_harbor_pb_harbor_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
 var file_apps_harbor_pb_harbor_proto_goTypes = []interface{}{
-	(*Page)(nil),           // 0: codehorse.mkube.harbor.Page
-	(*Projects)(nil),       // 1: codehorse.mkube.harbor.Projects
-	(*ProjectData)(nil),    // 2: codehorse.mkube.harbor.ProjectData
-	(*CveAllowlist)(nil),   // 3: codehorse.mkube.harbor.CveAllowlist
-	(*Metadata)(nil),       // 4: codehorse.mkube.harbor.Metadata
-	(*Repositories)(nil),   // 5: codehorse.mkube.harbor.Repositories
-	(*RepositoryData)(nil), // 6: codehorse.mkube.harbor.RepositoryData
+	(*Page)(nil),               // 0: codehorse.mkube.harbor.Page
+	(*Projects)(nil),           // 1: codehorse.mkube.harbor.Projects
+	(*ProjectData)(nil),        // 2: codehorse.mkube.harbor.ProjectData
+	(*CveAllowlist)(nil),       // 3: codehorse.mkube.harbor.CveAllowlist
+	(*Metadata)(nil),           // 4: codehorse.mkube.harbor.Metadata
+	(*Repositories)(nil),       // 5: codehorse.mkube.harbor.Repositories
+	(*RepositoryData)(nil),     // 6: codehorse.mkube.harbor.RepositoryData
+	(*Artifacts)(nil),          // 7: codehorse.mkube.harbor.Artifacts
+	(*ArtifactData)(nil),       // 8: codehorse.mkube.harbor.ArtifactData
+	(*Tags)(nil),               // 9: codehorse.mkube.harbor.Tags
+	(*References)(nil),         // 10: codehorse.mkube.harbor.References
+	(*ArtifactDataLabels)(nil), // 11: codehorse.mkube.harbor.ArtifactDataLabels
+	(*ExtraAttrs)(nil),         // 12: codehorse.mkube.harbor.ExtraAttrs
+	(*Config)(nil),             // 13: codehorse.mkube.harbor.Config
+	(*Labels)(nil),             // 14: codehorse.mkube.harbor.Labels
+	(*ExposedPorts)(nil),       // 15: codehorse.mkube.harbor.ExposedPorts
+	(*Tcp)(nil),                // 16: codehorse.mkube.harbor.Tcp
+	(*Accessories)(nil),        // 17: codehorse.mkube.harbor.Accessories
+	(*AdditionLinks)(nil),      // 18: codehorse.mkube.harbor.AdditionLinks
+	(*BuildHistory)(nil),       // 19: codehorse.mkube.harbor.BuildHistory
 }
 var file_apps_harbor_pb_harbor_proto_depIdxs = []int32{
-	0, // 0: codehorse.mkube.harbor.Projects.page:type_name -> codehorse.mkube.harbor.Page
-	2, // 1: codehorse.mkube.harbor.Projects.Data:type_name -> codehorse.mkube.harbor.ProjectData
-	3, // 2: codehorse.mkube.harbor.ProjectData.CveAllowlist:type_name -> codehorse.mkube.harbor.CveAllowlist
-	4, // 3: codehorse.mkube.harbor.ProjectData.Metadata:type_name -> codehorse.mkube.harbor.Metadata
-	0, // 4: codehorse.mkube.harbor.Repositories.page:type_name -> codehorse.mkube.harbor.Page
-	6, // 5: codehorse.mkube.harbor.Repositories.Data:type_name -> codehorse.mkube.harbor.RepositoryData
-	6, // [6:6] is the sub-list for method output_type
-	6, // [6:6] is the sub-list for method input_type
-	6, // [6:6] is the sub-list for extension type_name
-	6, // [6:6] is the sub-list for extension extendee
-	0, // [0:6] is the sub-list for field type_name
+	0,  // 0: codehorse.mkube.harbor.Projects.page:type_name -> codehorse.mkube.harbor.Page
+	2,  // 1: codehorse.mkube.harbor.Projects.Data:type_name -> codehorse.mkube.harbor.ProjectData
+	3,  // 2: codehorse.mkube.harbor.ProjectData.CveAllowlist:type_name -> codehorse.mkube.harbor.CveAllowlist
+	4,  // 3: codehorse.mkube.harbor.ProjectData.Metadata:type_name -> codehorse.mkube.harbor.Metadata
+	0,  // 4: codehorse.mkube.harbor.Repositories.page:type_name -> codehorse.mkube.harbor.Page
+	6,  // 5: codehorse.mkube.harbor.Repositories.Data:type_name -> codehorse.mkube.harbor.RepositoryData
+	0,  // 6: codehorse.mkube.harbor.Artifacts.page:type_name -> codehorse.mkube.harbor.Page
+	8,  // 7: codehorse.mkube.harbor.Artifacts.Data:type_name -> codehorse.mkube.harbor.ArtifactData
+	17, // 8: codehorse.mkube.harbor.ArtifactData.Accessories:type_name -> codehorse.mkube.harbor.Accessories
+	18, // 9: codehorse.mkube.harbor.ArtifactData.AdditionLinks:type_name -> codehorse.mkube.harbor.AdditionLinks
+	12, // 10: codehorse.mkube.harbor.ArtifactData.ExtraAttrs:type_name -> codehorse.mkube.harbor.ExtraAttrs
+	11, // 11: codehorse.mkube.harbor.ArtifactData.Labels:type_name -> codehorse.mkube.harbor.ArtifactDataLabels
+	10, // 12: codehorse.mkube.harbor.ArtifactData.References:type_name -> codehorse.mkube.harbor.References
+	9,  // 13: codehorse.mkube.harbor.ArtifactData.Tags:type_name -> codehorse.mkube.harbor.Tags
+	13, // 14: codehorse.mkube.harbor.ExtraAttrs.Config:type_name -> codehorse.mkube.harbor.Config
+	15, // 15: codehorse.mkube.harbor.Config.ExposedPorts:type_name -> codehorse.mkube.harbor.ExposedPorts
+	14, // 16: codehorse.mkube.harbor.Config.Labels:type_name -> codehorse.mkube.harbor.Labels
+	16, // 17: codehorse.mkube.harbor.ExposedPorts.Tcp:type_name -> codehorse.mkube.harbor.Tcp
+	19, // 18: codehorse.mkube.harbor.AdditionLinks.BuildHistory:type_name -> codehorse.mkube.harbor.BuildHistory
+	19, // [19:19] is the sub-list for method output_type
+	19, // [19:19] is the sub-list for method input_type
+	19, // [19:19] is the sub-list for extension type_name
+	19, // [19:19] is the sub-list for extension extendee
+	0,  // [0:19] is the sub-list for field type_name
 }
 
 func init() { file_apps_harbor_pb_harbor_proto_init() }
@@ -804,6 +1898,162 @@ func file_apps_harbor_pb_harbor_proto_init() {
 				return nil
 			}
 		}
+		file_apps_harbor_pb_harbor_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Artifacts); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_apps_harbor_pb_harbor_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ArtifactData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_apps_harbor_pb_harbor_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Tags); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_apps_harbor_pb_harbor_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*References); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_apps_harbor_pb_harbor_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ArtifactDataLabels); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_apps_harbor_pb_harbor_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ExtraAttrs); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_apps_harbor_pb_harbor_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Config); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_apps_harbor_pb_harbor_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Labels); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_apps_harbor_pb_harbor_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ExposedPorts); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_apps_harbor_pb_harbor_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Tcp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_apps_harbor_pb_harbor_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Accessories); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_apps_harbor_pb_harbor_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AdditionLinks); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_apps_harbor_pb_harbor_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*BuildHistory); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -811,7 +2061,7 @@ func file_apps_harbor_pb_harbor_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_apps_harbor_pb_harbor_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   20,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

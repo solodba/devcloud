@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	RPC_QueryProjects_FullMethodName     = "/codehorse.mkube.harbor.RPC/QueryProjects"
 	RPC_QueryRepositories_FullMethodName = "/codehorse.mkube.harbor.RPC/QueryRepositories"
+	RPC_QueryArtifacts_FullMethodName    = "/codehorse.mkube.harbor.RPC/QueryArtifacts"
 )
 
 // RPCClient is the client API for RPC service.
@@ -31,6 +32,8 @@ type RPCClient interface {
 	QueryProjects(ctx context.Context, in *QueryProjectsRequest, opts ...grpc.CallOption) (*Projects, error)
 	// 获取Harbor Respositories
 	QueryRepositories(ctx context.Context, in *QueryRepositoriesRequest, opts ...grpc.CallOption) (*Repositories, error)
+	// 获取Harbor Artifacts
+	QueryArtifacts(ctx context.Context, in *QueryArtifactsRequest, opts ...grpc.CallOption) (*Artifacts, error)
 }
 
 type rPCClient struct {
@@ -59,6 +62,15 @@ func (c *rPCClient) QueryRepositories(ctx context.Context, in *QueryRepositories
 	return out, nil
 }
 
+func (c *rPCClient) QueryArtifacts(ctx context.Context, in *QueryArtifactsRequest, opts ...grpc.CallOption) (*Artifacts, error) {
+	out := new(Artifacts)
+	err := c.cc.Invoke(ctx, RPC_QueryArtifacts_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // RPCServer is the server API for RPC service.
 // All implementations must embed UnimplementedRPCServer
 // for forward compatibility
@@ -67,6 +79,8 @@ type RPCServer interface {
 	QueryProjects(context.Context, *QueryProjectsRequest) (*Projects, error)
 	// 获取Harbor Respositories
 	QueryRepositories(context.Context, *QueryRepositoriesRequest) (*Repositories, error)
+	// 获取Harbor Artifacts
+	QueryArtifacts(context.Context, *QueryArtifactsRequest) (*Artifacts, error)
 	mustEmbedUnimplementedRPCServer()
 }
 
@@ -79,6 +93,9 @@ func (UnimplementedRPCServer) QueryProjects(context.Context, *QueryProjectsReque
 }
 func (UnimplementedRPCServer) QueryRepositories(context.Context, *QueryRepositoriesRequest) (*Repositories, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QueryRepositories not implemented")
+}
+func (UnimplementedRPCServer) QueryArtifacts(context.Context, *QueryArtifactsRequest) (*Artifacts, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryArtifacts not implemented")
 }
 func (UnimplementedRPCServer) mustEmbedUnimplementedRPCServer() {}
 
@@ -129,6 +146,24 @@ func _RPC_QueryRepositories_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RPC_QueryArtifacts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryArtifactsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RPCServer).QueryArtifacts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RPC_QueryArtifacts_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RPCServer).QueryArtifacts(ctx, req.(*QueryArtifactsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // RPC_ServiceDesc is the grpc.ServiceDesc for RPC service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -143,6 +178,10 @@ var RPC_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "QueryRepositories",
 			Handler:    _RPC_QueryRepositories_Handler,
+		},
+		{
+			MethodName: "QueryArtifacts",
+			Handler:    _RPC_QueryArtifacts_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

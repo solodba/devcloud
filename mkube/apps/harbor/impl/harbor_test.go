@@ -30,3 +30,16 @@ func TestQueryRepositories(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(repositories))
 }
+
+func TestQueryArtifacts(t *testing.T) {
+	req := harbor.NewQueryArtifactsRequest()
+	req.CurPage = 1
+	req.PageSize = 10
+	req.ProjectName = "test"
+	req.RepositoryName = "mongo"
+	artifacts, err := svc.QueryArtifacts(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(artifacts))
+}

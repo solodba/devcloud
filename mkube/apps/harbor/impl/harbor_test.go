@@ -18,3 +18,15 @@ func TestQueryProjects(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(projects))
 }
+
+func TestQueryRepositories(t *testing.T) {
+	req := harbor.NewQueryRepositoriesRequest()
+	req.CurPage = 1
+	req.PageSize = 10
+	req.ProjectName = "test"
+	repositories, err := svc.QueryRepositories(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(repositories))
+}

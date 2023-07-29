@@ -26,3 +26,19 @@ func NewProjectData() *ProjectData {
 		Metadata: &Metadata{},
 	}
 }
+
+// Repositories初始化函数
+func NewRepositories(curPage, pageSize int64) *Repositories {
+	page := NewPage()
+	page.CurrentPage = curPage
+	page.PageSize = pageSize
+	return &Repositories{
+		Page: page,
+		Data: make([]*RepositoryData, 0),
+	}
+}
+
+// RepositoryData初始化函数
+func NewRepositoryData() *RepositoryData {
+	return &RepositoryData{}
+}

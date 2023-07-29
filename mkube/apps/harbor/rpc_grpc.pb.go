@@ -19,7 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	RPC_QueryProjects_FullMethodName = "/codehorse.mkube.harbor.RPC/QueryProjects"
+	RPC_QueryProjects_FullMethodName     = "/codehorse.mkube.harbor.RPC/QueryProjects"
+	RPC_QueryRepositories_FullMethodName = "/codehorse.mkube.harbor.RPC/QueryRepositories"
 )
 
 // RPCClient is the client API for RPC service.
@@ -28,6 +29,8 @@ const (
 type RPCClient interface {
 	// 获取Harbor Projects
 	QueryProjects(ctx context.Context, in *QueryProjectsRequest, opts ...grpc.CallOption) (*Projects, error)
+	// 获取Harbor Respositories
+	QueryRepositories(ctx context.Context, in *QueryRepositoriesRequest, opts ...grpc.CallOption) (*Repositories, error)
 }
 
 type rPCClient struct {
@@ -47,12 +50,23 @@ func (c *rPCClient) QueryProjects(ctx context.Context, in *QueryProjectsRequest,
 	return out, nil
 }
 
+func (c *rPCClient) QueryRepositories(ctx context.Context, in *QueryRepositoriesRequest, opts ...grpc.CallOption) (*Repositories, error) {
+	out := new(Repositories)
+	err := c.cc.Invoke(ctx, RPC_QueryRepositories_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // RPCServer is the server API for RPC service.
 // All implementations must embed UnimplementedRPCServer
 // for forward compatibility
 type RPCServer interface {
 	// 获取Harbor Projects
 	QueryProjects(context.Context, *QueryProjectsRequest) (*Projects, error)
+	// 获取Harbor Respositories
+	QueryRepositories(context.Context, *QueryRepositoriesRequest) (*Repositories, error)
 	mustEmbedUnimplementedRPCServer()
 }
 
@@ -62,6 +76,9 @@ type UnimplementedRPCServer struct {
 
 func (UnimplementedRPCServer) QueryProjects(context.Context, *QueryProjectsRequest) (*Projects, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QueryProjects not implemented")
+}
+func (UnimplementedRPCServer) QueryRepositories(context.Context, *QueryRepositoriesRequest) (*Repositories, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryRepositories not implemented")
 }
 func (UnimplementedRPCServer) mustEmbedUnimplementedRPCServer() {}
 
@@ -94,6 +111,24 @@ func _RPC_QueryProjects_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RPC_QueryRepositories_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryRepositoriesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RPCServer).QueryRepositories(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RPC_QueryRepositories_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RPCServer).QueryRepositories(ctx, req.(*QueryRepositoriesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // RPC_ServiceDesc is the grpc.ServiceDesc for RPC service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -104,6 +139,10 @@ var RPC_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "QueryProjects",
 			Handler:    _RPC_QueryProjects_Handler,
+		},
+		{
+			MethodName: "QueryRepositories",
+			Handler:    _RPC_QueryRepositories_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

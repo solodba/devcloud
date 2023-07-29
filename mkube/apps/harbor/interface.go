@@ -46,3 +46,8 @@ func NewQueryProjectsRequestFromRestful(r *restful.Request) (*QueryProjectsReque
 		Keyword:  r.QueryParameter("keyword"),
 	}, nil
 }
+
+// QueryRepositoriesRequest初始化函数
+func NewQueryRepositoriesRequest() *QueryRepositoriesRequest {
+	return &QueryRepositoriesRequest{}
+}

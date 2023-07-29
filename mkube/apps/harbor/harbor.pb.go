@@ -427,6 +427,167 @@ func (x *Metadata) GetPublic() string {
 	return ""
 }
 
+// Repositories结构体
+type Repositories struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// @gotags: bson:",inline" json:"page"
+	Page *Page `protobuf:"bytes,1,opt,name=page,proto3" json:"page" bson:",inline"`
+	// @gotags: bson:",inline" json:"data"
+	Data []*RepositoryData `protobuf:"bytes,2,rep,name=Data,proto3" json:"data" bson:",inline"`
+}
+
+func (x *Repositories) Reset() {
+	*x = Repositories{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_apps_harbor_pb_harbor_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Repositories) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Repositories) ProtoMessage() {}
+
+func (x *Repositories) ProtoReflect() protoreflect.Message {
+	mi := &file_apps_harbor_pb_harbor_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Repositories.ProtoReflect.Descriptor instead.
+func (*Repositories) Descriptor() ([]byte, []int) {
+	return file_apps_harbor_pb_harbor_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *Repositories) GetPage() *Page {
+	if x != nil {
+		return x.Page
+	}
+	return nil
+}
+
+func (x *Repositories) GetData() []*RepositoryData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+// RepositoryData结构体
+type RepositoryData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// @gotags: bson:"artifact_count" json:"artifact_count"
+	ArtifactCount int64 `protobuf:"varint,1,opt,name=ArtifactCount,proto3" json:"artifact_count" bson:"artifact_count"`
+	// @gotags: bson:"creation_time" json:"creation_time"
+	CreationTime string `protobuf:"bytes,2,opt,name=CreationTime,proto3" json:"creation_time" bson:"creation_time"`
+	// @gotags: bson:"id" json:"id"
+	ID int64 `protobuf:"varint,3,opt,name=ID,proto3" json:"id" bson:"id"`
+	// @gotags: bson:"name" json:"name"
+	Name string `protobuf:"bytes,4,opt,name=Name,proto3" json:"name" bson:"name"`
+	// @gotags: bson:"project_id" json:"project_id"
+	ProjectId int64 `protobuf:"varint,5,opt,name=ProjectId,proto3" json:"project_id" bson:"project_id"`
+	// @gotags: bson:"pull_count" json:"pull_count"
+	PullCount int64 `protobuf:"varint,6,opt,name=PullCount,proto3" json:"pull_count" bson:"pull_count"`
+	// @gotags: bson:"update_time" json:"update_time"
+	UpdateTime string `protobuf:"bytes,7,opt,name=UpdateTime,proto3" json:"update_time" bson:"update_time"`
+}
+
+func (x *RepositoryData) Reset() {
+	*x = RepositoryData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_apps_harbor_pb_harbor_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RepositoryData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RepositoryData) ProtoMessage() {}
+
+func (x *RepositoryData) ProtoReflect() protoreflect.Message {
+	mi := &file_apps_harbor_pb_harbor_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RepositoryData.ProtoReflect.Descriptor instead.
+func (*RepositoryData) Descriptor() ([]byte, []int) {
+	return file_apps_harbor_pb_harbor_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *RepositoryData) GetArtifactCount() int64 {
+	if x != nil {
+		return x.ArtifactCount
+	}
+	return 0
+}
+
+func (x *RepositoryData) GetCreationTime() string {
+	if x != nil {
+		return x.CreationTime
+	}
+	return ""
+}
+
+func (x *RepositoryData) GetID() int64 {
+	if x != nil {
+		return x.ID
+	}
+	return 0
+}
+
+func (x *RepositoryData) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *RepositoryData) GetProjectId() int64 {
+	if x != nil {
+		return x.ProjectId
+	}
+	return 0
+}
+
+func (x *RepositoryData) GetPullCount() int64 {
+	if x != nil {
+		return x.PullCount
+	}
+	return 0
+}
+
+func (x *RepositoryData) GetUpdateTime() string {
+	if x != nil {
+		return x.UpdateTime
+	}
+	return ""
+}
+
 var File_apps_harbor_pb_harbor_proto protoreflect.FileDescriptor
 
 var file_apps_harbor_pb_harbor_proto_rawDesc = []byte{
@@ -489,10 +650,32 @@ var file_apps_harbor_pb_harbor_proto_rawDesc = []byte{
 	0x52, 0x0a, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x54, 0x69, 0x6d, 0x65, 0x22, 0x22, 0x0a, 0x08,
 	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x16, 0x0a, 0x06, 0x50, 0x75, 0x62, 0x6c,
 	0x69, 0x63, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x50, 0x75, 0x62, 0x6c, 0x69, 0x63,
-	0x42, 0x2f, 0x5a, 0x2d, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x73,
-	0x6f, 0x6c, 0x6f, 0x64, 0x62, 0x61, 0x2f, 0x64, 0x65, 0x76, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f,
-	0x6d, 0x6b, 0x75, 0x62, 0x65, 0x2f, 0x61, 0x70, 0x70, 0x73, 0x2f, 0x68, 0x61, 0x72, 0x62, 0x6f,
-	0x72, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x22, 0x7c, 0x0a, 0x0c, 0x52, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x6f, 0x72, 0x69, 0x65, 0x73,
+	0x12, 0x30, 0x0a, 0x04, 0x70, 0x61, 0x67, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c,
+	0x2e, 0x63, 0x6f, 0x64, 0x65, 0x68, 0x6f, 0x72, 0x73, 0x65, 0x2e, 0x6d, 0x6b, 0x75, 0x62, 0x65,
+	0x2e, 0x68, 0x61, 0x72, 0x62, 0x6f, 0x72, 0x2e, 0x50, 0x61, 0x67, 0x65, 0x52, 0x04, 0x70, 0x61,
+	0x67, 0x65, 0x12, 0x3a, 0x0a, 0x04, 0x44, 0x61, 0x74, 0x61, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x26, 0x2e, 0x63, 0x6f, 0x64, 0x65, 0x68, 0x6f, 0x72, 0x73, 0x65, 0x2e, 0x6d, 0x6b, 0x75,
+	0x62, 0x65, 0x2e, 0x68, 0x61, 0x72, 0x62, 0x6f, 0x72, 0x2e, 0x52, 0x65, 0x70, 0x6f, 0x73, 0x69,
+	0x74, 0x6f, 0x72, 0x79, 0x44, 0x61, 0x74, 0x61, 0x52, 0x04, 0x44, 0x61, 0x74, 0x61, 0x22, 0xda,
+	0x01, 0x0a, 0x0e, 0x52, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x6f, 0x72, 0x79, 0x44, 0x61, 0x74,
+	0x61, 0x12, 0x24, 0x0a, 0x0d, 0x41, 0x72, 0x74, 0x69, 0x66, 0x61, 0x63, 0x74, 0x43, 0x6f, 0x75,
+	0x6e, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0d, 0x41, 0x72, 0x74, 0x69, 0x66, 0x61,
+	0x63, 0x74, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x22, 0x0a, 0x0c, 0x43, 0x72, 0x65, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x43,
+	0x72, 0x65, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x49,
+	0x44, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x02, 0x49, 0x44, 0x12, 0x12, 0x0a, 0x04, 0x4e,
+	0x61, 0x6d, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x4e, 0x61, 0x6d, 0x65, 0x12,
+	0x1c, 0x0a, 0x09, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x49, 0x64, 0x18, 0x05, 0x20, 0x01,
+	0x28, 0x03, 0x52, 0x09, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x49, 0x64, 0x12, 0x1c, 0x0a,
+	0x09, 0x50, 0x75, 0x6c, 0x6c, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x06, 0x20, 0x01, 0x28, 0x03,
+	0x52, 0x09, 0x50, 0x75, 0x6c, 0x6c, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x1e, 0x0a, 0x0a, 0x55,
+	0x70, 0x64, 0x61, 0x74, 0x65, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0a, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x54, 0x69, 0x6d, 0x65, 0x42, 0x2f, 0x5a, 0x2d, 0x67,
+	0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x73, 0x6f, 0x6c, 0x6f, 0x64, 0x62,
+	0x61, 0x2f, 0x64, 0x65, 0x76, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x6d, 0x6b, 0x75, 0x62, 0x65,
+	0x2f, 0x61, 0x70, 0x70, 0x73, 0x2f, 0x68, 0x61, 0x72, 0x62, 0x6f, 0x72, 0x62, 0x06, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -507,24 +690,28 @@ func file_apps_harbor_pb_harbor_proto_rawDescGZIP() []byte {
 	return file_apps_harbor_pb_harbor_proto_rawDescData
 }
 
-var file_apps_harbor_pb_harbor_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_apps_harbor_pb_harbor_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_apps_harbor_pb_harbor_proto_goTypes = []interface{}{
-	(*Page)(nil),         // 0: codehorse.mkube.harbor.Page
-	(*Projects)(nil),     // 1: codehorse.mkube.harbor.Projects
-	(*ProjectData)(nil),  // 2: codehorse.mkube.harbor.ProjectData
-	(*CveAllowlist)(nil), // 3: codehorse.mkube.harbor.CveAllowlist
-	(*Metadata)(nil),     // 4: codehorse.mkube.harbor.Metadata
+	(*Page)(nil),           // 0: codehorse.mkube.harbor.Page
+	(*Projects)(nil),       // 1: codehorse.mkube.harbor.Projects
+	(*ProjectData)(nil),    // 2: codehorse.mkube.harbor.ProjectData
+	(*CveAllowlist)(nil),   // 3: codehorse.mkube.harbor.CveAllowlist
+	(*Metadata)(nil),       // 4: codehorse.mkube.harbor.Metadata
+	(*Repositories)(nil),   // 5: codehorse.mkube.harbor.Repositories
+	(*RepositoryData)(nil), // 6: codehorse.mkube.harbor.RepositoryData
 }
 var file_apps_harbor_pb_harbor_proto_depIdxs = []int32{
 	0, // 0: codehorse.mkube.harbor.Projects.page:type_name -> codehorse.mkube.harbor.Page
 	2, // 1: codehorse.mkube.harbor.Projects.Data:type_name -> codehorse.mkube.harbor.ProjectData
 	3, // 2: codehorse.mkube.harbor.ProjectData.CveAllowlist:type_name -> codehorse.mkube.harbor.CveAllowlist
 	4, // 3: codehorse.mkube.harbor.ProjectData.Metadata:type_name -> codehorse.mkube.harbor.Metadata
-	4, // [4:4] is the sub-list for method output_type
-	4, // [4:4] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	0, // 4: codehorse.mkube.harbor.Repositories.page:type_name -> codehorse.mkube.harbor.Page
+	6, // 5: codehorse.mkube.harbor.Repositories.Data:type_name -> codehorse.mkube.harbor.RepositoryData
+	6, // [6:6] is the sub-list for method output_type
+	6, // [6:6] is the sub-list for method input_type
+	6, // [6:6] is the sub-list for extension type_name
+	6, // [6:6] is the sub-list for extension extendee
+	0, // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_apps_harbor_pb_harbor_proto_init() }
@@ -593,6 +780,30 @@ func file_apps_harbor_pb_harbor_proto_init() {
 				return nil
 			}
 		}
+		file_apps_harbor_pb_harbor_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Repositories); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_apps_harbor_pb_harbor_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RepositoryData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -600,7 +811,7 @@ func file_apps_harbor_pb_harbor_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_apps_harbor_pb_harbor_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

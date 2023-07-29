@@ -11,6 +11,8 @@ import "apps/harbor/pb/harbor.proto";
 service RPC {
     // 获取Harbor Projects
     rpc QueryProjects(QueryProjectsRequest) returns(Projects);
+    // 获取Harbor Respositories
+    rpc QueryRepositories(QueryRepositoriesRequest) returns(Repositories);
 }
 
 // QueryProjectsRequest结构体
@@ -21,4 +23,16 @@ message QueryProjectsRequest {
     int64 PageSize = 2;
     // @gotags: bson:"keyword" json:"keyword"
     string Keyword = 3;
+}
+
+// QueryRepositoriesRequest结构体
+message QueryRepositoriesRequest {
+    // @gotags: bson:"projectName" json:"projectName"
+    string ProjectName = 1;
+    // @gotags: bson:"curpage" json:"curpage"
+    int64 CurPage = 2;
+    // @gotags: bson:"pagesize" json:"pagesize"
+    int64 PageSize = 3;
+    // @gotags: bson:"keyword" json:"keyword"
+    string Keyword = 4;
 }

@@ -69,3 +69,29 @@ message Metadata {
     // @gotags: bson:"public" json:"public"
     string Public = 1;
 }
+
+// Repositories结构体
+message Repositories {
+    // @gotags: bson:",inline" json:"page"
+    Page page = 1;
+    // @gotags: bson:",inline" json:"data"
+    repeated RepositoryData Data = 2;
+}
+
+// RepositoryData结构体
+message RepositoryData {
+    // @gotags: bson:"artifact_count" json:"artifact_count"
+    int64 ArtifactCount = 1;
+    // @gotags: bson:"creation_time" json:"creation_time"
+    string CreationTime = 2;
+    // @gotags: bson:"id" json:"id"
+    int64 ID = 3;
+    // @gotags: bson:"name" json:"name"
+    string Name = 4;
+    // @gotags: bson:"project_id" json:"project_id"
+    int64 ProjectId = 5;
+    // @gotags: bson:"pull_count" json:"pull_count"
+    int64 PullCount = 6;
+    // @gotags: bson:"update_time" json:"update_time"
+    string UpdateTime = 7;
+}

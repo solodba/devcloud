@@ -35,3 +35,18 @@ func (h *handler) QueryRepositories(r *restful.Request, w *restful.Response) {
 	}
 	w.WriteEntity(response.NewSuccess(200, repositories))
 }
+
+// 查询Harbor Artifacts
+func (h *handler) QueryArtifacts(r *restful.Request, w *restful.Response) {
+	req, err := harbor.NewQueryArtifactsRequestFromRestful(r)
+	if err != nil {
+		w.WriteEntity(response.NewFail(400, err.Error()))
+		return
+	}
+	artifacts, err := h.svc.QueryArtifacts(r.Request.Context(), req)
+	if err != nil {
+		w.WriteEntity(response.NewFail(500, err.Error()))
+		return
+	}
+	w.WriteEntity(response.NewSuccess(200, artifacts))
+}

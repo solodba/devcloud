@@ -51,3 +51,29 @@ func NewQueryProjectsRequestFromRestful(r *restful.Request) (*QueryProjectsReque
 func NewQueryRepositoriesRequest() *QueryRepositoriesRequest {
 	return &QueryRepositoriesRequest{}
 }
+
+// 从restful解析参数初始化QueryRepositoriesRequest
+func NewQueryRepositoriesRequestFromRestful(r *restful.Request) (*QueryRepositoriesRequest, error) {
+	curPage := r.QueryParameter("currentPage")
+	if curPage == "" {
+		curPage = "1"
+	}
+	newCurPage, err := strconv.Atoi(curPage)
+	if err != nil {
+		return nil, err
+	}
+	pageSize := r.QueryParameter("pageSize")
+	if pageSize == "" {
+		pageSize = "10"
+	}
+	newPageSize, err := strconv.Atoi(pageSize)
+	if err != nil {
+		return nil, err
+	}
+	return &QueryRepositoriesRequest{
+		ProjectName: r.PathParameter("projectName"),
+		CurPage:     int64(newCurPage),
+		PageSize:    int64(newPageSize),
+		Keyword:     r.QueryParameter("keyword"),
+	}, nil
+}

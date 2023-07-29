@@ -40,6 +40,14 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 		Reads(harbor.QueryProjectsRequest{}).
 		Writes(harbor.Projects{}).
 		Returns(200, "OK", harbor.Projects{}))
+
+	// 查询Harbor Repository
+	ws.Route(ws.GET("/projects/{projectName}").To(h.QueryRepositories).
+		Doc("查询Harbor Repository").
+		Metadata(restfulspec.KeyOpenAPITags, tags).
+		Reads(harbor.QueryRepositoriesRequest{}).
+		Writes(harbor.Repositories{}).
+		Returns(200, "OK", harbor.Repositories{}))
 }
 
 // 初始化函数注册restful实例

@@ -20,3 +20,18 @@ func (h *handler) QueryProjects(r *restful.Request, w *restful.Response) {
 	}
 	w.WriteEntity(response.NewSuccess(200, projects))
 }
+
+// 查询Harbor Repository
+func (h *handler) QueryRepositories(r *restful.Request, w *restful.Response) {
+	req, err := harbor.NewQueryRepositoriesRequestFromRestful(r)
+	if err != nil {
+		w.WriteEntity(response.NewFail(400, err.Error()))
+		return
+	}
+	repositories, err := h.svc.QueryRepositories(r.Request.Context(), req)
+	if err != nil {
+		w.WriteEntity(response.NewFail(500, err.Error()))
+		return
+	}
+	w.WriteEntity(response.NewSuccess(200, repositories))
+}

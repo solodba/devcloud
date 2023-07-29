@@ -43,3 +43,12 @@ func TestQueryArtifacts(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(artifacts))
 }
+
+func TestMatchImage(t *testing.T) {
+	req := harbor.NewMatchImageRequest("busybox:v1")
+	matchImages, err := svc.MatchImage(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(matchImages))
+}

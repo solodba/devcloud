@@ -22,6 +22,7 @@ const (
 	RPC_QueryProjects_FullMethodName     = "/codehorse.mkube.harbor.RPC/QueryProjects"
 	RPC_QueryRepositories_FullMethodName = "/codehorse.mkube.harbor.RPC/QueryRepositories"
 	RPC_QueryArtifacts_FullMethodName    = "/codehorse.mkube.harbor.RPC/QueryArtifacts"
+	RPC_MatchImage_FullMethodName        = "/codehorse.mkube.harbor.RPC/MatchImage"
 )
 
 // RPCClient is the client API for RPC service.
@@ -34,6 +35,8 @@ type RPCClient interface {
 	QueryRepositories(ctx context.Context, in *QueryRepositoriesRequest, opts ...grpc.CallOption) (*Repositories, error)
 	// 获取Harbor Artifacts
 	QueryArtifacts(ctx context.Context, in *QueryArtifactsRequest, opts ...grpc.CallOption) (*Artifacts, error)
+	// 匹配镜像仓库
+	MatchImage(ctx context.Context, in *MatchImageRequest, opts ...grpc.CallOption) (*MatchImages, error)
 }
 
 type rPCClient struct {
@@ -71,6 +74,15 @@ func (c *rPCClient) QueryArtifacts(ctx context.Context, in *QueryArtifactsReques
 	return out, nil
 }
 
+func (c *rPCClient) MatchImage(ctx context.Context, in *MatchImageRequest, opts ...grpc.CallOption) (*MatchImages, error) {
+	out := new(MatchImages)
+	err := c.cc.Invoke(ctx, RPC_MatchImage_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // RPCServer is the server API for RPC service.
 // All implementations must embed UnimplementedRPCServer
 // for forward compatibility
@@ -81,6 +93,8 @@ type RPCServer interface {
 	QueryRepositories(context.Context, *QueryRepositoriesRequest) (*Repositories, error)
 	// 获取Harbor Artifacts
 	QueryArtifacts(context.Context, *QueryArtifactsRequest) (*Artifacts, error)
+	// 匹配镜像仓库
+	MatchImage(context.Context, *MatchImageRequest) (*MatchImages, error)
 	mustEmbedUnimplementedRPCServer()
 }
 
@@ -96,6 +110,9 @@ func (UnimplementedRPCServer) QueryRepositories(context.Context, *QueryRepositor
 }
 func (UnimplementedRPCServer) QueryArtifacts(context.Context, *QueryArtifactsRequest) (*Artifacts, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QueryArtifacts not implemented")
+}
+func (UnimplementedRPCServer) MatchImage(context.Context, *MatchImageRequest) (*MatchImages, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MatchImage not implemented")
 }
 func (UnimplementedRPCServer) mustEmbedUnimplementedRPCServer() {}
 
@@ -164,6 +181,24 @@ func _RPC_QueryArtifacts_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RPC_MatchImage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MatchImageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RPCServer).MatchImage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RPC_MatchImage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RPCServer).MatchImage(ctx, req.(*MatchImageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // RPC_ServiceDesc is the grpc.ServiceDesc for RPC service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -182,6 +217,10 @@ var RPC_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "QueryArtifacts",
 			Handler:    _RPC_QueryArtifacts_Handler,
+		},
+		{
+			MethodName: "MatchImage",
+			Handler:    _RPC_MatchImage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -109,3 +109,10 @@ func NewQueryArtifactsRequestFromRestful(r *restful.Request) (*QueryArtifactsReq
 		RepositoryName: r.PathParameter("repositoryName"),
 	}, nil
 }
+
+// MatchImageRequest初始化函数
+func NewMatchImageRequest(keyword string) *MatchImageRequest {
+	return &MatchImageRequest{
+		Keyword: keyword,
+	}
+}

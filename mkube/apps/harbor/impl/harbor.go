@@ -7,7 +7,9 @@ import (
 	"io/ioutil"
 	"math"
 	"net/http"
+	"path/filepath"
 	"strconv"
+	"strings"
 
 	"github.com/solodba/devcloud/mkube/apps/harbor"
 )
@@ -123,4 +125,67 @@ func (i *impl) QueryArtifacts(ctx context.Context, in *harbor.QueryArtifactsRequ
 	artifacts.Page.TotalPage = int64(math.Ceil(float64(newXTotalCount) / float64(in.PageSize)))
 	artifacts.Page.TotalCount = int64(newXTotalCount)
 	return artifacts, nil
+}
+
+// 匹配镜像仓库
+func (i *impl) MatchImage(ctx context.Context, in *harbor.MatchImageRequest) (*harbor.MatchImages, error) {
+	keywordArr := strings.Split(in.Keyword, ":")
+	image := ""
+	tag := ""
+	if len(keywordArr) == 1 {
+		image = keywordArr[0]
+	} else {
+		image = keywordArr[0]
+		tag = keywordArr[1]
+	}
+	matchImages := harbor.NewMatchImages()
+	req := harbor.NewQueryProjectsRequest()
+	req.CurPage = 1
+	req.PageSize = 20
+	projects, err := i.QueryProjects(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	if projects.Page.TotalCount == 0 {
+		return matchImages, nil
+	}
+	var countFlag int64
+	for _, projectData := range projects.Data {
+		req := harbor.NewQueryRepositoriesRequest()
+		req.ProjectName = projectData.Name
+		req.CurPage = 1
+		req.PageSize = 10
+		req.Keyword = image
+		repositories, err := i.QueryRepositories(ctx, req)
+		if err != nil {
+			return nil, err
+		}
+		for _, repositoryData := range repositories.Data {
+			repositoryName := filepath.Base(repositoryData.Name)
+			req := harbor.NewQueryArtifactsRequest()
+			req.ProjectName = projectData.Name
+			req.RepositoryName = repositoryName
+			req.CurPage = 1
+			req.PageSize = 10
+			req.Keyword = tag
+			artifacts, err := i.QueryArtifacts(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+			if artifacts.Page.TotalCount == 0 {
+				continue
+			}
+			for _, artifact := range artifacts.Data {
+				for _, tag := range artifact.Tags {
+					imageInfo := fmt.Sprintf("%s/%s/%s:%s", artifact.Host, projectData.Name, repositoryName, tag.Name)
+					matchImages.AddItems(imageInfo)
+					countFlag++
+					if countFlag == 10 {
+						return matchImages, nil
+					}
+				}
+			}
+		}
+	}
+	return matchImages, nil
 }

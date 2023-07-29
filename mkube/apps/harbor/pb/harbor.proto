@@ -241,3 +241,9 @@ message BuildHistory {
     // @gotags: bson:"href" json:"href"
     string Href = 2;
 }
+
+// MatchImage结构体
+message MatchImages {
+    // @gotags: bson:"images" json:"images"
+    repeated string Images = 1;
+}

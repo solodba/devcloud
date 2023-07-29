@@ -15,6 +15,8 @@ service RPC {
     rpc QueryRepositories(QueryRepositoriesRequest) returns(Repositories);
     // 获取Harbor Artifacts
     rpc QueryArtifacts(QueryArtifactsRequest) returns(Artifacts);
+    // 匹配镜像仓库
+    rpc MatchImage(MatchImageRequest) returns(MatchImages);
 }
 
 // QueryProjectsRequest结构体
@@ -51,4 +53,10 @@ message QueryArtifactsRequest {
     string ProjectName = 4;
     // @gotags: bson:"repositoryName" json:"repositoryName"
     string RepositoryName = 5;
+}
+
+// MatchImageRequest结构体
+message MatchImageRequest {
+    // @gotags: bson:"keyword" json:"keyword"
+    string Keyword = 1;
 }

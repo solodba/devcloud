@@ -74,3 +74,15 @@ func NewArtifactData() *ArtifactData {
 		Tags:       make([]*Tags, 0),
 	}
 }
+
+// MatchImages初始化函数
+func NewMatchImages() *MatchImages {
+	return &MatchImages{
+		Images: make([]string, 0),
+	}
+}
+
+// MatchImages添加方法
+func (m *MatchImages) AddItems(items ...string) {
+	m.Images = append(m.Images, items...)
+}

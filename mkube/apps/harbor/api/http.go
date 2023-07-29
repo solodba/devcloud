@@ -56,6 +56,14 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 		Reads(harbor.QueryArtifactsRequest{}).
 		Writes(harbor.Artifacts{}).
 		Returns(200, "OK", harbor.Artifacts{}))
+
+	// 查询Harbor MatchImage
+	ws.Route(ws.GET("/match").To(h.QueryMatchImages).
+		Doc("查询Harbor MatchImage").
+		Metadata(restfulspec.KeyOpenAPITags, tags).
+		Reads(harbor.QueryMatchImagesRequest{}).
+		Writes(harbor.MatchImages{}).
+		Returns(200, "OK", harbor.MatchImages{}))
 }
 
 // 初始化函数注册restful实例

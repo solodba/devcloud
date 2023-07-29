@@ -45,8 +45,8 @@ func TestQueryArtifacts(t *testing.T) {
 }
 
 func TestMatchImage(t *testing.T) {
-	req := harbor.NewMatchImageRequest("busybox:v1")
-	matchImages, err := svc.MatchImage(ctx, req)
+	req := harbor.NewQueryMatchImagesRequest("busybox:v1")
+	matchImages, err := svc.QueryMatchImages(ctx, req)
 	if err != nil {
 		t.Fatal(err)
 	}

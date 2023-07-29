@@ -50,3 +50,14 @@ func (h *handler) QueryArtifacts(r *restful.Request, w *restful.Response) {
 	}
 	w.WriteEntity(response.NewSuccess(200, artifacts))
 }
+
+// 查询Harbor MatchImage
+func (h *handler) QueryMatchImages(r *restful.Request, w *restful.Response) {
+	req := harbor.NewQueryMatchImagesRequestFromRestful(r)
+	matchImages, err := h.svc.QueryMatchImages(r.Request.Context(), req)
+	if err != nil {
+		w.WriteEntity(response.NewFail(500, err.Error()))
+		return
+	}
+	w.WriteEntity(response.NewSuccess(200, matchImages))
+}

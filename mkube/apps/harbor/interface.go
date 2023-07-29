@@ -110,9 +110,16 @@ func NewQueryArtifactsRequestFromRestful(r *restful.Request) (*QueryArtifactsReq
 	}, nil
 }
 
-// MatchImageRequest初始化函数
-func NewMatchImageRequest(keyword string) *MatchImageRequest {
-	return &MatchImageRequest{
+// QueryMatchImagesRequest初始化函数
+func NewQueryMatchImagesRequest(keyword string) *QueryMatchImagesRequest {
+	return &QueryMatchImagesRequest{
 		Keyword: keyword,
+	}
+}
+
+// 从restful解析参数初始化QueryMatchImagesRequest
+func NewQueryMatchImagesRequestFromRestful(r *restful.Request) *QueryMatchImagesRequest {
+	return &QueryMatchImagesRequest{
+		Keyword: r.QueryParameter("keyword"),
 	}
 }

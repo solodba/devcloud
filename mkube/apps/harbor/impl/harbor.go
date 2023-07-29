@@ -111,7 +111,7 @@ func (i *impl) QueryArtifacts(ctx context.Context, in *harbor.QueryArtifactsRequ
 	xTotalCount := resp.Header.Get("x-total-count")
 	newXTotalCount, err := strconv.Atoi(xTotalCount)
 	if err != nil {
-		return nil, fmt.Errorf("解析x-totoal-count失败! 原因: %s", err.Error())
+		return nil, fmt.Errorf("解析x-total-count失败! 原因: %s", err.Error())
 	}
 	artifactDatas := make([]*harbor.ArtifactData, newXTotalCount)
 	err = json.Unmarshal(respBody, &artifactDatas)
@@ -128,7 +128,7 @@ func (i *impl) QueryArtifacts(ctx context.Context, in *harbor.QueryArtifactsRequ
 }
 
 // 匹配镜像仓库
-func (i *impl) MatchImage(ctx context.Context, in *harbor.MatchImageRequest) (*harbor.MatchImages, error) {
+func (i *impl) QueryMatchImages(ctx context.Context, in *harbor.QueryMatchImagesRequest) (*harbor.MatchImages, error) {
 	keywordArr := strings.Split(in.Keyword, ":")
 	image := ""
 	tag := ""

@@ -81,7 +81,7 @@ type Prometheus struct {
 	Enable  bool   `toml:"enable" env:"PROMETHEUS_ENABLE"`
 	Scheme  string `toml:"scheme" env:"PROMETHEUS_SCHEME"`
 	Host    string `toml:"host" env:"PROMETHEUS_HOST"`
-	Port    int32  `toml:"port" env:"PROMETHEUS_PORT"`
+	Port    int    `toml:"port" env:"PROMETHEUS_PORT"`
 	lock    sync.Mutex
 	promAPI promv1.API
 }

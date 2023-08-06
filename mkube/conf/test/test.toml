@@ -2,11 +2,11 @@
 name = "mkube"
 
 [app.http]
-host = "127.0.0.1"
+host = "192.168.1.3"
 port = 8882
 
 [app.grpc]
-host = "127.0.0.1"
+host = "192.168.1.3"
 port = 8883
 
 [mongodb]
@@ -28,3 +28,9 @@ username = "admin"
 password = "Harbor12345"
 host = "192.168.1.130"
 cacerts = "etc/ca.crt"
+
+[prometheus]
+enable = true
+scheme = "http"
+host = "192.168.1.100"
+port = 30090

@@ -25,6 +25,9 @@ func TestLoadConfigFromToml(t *testing.T) {
 	t.Log(conf.C().Harbor.CaCerts)
 	t.Log(conf.C().Harbor.GetHarborCaCerts())
 	t.Log(conf.C().Harbor.InitHarborClient())
+	t.Log(conf.C().Prometheus)
+	t.Log(conf.C().Prometheus.Addr())
+	t.Log(conf.C().Prometheus.GetPromAPI())
 }
 
 func TestLoadConfigFromEnv(t *testing.T) {
@@ -46,4 +49,7 @@ func TestLoadConfigFromEnv(t *testing.T) {
 	t.Log(conf.C().Harbor.CaCerts)
 	t.Log(conf.C().Harbor.GetHarborCaCerts())
 	t.Log(conf.C().Harbor.InitHarborClient())
+	t.Log(conf.C().Prometheus)
+	t.Log(conf.C().Prometheus.Addr())
+	t.Log(conf.C().Prometheus.GetPromAPI())
 }

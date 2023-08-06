@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"sync"
 
+	promv1 "github.com/prometheus/client_golang/api/prometheus/v1"
 	"github.com/solodba/mcube/logger"
 	"go.mongodb.org/mongo-driver/mongo"
 	"k8s.io/client-go/kubernetes"
@@ -75,13 +76,24 @@ type Harbor struct {
 	client   *http.Client
 }
 
+// Prometheus结构体
+type Prometheus struct {
+	Enable  bool   `toml:"enable" env:"PROMETHEUS_ENABLE"`
+	Scheme  string `toml:"scheme" env:"PROMETHEUS_SCHEME"`
+	Host    string `toml:"host" env:"PROMETHEUS_HOST"`
+	Port    int32  `toml:"port" env:"PROMETHEUS_PORT"`
+	lock    sync.Mutex
+	promAPI promv1.API
+}
+
 // 全局配置结构体
 type Config struct {
-	App     *App     `toml:"app"`
-	MongoDB *MongoDB `toml:"mongodb"`
-	K8s     *K8s     `toml:"k8s"`
-	Plugin  *Plugin  `toml:"plugin"`
-	Harbor  *Harbor  `toml:"harbor"`
+	App        *App        `toml:"app"`
+	MongoDB    *MongoDB    `toml:"mongodb"`
+	K8s        *K8s        `toml:"k8s"`
+	Plugin     *Plugin     `toml:"plugin"`
+	Harbor     *Harbor     `toml:"harbor"`
+	Prometheus *Prometheus `toml:"prometheus"`
 }
 
 // Http初始化函数
@@ -121,7 +133,7 @@ func NewDefaultMongoDB() *MongoDB {
 // K8s初始化函数
 func NewDefaultK8s() *K8s {
 	return &K8s{
-		KubeConfig: ".kube/config",
+		KubeConfig: "etc/config",
 	}
 }
 
@@ -140,14 +152,25 @@ func NewDefaultHarbor() *Harbor {
 	}
 }
 
+// Prometheus结构体初始化函数
+func NewPrometheus() *Prometheus {
+	return &Prometheus{
+		Enable: false,
+		Scheme: "http",
+		Host:   "127.0.0.1",
+		Port:   30090,
+	}
+}
+
 // Config初始化函数
 func NewDefaultConfig() *Config {
 	return &Config{
-		App:     NewDefaultApp(),
-		MongoDB: NewDefaultMongoDB(),
-		K8s:     NewDefaultK8s(),
-		Plugin:  NewDefaultPlugin(),
-		Harbor:  NewDefaultHarbor(),
+		App:        NewDefaultApp(),
+		MongoDB:    NewDefaultMongoDB(),
+		K8s:        NewDefaultK8s(),
+		Plugin:     NewDefaultPlugin(),
+		Harbor:     NewDefaultHarbor(),
+		Prometheus: NewPrometheus(),
 	}
 }
 
@@ -157,4 +180,8 @@ func (h *Http) Addr() string {
 
 func (g *Grpc) Addr() string {
 	return fmt.Sprintf("%s:%d", g.Host, g.Port)
+}
+
+func (p *Prometheus) Addr() string {
+	return fmt.Sprintf("%s://%s:%d", p.Scheme, p.Host, p.Port)
 }

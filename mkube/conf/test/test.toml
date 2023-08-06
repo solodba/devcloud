@@ -27,7 +27,7 @@ scheme = "https"
 username = "admin"
 password = "Harbor12345"
 host = "192.168.1.130"
-cacerts = "etc/ca.crt"
+cacerts = "C:\\Users\\Admin\\Desktop\\devcloud\\mkube\\etc\\ca.crt"
 
 [prometheus]
 enable = true

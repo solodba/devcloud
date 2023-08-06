@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package codehorse.mkube.metrics;
+
+option go_package = "github.com/solodba/devcloud/mkube/apps/metrics";
+
+// MetricSet结构体
+message MetricSet {
+    // @gotags: bson:"total" json:"total"
+    int64 Total = 1;
+    // @gotags: bson:"items" json:"items"
+    repeated MetricItem Items = 2;
+}
+
+// MetricItem结构体
+message MetricItem {
+    // @gotags: bson:"title" json:"title"
+    string Title = 1;
+    // @gotags: bson:"label" json:"label"
+    string Label = 2;
+    // @gotags: bson:"value" json:"value"
+    string Value = 3;
+    // @gotags: bson:"color" json:"color"
+    string Color = 4;
+    // @gotags: bson:"logo" json:"logo"
+    string Logo = 5;
+}

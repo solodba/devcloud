@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package codehorse.mkube.metrics;
+
+option go_package = "github.com/solodba/devcloud/mkube/apps/metrics";
+
+import "apps/metrics/pb/metrics.proto";
+
+// metrics收集服务
+service RPC {
+    // 查询集群资源使用情况
+    rpc QueryClusterUsage(QueryClusterUsageRequest) returns(MetricSet);
+}
+
+// QueryClusterUsageRequest结构体
+message QueryClusterUsageRequest {
+}

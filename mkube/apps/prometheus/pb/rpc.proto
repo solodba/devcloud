@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package codehorse.mkube.prometheus;
+
+option go_package = "github.com/solodba/devcloud/mkube/apps/prometheus";
+
+// 导入外部包
+import "apps/metrics/pb/metrics.proto";
+import "apps/prometheus/pb/prometheus.proto";
+
+// 获取prometheus数据接口
+service RPC {
+    // 从Prometheus获取Metrics数据
+    rpc QueryMetricsFromProm(QueryMetricsFromPromRequest) returns(PromMetrics);
+    // 获取集群时间段变化数据
+    rpc QueryClusterUsageRange(QueryClusterUsageRangeRequest) returns(metrics.MetricSet);
+}
+
+// QueryMetricsFromPromRequest结构体
+message QueryMetricsFromPromRequest {
+    // @gotags: bson:"metricName" json:"metricName"
+    string MetricName = 1;
+}
+
+// QueryClusterUsageRangeRequest结构体
+message QueryClusterUsageRangeRequest {
+}

@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package codehorse.mkube.prometheus;
+
+option go_package = "github.com/solodba/devcloud/mkube/apps/prometheus";
+
+// PromMetrics结构体
+message PromMetrics {
+    // @gotags: bson:"metrics" json:"metrics"
+    string Metrics = 1;
+}

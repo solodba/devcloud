@@ -13,6 +13,7 @@ import (
 	_ "github.com/solodba/devcloud/mkube/apps/namespace/impl"
 	_ "github.com/solodba/devcloud/mkube/apps/node/impl"
 	_ "github.com/solodba/devcloud/mkube/apps/pod/impl"
+	_ "github.com/solodba/devcloud/mkube/apps/prometheus/impl"
 	_ "github.com/solodba/devcloud/mkube/apps/pv/impl"
 	_ "github.com/solodba/devcloud/mkube/apps/pvc/impl"
 	_ "github.com/solodba/devcloud/mkube/apps/rbac/impl"

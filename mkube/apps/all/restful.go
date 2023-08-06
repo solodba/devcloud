@@ -12,6 +12,7 @@ import (
 	_ "github.com/solodba/devcloud/mkube/apps/namespace/api"
 	_ "github.com/solodba/devcloud/mkube/apps/node/api"
 	_ "github.com/solodba/devcloud/mkube/apps/pod/api"
+	_ "github.com/solodba/devcloud/mkube/apps/prometheus/api"
 	_ "github.com/solodba/devcloud/mkube/apps/pv/api"
 	_ "github.com/solodba/devcloud/mkube/apps/pvc/api"
 	_ "github.com/solodba/devcloud/mkube/apps/rbac/api"

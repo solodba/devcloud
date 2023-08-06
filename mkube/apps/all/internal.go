@@ -1,6 +1,7 @@
 package all
 
 import (
+	_ "github.com/solodba/devcloud/mkube/apps/collector/impl"
 	_ "github.com/solodba/devcloud/mkube/apps/configmap/impl"
 	_ "github.com/solodba/devcloud/mkube/apps/cronjob/impl"
 	_ "github.com/solodba/devcloud/mkube/apps/daemonset/impl"
@@ -8,6 +9,7 @@ import (
 	_ "github.com/solodba/devcloud/mkube/apps/harbor/impl"
 	_ "github.com/solodba/devcloud/mkube/apps/ingress/impl"
 	_ "github.com/solodba/devcloud/mkube/apps/job/impl"
+	_ "github.com/solodba/devcloud/mkube/apps/metrics/impl"
 	_ "github.com/solodba/devcloud/mkube/apps/namespace/impl"
 	_ "github.com/solodba/devcloud/mkube/apps/node/impl"
 	_ "github.com/solodba/devcloud/mkube/apps/pod/impl"

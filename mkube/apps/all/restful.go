@@ -1,6 +1,7 @@
 package all
 
 import (
+	_ "github.com/solodba/devcloud/mkube/apps/collector/api"
 	_ "github.com/solodba/devcloud/mkube/apps/configmap/api"
 	_ "github.com/solodba/devcloud/mkube/apps/cronjob/api"
 	_ "github.com/solodba/devcloud/mkube/apps/daemonset/api"

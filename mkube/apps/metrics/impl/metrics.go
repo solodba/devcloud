@@ -246,6 +246,7 @@ func (i *impl) QueryResource(ctx context.Context, in *metrics.QueryResourceReque
 	for index, item := range metricSet.Items {
 		metricSet.Items[index].Color = common.GenerateHashBasedRGB(item.Value)
 	}
+	metricSet.Total = int64(len(metricSet.Items))
 	return metricSet, nil
 }
 
@@ -299,5 +300,6 @@ func (i *impl) QueryClusterInfo(ctx context.Context, in *metrics.QueryClusterInf
 	for index, item := range metricSet.Items {
 		metricSet.Items[index].Color = common.GenerateHashBasedRGB(item.Title)
 	}
+	metricSet.Total = int64(len(metricSet.Items))
 	return metricSet, nil
 }

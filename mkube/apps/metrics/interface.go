@@ -14,3 +14,8 @@ type Service interface {
 func NewQueryClusterUsageRequest() *QueryClusterUsageRequest {
 	return &QueryClusterUsageRequest{}
 }
+
+// QueryResourceRequest初始化函数
+func NewQueryResourceRequest() *QueryResourceRequest {
+	return &QueryResourceRequest{}
+}

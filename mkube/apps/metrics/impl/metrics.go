@@ -242,7 +242,7 @@ func (i *impl) QueryResource(ctx context.Context, in *metrics.QueryResourceReque
 		clusterRoleBindingMetric.Value = strconv.Itoa(len(clusterRoleBindingList.Items))
 		metricSet.AddItems(clusterRoleBindingMetric)
 	}
-	// Color的生成
+	// 随机Color的生成
 	for index, item := range metricSet.Items {
 		metricSet.Items[index].Color = common.GenerateHashBasedRGB(item.Value)
 	}
@@ -251,5 +251,53 @@ func (i *impl) QueryResource(ctx context.Context, in *metrics.QueryResourceReque
 
 // 获取集群信息
 func (i *impl) QueryClusterInfo(ctx context.Context, in *metrics.QueryClusterInfoRequest) (*metrics.MetricSet, error) {
-	return nil, nil
+	metricSet := metrics.NewMetricSet()
+	// 添加K8S类型信息
+	typeMetric := metrics.NewMetricItem()
+	typeMetric.Title = "Cluster"
+	typeMetric.Logo = "k8s"
+	typeMetric.Value = "K8S"
+	metricSet.AddItems(typeMetric)
+	// 添加K8S版本信息
+	serverVersion, err := i.clientSet.ServerVersion()
+	if err == nil {
+		versionMetric := metrics.NewMetricItem()
+		versionMetric.Title = "Kubernetes version"
+		versionMetric.Logo = "k8s"
+		versionMetric.Value = fmt.Sprintf("%s.%s", serverVersion.Major, serverVersion.Minor)
+		metricSet.AddItems(versionMetric)
+	}
+	// K8S集群初始化时间
+	nodeList, err := i.clientSet.CoreV1().Nodes().List(ctx, metav1.ListOptions{})
+	if err == nil {
+		var k8sCreateTime int64 = 0
+		for _, item := range nodeList.Items {
+			if _, ok := item.Labels["node-role.kubernetes.io/control-plane"]; ok {
+				if k8sCreateTime == 0 {
+					k8sCreateTime = item.CreationTimestamp.Unix()
+				}
+				if k8sCreateTime > 0 && item.CreationTimestamp.Unix() < k8sCreateTime {
+					k8sCreateTime = item.CreationTimestamp.Unix()
+				}
+			}
+		}
+		createTimeMetric := metrics.NewMetricItem()
+		createTimeMetric.Title = "Created"
+		createTimeMetric.Logo = "k8s"
+		createTimeMetric.Value = common.GetFormatTimeByUnix(k8sCreateTime)
+		metricSet.AddItems(createTimeMetric)
+	}
+	// K8S节点数量
+	if err == nil {
+		nodeCountMetric := metrics.NewMetricItem()
+		nodeCountMetric.Title = "Nodes"
+		nodeCountMetric.Logo = "k8s"
+		nodeCountMetric.Value = strconv.Itoa(len(nodeList.Items))
+		metricSet.AddItems(nodeCountMetric)
+	}
+	// 随机Color的生成
+	for index, item := range metricSet.Items {
+		metricSet.Items[index].Color = common.GenerateHashBasedRGB(item.Title)
+	}
+	return metricSet, nil
 }

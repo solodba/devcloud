@@ -99,7 +99,24 @@ func (i *impl) UpdateIngressRoute(ctx context.Context, in *ingroute.UpdateIngres
 
 // 删除IngressRoute
 func (i *impl) DeleteIngressRoute(ctx context.Context, in *ingroute.DeleteIngressRouteRequest) (*ingroute.CreateIngressRouteRequest, error) {
-	return nil, nil
+	req := ingroute.NewDescribeIngressRouteRequest()
+	req.Namespace = in.Namespace
+	req.Name = in.Name
+	ingressRoute, err := i.DescribeIngressRoute(ctx, req)
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] ingress route not found", in.Namespace, in.Name)
+	}
+	url := fmt.Sprintf(INGRESS_ROUTE_DELETE_URL, ingressRoute.Namespace, ingressRoute.Name)
+	_, err = i.clientSet.RESTClient().Delete().AbsPath(url).DoRaw(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] ingress delete fail", ingressRoute.Namespace, ingressRoute.Name)
+	}
+	// 从库中删除
+	_, err = i.col.DeleteOne(ctx, bson.M{"name": ingressRoute.Name})
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s, name=%s] delete from mongodb fail", ingressRoute.Namespace, ingressRoute.Name)
+	}
+	return ingressRoute, nil
 }
 
 // 查询IngressRoute

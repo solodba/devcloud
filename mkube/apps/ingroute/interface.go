@@ -39,3 +39,8 @@ func NewUpdateIngressRouteRequest() *UpdateIngressRouteRequest {
 		IngressRoute: NewCreateIngressRouteRequest(),
 	}
 }
+
+// DeleteIngressRouteRequest初始化函数
+func NewDeleteIngressRouteRequest() *DeleteIngressRouteRequest {
+	return &DeleteIngressRouteRequest{}
+}

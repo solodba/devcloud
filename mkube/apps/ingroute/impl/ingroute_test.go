@@ -64,3 +64,14 @@ func TestUpdateIngressRoute(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(ingressRoute))
 }
+
+func TestDeleteIngressRoute(t *testing.T) {
+	req := ingroute.NewDeleteIngressRouteRequest()
+	req.Namespace = "test"
+	req.Name = "test"
+	ingressRoute, err := svc.DeleteIngressRoute(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(ingressRoute))
+}

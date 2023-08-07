@@ -174,5 +174,19 @@ func (i *impl) DescribeIngressRoute(ctx context.Context, in *ingroute.DescribeIn
 
 // 查询IngressRoute中间件列表
 func (i *impl) QueryIngRouteMiddlewareList(ctx context.Context, in *ingroute.QueryIngRouteMwRequest) (*ingroute.MiddlewareList, error) {
-	return nil, nil
+	url := fmt.Sprintf(MIDDLEWARE_LIST_URL, in.Namespace)
+	raw, err := i.clientSet.RESTClient().Get().AbsPath(url).DoRaw(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("[namespace=%s] get ingress route middleware list resource failed, err: %s", in.Namespace, err.Error())
+	}
+	k8sMwList := ingroute.NewK8sMiddlewareList()
+	err = json.Unmarshal(raw, k8sMwList)
+	if err != nil {
+		return nil, fmt.Errorf("json unmarshal failed, err: %s", err.Error())
+	}
+	mwList := ingroute.NewMiddlewareList()
+	for _, item := range k8sMwList.Items {
+		mwList.AddItems(item.Metadata.Name)
+	}
+	return mwList, nil
 }

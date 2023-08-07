@@ -75,3 +75,12 @@ func TestDeleteIngressRoute(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(ingressRoute))
 }
+
+func TestQueryIngRouteMiddlewareList(t *testing.T) {
+	req := ingroute.NewQueryIngRouteMwRequest("test")
+	mwList, err := svc.QueryIngRouteMiddlewareList(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(mwList))
+}

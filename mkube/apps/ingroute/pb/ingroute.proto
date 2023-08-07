@@ -45,7 +45,15 @@ message Routes {
     string Match = 2;
     // @gotags: bson:"services" json:"services"
     repeated Services Services = 3;
+    // @gotags: bson:"middlewares" json:"middlewares"
+    repeated Middlewares Middlewares = 4;
 }   
+
+// Middlewares结构体
+message Middlewares {
+    // @gotags: bson:"name" json:"name"
+    string Name = 1;
+}
 
 // Services结构体
 message Services {

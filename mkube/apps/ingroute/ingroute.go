@@ -19,6 +19,19 @@ type K8sIngressRouteList struct {
 	Items           []*K8sIngressRoute `json:"items"`
 }
 
+// Middleware结构体
+type K8sMiddleware struct {
+	metav1.TypeMeta `json:",inline"`
+	Metadata        metav1.ObjectMeta `json:"metadata"`
+}
+
+// K8sMiddlewareList结构体
+type K8sMiddlewareList struct {
+	metav1.TypeMeta `json:",inline"`
+	metav1.ListMeta `json:"metadata,omitempty" protobuf:"bytes,1,opt,name=metadata"`
+	Items           []K8sMiddleware `json:"items"`
+}
+
 // IngressRouteSet结构体初始化函数
 func NewIngressRouteSet() *IngressRouteSet {
 	return &IngressRouteSet{
@@ -76,5 +89,34 @@ func NewDefaultIngressRoute() *IngressRoute {
 	return &IngressRoute{
 		Meta:         meta.NewMeta(),
 		IngressRoute: NewCreateIngressRouteRequest(),
+	}
+}
+
+// MiddlewareList初始化函数
+func NewMiddlewareList() *MiddlewareList {
+	return &MiddlewareList{
+		Items: make([]string, 0),
+	}
+}
+
+// MiddlewareList添加方法
+func (m *MiddlewareList) AddItems(items ...string) {
+	m.Items = append(m.Items, items...)
+}
+
+// Middleware初始化函数
+func NewMiddleware() *K8sIngressRoute {
+	return &K8sIngressRoute{
+		TypeMeta: metav1.TypeMeta{},
+		Metadata: metav1.ObjectMeta{},
+	}
+}
+
+// K8sMiddlewareList初始化函数
+func NewK8sMiddlewareList() *K8sMiddlewareList {
+	return &K8sMiddlewareList{
+		TypeMeta: metav1.TypeMeta{},
+		ListMeta: metav1.ListMeta{},
+		Items:    make([]K8sMiddleware, 0),
 	}
 }

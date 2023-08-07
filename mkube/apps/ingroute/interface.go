@@ -44,3 +44,10 @@ func NewUpdateIngressRouteRequest() *UpdateIngressRouteRequest {
 func NewDeleteIngressRouteRequest() *DeleteIngressRouteRequest {
 	return &DeleteIngressRouteRequest{}
 }
+
+// QueryIngRouteMwRequest初始化函数
+func NewQueryIngRouteMwRequest(namespace string) *QueryIngRouteMwRequest {
+	return &QueryIngRouteMwRequest{
+		Namespace: namespace,
+	}
+}

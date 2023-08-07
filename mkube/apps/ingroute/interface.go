@@ -27,3 +27,8 @@ func NewCreateIngressRouteRequest() *CreateIngressRouteRequest {
 func NewDescribeIngressRouteRequest() *DescribeIngressRouteRequest {
 	return &DescribeIngressRouteRequest{}
 }
+
+// QueryIngressRouteRequest初始化函数
+func NewQueryIngressRouteRequest() *QueryIngressRouteRequest {
+	return &QueryIngressRouteRequest{}
+}

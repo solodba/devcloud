@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"strings"
 
 	"github.com/solodba/devcloud/mkube/apps/ingroute"
 )
@@ -25,7 +26,28 @@ func (i *impl) DeleteIngressRoute(ctx context.Context, in *ingroute.DeleteIngres
 
 // 查询IngressRoute
 func (i *impl) QueryIngressRoute(ctx context.Context, in *ingroute.QueryIngressRouteRequest) (*ingroute.IngressRouteSet, error) {
-	return nil, nil
+	url := fmt.Sprintf(INGRESS_ROUTE_LIST_URL, in.Namespace)
+	k8sIngRouteList := ingroute.NewK8sIngressRouteList()
+	ingRouteSet := ingroute.NewIngressRouteSet()
+	raw, err := i.clientSet.RESTClient().Get().AbsPath(url).DoRaw(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("get ingress route resource failed, err: %s", err.Error())
+	}
+	err = json.Unmarshal(raw, k8sIngRouteList)
+	if err != nil {
+		return nil, fmt.Errorf("json unmarshal failed, err: %s", err.Error())
+	}
+	for i := range k8sIngRouteList.Items {
+		if strings.Contains(k8sIngRouteList.Items[i].Metadata.Name, in.Keyword) {
+			ingRouteSetItem := ingroute.NewIngressRouteSetItem()
+			ingRouteSetItem.Name = k8sIngRouteList.Items[i].Metadata.Name
+			ingRouteSetItem.Namespace = k8sIngRouteList.Items[i].Metadata.Namespace
+			ingRouteSetItem.Age = k8sIngRouteList.Items[i].Metadata.CreationTimestamp.Unix()
+			ingRouteSet.AddItems(ingRouteSetItem)
+		}
+	}
+	ingRouteSet.Total = int64(len(ingRouteSet.Items))
+	return ingRouteSet, nil
 }
 
 // 查询IngressRoute详情

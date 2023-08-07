@@ -17,3 +17,14 @@ func TestDescribeIngressRoute(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(ingressRoute))
 }
+
+func TestQueryIngressRoute(t *testing.T) {
+	req := ingroute.NewQueryIngressRouteRequest()
+	req.Namespace = "test"
+	req.Keyword = "web"
+	ingRouteSet, err := svc.QueryIngressRoute(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(ingRouteSet))
+}

@@ -10,8 +10,20 @@ import "apps/metrics/pb/metrics.proto";
 service RPC {
     // 查询集群资源使用情况
     rpc QueryClusterUsage(QueryClusterUsageRequest) returns(MetricSet);
+    // 查询K8S资源情况
+    rpc QueryResource(QueryResourceRequest) returns(MetricSet);
+    // 获取集群信息
+    rpc QueryClusterInfo(QueryClusterInfoRequest) returns(MetricSet);
 }
 
 // QueryClusterUsageRequest结构体
 message QueryClusterUsageRequest {
+}
+
+// QueryResourceRequest结构体
+message QueryResourceRequest {
+}
+
+// QueryClusterInfoRequest结构体
+message QueryClusterInfoRequest {
 }

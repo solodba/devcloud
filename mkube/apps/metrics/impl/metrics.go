@@ -65,3 +65,13 @@ func (i *impl) QueryClusterUsage(ctx context.Context, in *metrics.QueryClusterUs
 	}
 	return metricSet, nil
 }
+
+// 查询K8S资源情况
+func (i *impl) QueryResource(ctx context.Context, in *metrics.QueryResourceRequest) (*metrics.MetricSet, error) {
+	return nil, nil
+}
+
+// 获取集群信息
+func (i *impl) QueryClusterInfo(ctx context.Context, in *metrics.QueryClusterInfoRequest) (*metrics.MetricSet, error) {
+	return nil, nil
+}

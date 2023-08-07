@@ -20,6 +20,8 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	RPC_QueryClusterUsage_FullMethodName = "/codehorse.mkube.metrics.RPC/QueryClusterUsage"
+	RPC_QueryResource_FullMethodName     = "/codehorse.mkube.metrics.RPC/QueryResource"
+	RPC_QueryClusterInfo_FullMethodName  = "/codehorse.mkube.metrics.RPC/QueryClusterInfo"
 )
 
 // RPCClient is the client API for RPC service.
@@ -28,6 +30,10 @@ const (
 type RPCClient interface {
 	// 查询集群资源使用情况
 	QueryClusterUsage(ctx context.Context, in *QueryClusterUsageRequest, opts ...grpc.CallOption) (*MetricSet, error)
+	// 查询K8S资源情况
+	QueryResource(ctx context.Context, in *QueryResourceRequest, opts ...grpc.CallOption) (*MetricSet, error)
+	// 获取集群信息
+	QueryClusterInfo(ctx context.Context, in *QueryClusterInfoRequest, opts ...grpc.CallOption) (*MetricSet, error)
 }
 
 type rPCClient struct {
@@ -47,12 +53,34 @@ func (c *rPCClient) QueryClusterUsage(ctx context.Context, in *QueryClusterUsage
 	return out, nil
 }
 
+func (c *rPCClient) QueryResource(ctx context.Context, in *QueryResourceRequest, opts ...grpc.CallOption) (*MetricSet, error) {
+	out := new(MetricSet)
+	err := c.cc.Invoke(ctx, RPC_QueryResource_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *rPCClient) QueryClusterInfo(ctx context.Context, in *QueryClusterInfoRequest, opts ...grpc.CallOption) (*MetricSet, error) {
+	out := new(MetricSet)
+	err := c.cc.Invoke(ctx, RPC_QueryClusterInfo_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // RPCServer is the server API for RPC service.
 // All implementations must embed UnimplementedRPCServer
 // for forward compatibility
 type RPCServer interface {
 	// 查询集群资源使用情况
 	QueryClusterUsage(context.Context, *QueryClusterUsageRequest) (*MetricSet, error)
+	// 查询K8S资源情况
+	QueryResource(context.Context, *QueryResourceRequest) (*MetricSet, error)
+	// 获取集群信息
+	QueryClusterInfo(context.Context, *QueryClusterInfoRequest) (*MetricSet, error)
 	mustEmbedUnimplementedRPCServer()
 }
 
@@ -62,6 +90,12 @@ type UnimplementedRPCServer struct {
 
 func (UnimplementedRPCServer) QueryClusterUsage(context.Context, *QueryClusterUsageRequest) (*MetricSet, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QueryClusterUsage not implemented")
+}
+func (UnimplementedRPCServer) QueryResource(context.Context, *QueryResourceRequest) (*MetricSet, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryResource not implemented")
+}
+func (UnimplementedRPCServer) QueryClusterInfo(context.Context, *QueryClusterInfoRequest) (*MetricSet, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryClusterInfo not implemented")
 }
 func (UnimplementedRPCServer) mustEmbedUnimplementedRPCServer() {}
 
@@ -94,6 +128,42 @@ func _RPC_QueryClusterUsage_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RPC_QueryResource_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryResourceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RPCServer).QueryResource(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RPC_QueryResource_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RPCServer).QueryResource(ctx, req.(*QueryResourceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RPC_QueryClusterInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryClusterInfoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RPCServer).QueryClusterInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RPC_QueryClusterInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RPCServer).QueryClusterInfo(ctx, req.(*QueryClusterInfoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // RPC_ServiceDesc is the grpc.ServiceDesc for RPC service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -104,6 +174,14 @@ var RPC_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "QueryClusterUsage",
 			Handler:    _RPC_QueryClusterUsage_Handler,
+		},
+		{
+			MethodName: "QueryResource",
+			Handler:    _RPC_QueryResource_Handler,
+		},
+		{
+			MethodName: "QueryClusterInfo",
+			Handler:    _RPC_QueryClusterInfo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

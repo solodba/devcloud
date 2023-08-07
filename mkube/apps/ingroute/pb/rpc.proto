@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package codehorse.mkube.ingroute;
+
+option go_package = "github.com/solodba/devcloud/mkube/apps/ingroute";
+
+// 导入外部包
+import "apps/ingroute/pb/ingroute.proto";
+
+// IngressRoute相关功能接口
+service RPC {
+    // 创建IngressRoute
+    rpc CreateIngressRoute(CreateIngressRouteRequest) returns(IngressRoute);
+    // 更新IngressRoute
+    rpc UpdateIngressRoute(UpdateIngressRouteRequest) returns(IngressRoute);
+    // 删除IngressRoute
+    rpc DeleteIngressRoute(DeleteIngressRouteRequest) returns(CreateIngressRouteRequest);
+    // 查询IngressRoute
+    rpc QueryIngressRoute(QueryIngressRouteRequest) returns(IngressRouteSet);
+    // 查询IngressRoute详情
+    rpc DescribeIngressRoute(DescribeIngressRouteRequest) returns(CreateIngressRouteRequest);
+    // 查询IngressRoute中间件列表
+    rpc QueryIngRouteMiddlewareList(QueryIngRouteMwRequest) returns(MiddlewareList);
+}
+
+// UpdateIngressRouteRequest结构体
+message UpdateIngressRouteRequest {
+    // @gotags: bson:"ingressRoute" json:"ingressRoute"
+    CreateIngressRouteRequest IngressRoute = 1;
+}
+
+// DeleteIngressRouteRequest结构体
+message DeleteIngressRouteRequest {
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 1;
+    // @gotags: bson:"name" json:"name"
+    string Name = 2;
+}
+
+// QueryIngressRouteRequest结构体
+message QueryIngressRouteRequest {
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 1;
+    // @gotags: bson:"keyword" json:"keyword"
+    string Keyword = 2;
+}
+
+// DescribeIngressRouteRequest结构体
+message DescribeIngressRouteRequest {
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 1;
+    // @gotags: bson:"name" json:"name"
+    string Name = 2;
+}
+
+// QueryIngRouteMwRequest结构体
+message QueryIngRouteMwRequest {
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 1;
+}

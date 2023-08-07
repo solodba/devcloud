@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+package codehorse.mkube.ingroute;
+
+option go_package = "github.com/solodba/devcloud/mkube/apps/ingroute";
+
+// 导入外部包
+import "common/pb/github.com/solodba/mcube/pb/meta/meta.proto";
+
+// CreateIngressRouteRequest结构体
+message CreateIngressRouteRequest {
+    // gotags: bson:"name" json:"name"
+    string Name = 1;
+    // gotags: bson:"namespace" json:"namespace"
+    string Namespace = 2;
+    // gotags: bson:"labels" json:"labels"
+    repeated ListMapItem Labels = 3;
+    // gotags: bson:"ingressRouteSpec" json:"ingressRouteSpec"
+    IngressRouteSpec IngressRouteSpec = 4;
+}
+
+// 通用键值对结构体
+message ListMapItem {
+    // @gotags: bson:"key" json:"key"
+    string Key = 1;
+    // @gotags: bson:"value" json:"value"
+    string Value = 2;
+}
+
+// IngressRouteSpec结构体
+message IngressRouteSpec {
+    // @gotags: bson:"entryPoints" json:"entryPoints"
+    repeated string EntryPoints = 1;
+    // @gotags: bson:"routes" json:"routes"
+    repeated Routes Routes = 2;
+    // @gotags: bson:"tls" json:"tls"
+    Tls Tls = 3;
+}
+
+// Routes结构体
+message Routes {
+    // @gotags: bson:"kind" json:"kind"
+    string Kind = 1;
+    // @gotags: bson:"match" json:"match"
+    string Match = 2;
+    // @gotags: bson:"services" json:"services"
+    repeated Services Services = 3;
+}   
+
+// Services结构体
+message Services {
+    // @gotags: bson:"name" json:"name"
+    string Name = 1;
+    // @gotags: bson:"port" json:"port"
+    int32 Port = 2;
+}
+
+// Tls结构体
+message Tls {
+    // @gotags: bson:"secretName" json:"secretName"
+    string SecretName = 1;
+}
+
+// IngressRoute结构体
+message IngressRoute {
+    // @gotags: bson:",inline" json:"meta"
+    codehorse.mcube.meta.Meta Meta = 1;
+    // @gotags: bson:",inline" json:"ingressRoute"
+    CreateIngressRouteRequest IngressRoute = 2;
+}
+
+// IngressRouteSet结构体
+message IngressRouteSet {
+    // @gotags: bson:"total" json:"total"
+    int64 Total = 1;
+    // @gotags: bson:"items" json:"items"
+    repeated IngressRouteSetItem Items = 2;
+}
+
+// IngressListItem结构体
+message IngressRouteSetItem {
+    // @gotags: bson:"name" json:"name"
+    string Name = 1;
+    // @gotags: bson:"namespace" json:"namespace"
+    string Namespace = 2;
+    // @gotags: bson:"age" json:"age"
+    int64 Age = 3;
+}
+
+// MiddlewareList结构体
+message MiddlewareList {
+    // @gotags: bson:"items" json:"items"
+    repeated string Items = 1;
+}

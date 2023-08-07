@@ -32,3 +32,10 @@ func NewDescribeIngressRouteRequest() *DescribeIngressRouteRequest {
 func NewQueryIngressRouteRequest() *QueryIngressRouteRequest {
 	return &QueryIngressRouteRequest{}
 }
+
+// UpdateIngressRouteRequest初始化函数
+func NewUpdateIngressRouteRequest() *UpdateIngressRouteRequest {
+	return &UpdateIngressRouteRequest{
+		IngressRoute: NewCreateIngressRouteRequest(),
+	}
+}

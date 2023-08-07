@@ -22,7 +22,7 @@ func (i *impl) CreateIngress(ctx context.Context, in *ingress.CreateIngressReque
 	if err != nil {
 		return nil, fmt.Errorf("[namespace=%s, name=%s] create failed, err: %s", k8sIngress.Namespace, k8sIngress.Name, err.Error())
 	}
-	// 新增Pod数据入库]
+	// 新增Ingress数据入库
 	ingress := ingress.NewIngress(in)
 	_, err = i.col.InsertOne(ctx, ingress)
 	if err != nil {

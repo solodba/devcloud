@@ -9,6 +9,7 @@ import (
 	_ "github.com/solodba/devcloud/mkube/apps/deployment/api"
 	_ "github.com/solodba/devcloud/mkube/apps/harbor/api"
 	_ "github.com/solodba/devcloud/mkube/apps/ingress/api"
+	_ "github.com/solodba/devcloud/mkube/apps/ingroute/api"
 	_ "github.com/solodba/devcloud/mkube/apps/job/api"
 	_ "github.com/solodba/devcloud/mkube/apps/namespace/api"
 	_ "github.com/solodba/devcloud/mkube/apps/node/api"

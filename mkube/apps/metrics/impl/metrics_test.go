@@ -24,3 +24,12 @@ func TestQueryResource(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(metricSet))
 }
+
+func TestQueryClusterInfo(t *testing.T) {
+	req := metrics.NewQueryClusterInfoRequest()
+	metricSet, err := svc.QueryClusterInfo(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(metricSet))
+}

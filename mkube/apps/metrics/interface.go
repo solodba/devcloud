@@ -19,3 +19,8 @@ func NewQueryClusterUsageRequest() *QueryClusterUsageRequest {
 func NewQueryResourceRequest() *QueryResourceRequest {
 	return &QueryResourceRequest{}
 }
+
+// QueryClusterInfoRequest初始化函数
+func NewQueryClusterInfoRequest() *QueryClusterInfoRequest {
+	return &QueryClusterInfoRequest{}
+}

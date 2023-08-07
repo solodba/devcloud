@@ -8,6 +8,7 @@ import (
 	_ "github.com/solodba/devcloud/mkube/apps/deployment/impl"
 	_ "github.com/solodba/devcloud/mkube/apps/harbor/impl"
 	_ "github.com/solodba/devcloud/mkube/apps/ingress/impl"
+	_ "github.com/solodba/devcloud/mkube/apps/ingroute/impl"
 	_ "github.com/solodba/devcloud/mkube/apps/job/impl"
 	_ "github.com/solodba/devcloud/mkube/apps/metrics/impl"
 	_ "github.com/solodba/devcloud/mkube/apps/namespace/impl"

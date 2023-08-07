@@ -4,8 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"strconv"
 
 	"github.com/solodba/devcloud/mkube/apps/metrics"
+	"github.com/solodba/devcloud/mkube/common"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -68,7 +70,183 @@ func (i *impl) QueryClusterUsage(ctx context.Context, in *metrics.QueryClusterUs
 
 // 查询K8S资源情况
 func (i *impl) QueryResource(ctx context.Context, in *metrics.QueryResourceRequest) (*metrics.MetricSet, error) {
-	return nil, nil
+	metricSet := metrics.NewMetricSet()
+	// 获取namespace
+	namespaceList, err := i.clientSet.CoreV1().Namespaces().List(ctx, metav1.ListOptions{})
+	if err == nil {
+		namespaceMetric := metrics.NewMetricItem()
+		namespaceMetric.Logo = "k8s"
+		namespaceMetric.Title = "Namespaces"
+		namespaceMetric.Value = strconv.Itoa(len(namespaceList.Items))
+		metricSet.AddItems(namespaceMetric)
+	}
+	// 获取Pods
+	podList, err := i.clientSet.CoreV1().Pods("").List(ctx, metav1.ListOptions{})
+	if err == nil {
+		podMetric := metrics.NewMetricItem()
+		podMetric.Logo = "pod"
+		podMetric.Title = "Pods"
+		podMetric.Value = strconv.Itoa(len(podList.Items))
+		metricSet.AddItems(podMetric)
+	}
+	// 获取ConfigMap
+	cmList, err := i.clientSet.CoreV1().ConfigMaps("").List(ctx, metav1.ListOptions{})
+	if err == nil {
+		cmMetric := metrics.NewMetricItem()
+		cmMetric.Logo = "cm"
+		cmMetric.Title = "ConfigMaps"
+		cmMetric.Value = strconv.Itoa(len(cmList.Items))
+		metricSet.AddItems(cmMetric)
+	}
+	// 获取Secret
+	secretList, err := i.clientSet.CoreV1().Secrets("").List(ctx, metav1.ListOptions{})
+	if err == nil {
+		secretMetric := metrics.NewMetricItem()
+		secretMetric.Logo = "secret"
+		secretMetric.Title = "Secrets"
+		secretMetric.Value = strconv.Itoa(len(secretList.Items))
+		metricSet.AddItems(secretMetric)
+	}
+	// 获取PersistentVolume
+	pvList, err := i.clientSet.CoreV1().PersistentVolumes().List(ctx, metav1.ListOptions{})
+	if err == nil {
+		pvMetric := metrics.NewMetricItem()
+		pvMetric.Logo = "pv"
+		pvMetric.Title = "PV"
+		pvMetric.Value = strconv.Itoa(len(pvList.Items))
+		metricSet.AddItems(pvMetric)
+	}
+	// 获取PersistentVolumeClaim
+	pvcList, err := i.clientSet.CoreV1().PersistentVolumeClaims("").List(ctx, metav1.ListOptions{})
+	if err == nil {
+		pvcMetric := metrics.NewMetricItem()
+		pvcMetric.Logo = "pvc"
+		pvcMetric.Title = "PVC"
+		pvcMetric.Value = strconv.Itoa(len(pvcList.Items))
+		metricSet.AddItems(pvcMetric)
+	}
+	// 获取StorageClass
+	scList, err := i.clientSet.StorageV1().StorageClasses().List(ctx, metav1.ListOptions{})
+	if err == nil {
+		scMetric := metrics.NewMetricItem()
+		scMetric.Logo = "sc"
+		scMetric.Title = "StorageClass"
+		scMetric.Value = strconv.Itoa(len(scList.Items))
+		metricSet.AddItems(scMetric)
+	}
+	// 获取Service
+	svcList, err := i.clientSet.CoreV1().Services("").List(ctx, metav1.ListOptions{})
+	if err == nil {
+		svcMetric := metrics.NewMetricItem()
+		svcMetric.Logo = "svc"
+		svcMetric.Title = "Services"
+		svcMetric.Value = strconv.Itoa(len(svcList.Items))
+		metricSet.AddItems(svcMetric)
+	}
+	// 获取Ingress
+	ingressList, err := i.clientSet.NetworkingV1().Ingresses("").List(ctx, metav1.ListOptions{})
+	if err == nil {
+		ingressMetric := metrics.NewMetricItem()
+		ingressMetric.Logo = "ingress"
+		ingressMetric.Title = "Ingresses"
+		ingressMetric.Value = strconv.Itoa(len(ingressList.Items))
+		metricSet.AddItems(ingressMetric)
+	}
+	// 获取Deployment
+	deploymentList, err := i.clientSet.AppsV1().Deployments("").List(ctx, metav1.ListOptions{})
+	if err == nil {
+		deploymentMetric := metrics.NewMetricItem()
+		deploymentMetric.Logo = "pod"
+		deploymentMetric.Title = "Deployments"
+		deploymentMetric.Value = strconv.Itoa(len(deploymentList.Items))
+		metricSet.AddItems(deploymentMetric)
+	}
+	// 获取DaemonSet
+	daemonSetList, err := i.clientSet.AppsV1().DaemonSets("").List(ctx, metav1.ListOptions{})
+	if err == nil {
+		daemonSetMetric := metrics.NewMetricItem()
+		daemonSetMetric.Logo = "pod"
+		daemonSetMetric.Title = "DaemonSets"
+		daemonSetMetric.Value = strconv.Itoa(len(daemonSetList.Items))
+		metricSet.AddItems(daemonSetMetric)
+	}
+	// 获取StatefulSets
+	statefulSetList, err := i.clientSet.AppsV1().StatefulSets("").List(ctx, metav1.ListOptions{})
+	if err == nil {
+		statefulSetMetric := metrics.NewMetricItem()
+		statefulSetMetric.Logo = "ingress"
+		statefulSetMetric.Title = "statefulSets"
+		statefulSetMetric.Value = strconv.Itoa(len(statefulSetList.Items))
+		metricSet.AddItems(statefulSetMetric)
+	}
+	// 获取Jobs
+	jobList, err := i.clientSet.BatchV1().Jobs("").List(ctx, metav1.ListOptions{})
+	if err == nil {
+		jobMetric := metrics.NewMetricItem()
+		jobMetric.Logo = "pod"
+		jobMetric.Title = "Jobs"
+		jobMetric.Value = strconv.Itoa(len(jobList.Items))
+		metricSet.AddItems(jobMetric)
+	}
+	// 获取CronJobs
+	cronJobList, err := i.clientSet.BatchV1().CronJobs("").List(ctx, metav1.ListOptions{})
+	if err == nil {
+		cronjobMetric := metrics.NewMetricItem()
+		cronjobMetric.Logo = "pod"
+		cronjobMetric.Title = "CronJobs"
+		cronjobMetric.Value = strconv.Itoa(len(cronJobList.Items))
+		metricSet.AddItems(cronjobMetric)
+	}
+	// 获取ServiceAccounts
+	saList, err := i.clientSet.CoreV1().ServiceAccounts("").List(ctx, metav1.ListOptions{})
+	if err == nil {
+		saMetric := metrics.NewMetricItem()
+		saMetric.Logo = "secret"
+		saMetric.Title = "ServiceAccounts"
+		saMetric.Value = strconv.Itoa(len(saList.Items))
+		metricSet.AddItems(saMetric)
+	}
+	// 获取Roles
+	roleList, err := i.clientSet.RbacV1().Roles("").List(ctx, metav1.ListOptions{})
+	if err == nil {
+		roleMetric := metrics.NewMetricItem()
+		roleMetric.Logo = "secret"
+		roleMetric.Title = "Roles"
+		roleMetric.Value = strconv.Itoa(len(roleList.Items))
+		metricSet.AddItems(roleMetric)
+	}
+	// 获取ClusterRole
+	clusterRoleList, err := i.clientSet.RbacV1().ClusterRoles().List(ctx, metav1.ListOptions{})
+	if err == nil {
+		clusterRoleMetric := metrics.NewMetricItem()
+		clusterRoleMetric.Logo = "secret"
+		clusterRoleMetric.Title = "ClusterRoles"
+		clusterRoleMetric.Value = strconv.Itoa(len(clusterRoleList.Items))
+		metricSet.AddItems(clusterRoleMetric)
+	}
+	// 获取RoleBinding
+	roleBindingList, err := i.clientSet.RbacV1().RoleBindings("").List(ctx, metav1.ListOptions{})
+	if err == nil {
+		roleBindingMetric := metrics.NewMetricItem()
+		roleBindingMetric.Logo = "secret"
+		roleBindingMetric.Title = "RoleBindings"
+		roleBindingMetric.Value = strconv.Itoa(len(roleBindingList.Items))
+		metricSet.AddItems(roleBindingMetric)
+	}
+	// 获取ClusterRoleBinding
+	clusterRoleBindingList, err := i.clientSet.RbacV1().ClusterRoleBindings().List(ctx, metav1.ListOptions{})
+	if err == nil {
+		clusterRoleBindingMetric := metrics.NewMetricItem()
+		clusterRoleBindingMetric.Logo = "secret"
+		clusterRoleBindingMetric.Title = "CRBindings"
+		clusterRoleBindingMetric.Value = strconv.Itoa(len(clusterRoleBindingList.Items))
+		metricSet.AddItems(clusterRoleBindingMetric)
+	}
+	// Color的生成
+	for index, item := range metricSet.Items {
+		metricSet.Items[index].Color = common.GenerateHashBasedRGB(item.Value)
+	}
+	return metricSet, nil
 }
 
 // 获取集群信息

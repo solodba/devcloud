@@ -2,6 +2,8 @@ package impl
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
 
 	"github.com/solodba/devcloud/mkube/apps/ingroute"
 )
@@ -28,7 +30,29 @@ func (i *impl) QueryIngressRoute(ctx context.Context, in *ingroute.QueryIngressR
 
 // 查询IngressRoute详情
 func (i *impl) DescribeIngressRoute(ctx context.Context, in *ingroute.DescribeIngressRouteRequest) (*ingroute.CreateIngressRouteRequest, error) {
-	return nil, nil
+	ingRouteReq := ingroute.NewCreateIngressRouteRequest()
+	k8sIngRoute := ingroute.NewK8sIngressRoute()
+	url := fmt.Sprintf(INGRESS_ROUTE_DETAIL_URL, in.Namespace, in.Name)
+	raw, err := i.clientSet.RESTClient().Get().AbsPath(url).DoRaw(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("get ingress route resource failed, err: %s", err.Error())
+	}
+	err = json.Unmarshal(raw, k8sIngRoute)
+	if err != nil {
+		return nil, fmt.Errorf("json unmarshal failed, err: %s", err.Error())
+	}
+	ingRouteReq.Name = k8sIngRoute.Metadata.Name
+	ingRouteReq.Namespace = k8sIngRoute.Metadata.Namespace
+	ingRouteReqLabels := make([]*ingroute.ListMapItem, 0)
+	for k, v := range k8sIngRoute.Metadata.Labels {
+		ingRouteReqLabels = append(ingRouteReqLabels, &ingroute.ListMapItem{
+			Key:   k,
+			Value: v,
+		})
+	}
+	ingRouteReq.Labels = ingRouteReqLabels
+	ingRouteReq.IngressRouteSpec = &k8sIngRoute.Spec
+	return ingRouteReq, nil
 }
 
 // 查询IngressRoute中间件列表

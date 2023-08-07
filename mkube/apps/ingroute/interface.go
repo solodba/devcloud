@@ -10,3 +10,15 @@ type Service interface {
 	// 嵌套IngressRoute GRPC接口
 	RPCServer
 }
+
+// CreateIngressRouteRequest结构体初始化函数
+func NewCreateIngressRouteRequest() *CreateIngressRouteRequest {
+	return &CreateIngressRouteRequest{
+		Labels: make([]*ListMapItem, 0),
+		IngressRouteSpec: &IngressRouteSpec{
+			EntryPoints: make([]string, 0),
+			Routes:      make([]*Routes, 0),
+			Tls:         &Tls{},
+		},
+	}
+}

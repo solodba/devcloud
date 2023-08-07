@@ -5,6 +5,7 @@ import (
 	_ "github.com/solodba/devcloud/mkube/apps/configmap/api"
 	_ "github.com/solodba/devcloud/mkube/apps/cronjob/api"
 	_ "github.com/solodba/devcloud/mkube/apps/daemonset/api"
+	_ "github.com/solodba/devcloud/mkube/apps/dashboard/api"
 	_ "github.com/solodba/devcloud/mkube/apps/deployment/api"
 	_ "github.com/solodba/devcloud/mkube/apps/harbor/api"
 	_ "github.com/solodba/devcloud/mkube/apps/ingress/api"

@@ -9,7 +9,7 @@ require (
 	github.com/emicklei/go-restful/v3 v3.10.2
 	github.com/infraboard/mcube v1.9.16
 	github.com/rs/xid v1.5.0
-	github.com/solodba/mcube v1.0.2
+	github.com/solodba/mcube v1.0.3
 	github.com/spf13/cobra v1.7.0
 	go.mongodb.org/mongo-driver v1.12.0
 	golang.org/x/crypto v0.9.0

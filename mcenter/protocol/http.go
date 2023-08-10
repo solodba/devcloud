@@ -53,7 +53,7 @@ func (h *HttpService) PathPrefix() string {
 	return fmt.Sprintf("/%s/api", h.c.App.Name)
 }
 
-// Http服务启动方法
+// Http服务启动方法 swagger文档对应每个模块
 func (s *HttpService) Start() error {
 	apps.InitRestfulApps(s.PathPrefix(), s.r)
 	config := restfulspec.Config{

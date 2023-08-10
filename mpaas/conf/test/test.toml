@@ -1,0 +1,17 @@
+[app]
+name = "mpaas"
+
+[app.http]
+host = "127.0.0.1"
+port = 8884
+
+[app.grpc]
+host = "127.0.0.1"
+port = 8885
+
+[mongodb]
+username = ""
+password = ""
+endpoints = ["192.168.1.130:27017"]
+database = "mpaas"
+authsource = "mpaas"

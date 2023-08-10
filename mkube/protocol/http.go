@@ -61,7 +61,7 @@ func (s *HttpService) Start() error {
 	config := restfulspec.Config{
 		WebServices:                   restful.RegisteredWebServices(),
 		APIPath:                       "/apidocs.json",
-		PostBuildSwaggerObjectHandler: swagger.DocsMpaas,
+		PostBuildSwaggerObjectHandler: swagger.DocsMkube,
 		DefinitionNameHandler: func(name string) string {
 			if name == "state" || name == "sizeCache" || name == "unknownFields" {
 				return ""

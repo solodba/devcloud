@@ -11,7 +11,7 @@ require (
 	github.com/prometheus/client_golang v1.16.0
 	github.com/prometheus/common v0.42.0
 	github.com/solodba/devcloud/mcenter v0.0.0-20230725110855-a8173697da7d
-	github.com/solodba/mcube v1.0.2
+	github.com/solodba/mcube v1.0.3
 	github.com/spf13/cobra v1.7.0
 	go.mongodb.org/mongo-driver v1.12.0
 	google.golang.org/grpc v1.56.2

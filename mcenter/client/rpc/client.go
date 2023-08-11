@@ -21,7 +21,7 @@ func NewClient(conf *Config) *Client {
 		context.Background(),
 		conf.address,
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
-		// 客户端拨号传递认证信息到grpc客户端中
+		// 客户端拨号传递认证信息到grpc客户端
 		grpc.WithPerRPCCredentials(conf),
 	)
 	if err != nil {

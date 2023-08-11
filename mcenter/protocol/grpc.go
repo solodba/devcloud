@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"net"
 
+	"github.com/infraboard/mcube/grpc/middleware/recovery"
 	"github.com/solodba/devcloud/mcenter/conf"
+	"github.com/solodba/devcloud/mcenter/protocol/auth"
 	"github.com/solodba/mcube/apps"
 	"github.com/solodba/mcube/logger"
 	"google.golang.org/grpc"
@@ -18,7 +20,11 @@ type GrpcService struct {
 
 // GRPC服务结构体初始化
 func NewGrpcService() *GrpcService {
-	srv := grpc.NewServer()
+	// 添加grpc认证中间
+	rc := recovery.NewInterceptor(recovery.NewZapRecoveryHandler())
+	srv := grpc.NewServer(
+		grpc.ChainUnaryInterceptor(rc.UnaryServerInterceptor()),
+		grpc.ChainUnaryInterceptor(auth.NewGrpcAuther().AuthFunc))
 	return &GrpcService{
 		svr: srv,
 		c:   conf.C(),

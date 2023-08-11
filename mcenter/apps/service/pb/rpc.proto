@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package codehorse.mcenter.service;
+
+option go_package = "github.com/solodba/devcloud/mcenter/apps/service";
+
+// 导入外部模块
+import "apps/service/pb/service.proto";
+import "common/pb/github.com/solodba/mcube/pb/page/page.proto";
+
+// 服务管理模块
+service RPC {
+    // 创建服务
+    // rpc CreateService(CreateServiceRequest) returns(Service);
+    // 查询服务
+    rpc QueryService(QueryServiceRequest) returns(ServiceSet);
+    // 查询服务详情
+    rpc DescribeService(DescribeServiceRequest) returns(Service);
+}
+
+// QueryServiceRequest结构体
+message QueryServiceRequest {
+    // @gotags: bson:",inline" json:"page"
+    codehorse.mcube.page.PageRequest page = 1;
+    // @gotags: bson:"keywords" json:"keywords"
+    string keywords = 2;
+}
+
+// 查询Service的枚举类型
+enum DESCRIBE_BY {
+    SERVICE_ID = 0;
+    SERVICE_CREDENTIAL_ID = 1;
+}
+
+// DescribeServiceRequest结构体
+message DescribeServiceRequest {
+    // @gotags: bson:"describe_type" json:"describe_type"
+    DESCRIBE_BY describe_type = 1;
+    // @gotags: bson:"describe_value" json:"describe_value"
+    string describe_value = 2;
+}

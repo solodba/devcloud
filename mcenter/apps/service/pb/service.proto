@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package codehorse.mcenter.service;
+
+option go_package = "github.com/solodba/devcloud/mcenter/apps/service";
+
+// 导入外部包
+import "common/pb/github.com/solodba/mcube/pb/meta/meta.proto";
+
+// CreateServiceRequest结构体
+message CreateServiceRequest {
+    // @gotags: bson:"domain" json:"domain"
+    string domain = 1;
+    // @gotags: bson:"namespace" json:"namespace"
+    string namespace = 2;
+    // @gotags: bson:"name" json:"name"
+}
+
+// Service结构体
+message Service {
+    // @gotags: bson:",inline" json:"meta"
+    codehorse.mcube.meta.Meta meta = 1;
+    // @gotags: bson:",inline" json:"spec"
+    CreateServiceRequest spec = 2;
+    // @gotags: bson:",inline" json:"credential"
+    Credential credential = 3;
+}
+
+// Credential结构体
+message Credential {
+    // @gotags: bson:"create_at" json:"create_at"
+    int64 create_at = 1;
+    // @gotags: bson:"client_id" json:"client_id"
+    string client_id = 2;
+    // @gotags: bson:"client_secret" json:"client_secret"
+    string client_secret = 3;
+}
+
+// ServiceSet结构体
+message ServiceSet {
+    // @gotags: bson:"total" json:"total"
+    int64 total = 1;
+    // @gotags: bson:"items" json:"items"
+    repeated Service items = 2;
+}

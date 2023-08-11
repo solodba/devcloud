@@ -7,8 +7,8 @@ import (
 	"github.com/solodba/devcloud/mcenter/test/tools"
 )
 
-func TestIssueToken(t *testing.T) {
-	req := token.NewValidateTokenRequest("cio16drjrq647o5boo1g")
+func TestValidateToken(t *testing.T) {
+	req := token.NewValidateTokenRequest("cjavod4fd1flcq19qgk0")
 	tk, err := c.NewTokenRPCClient().ValidateToken(ctx, req)
 	if err != nil {
 		t.Fatal(err)

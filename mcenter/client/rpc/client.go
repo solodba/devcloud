@@ -19,7 +19,7 @@ type Client struct {
 func NewClient(conf *Config) *Client {
 	clientConn, err := grpc.DialContext(
 		context.Background(),
-		conf.address,
+		conf.Address,
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 		// 客户端拨号传递认证信息到grpc客户端
 		grpc.WithPerRPCCredentials(conf),

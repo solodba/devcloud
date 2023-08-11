@@ -19,3 +19,10 @@ type ServiceManager interface {
 func NewCreateServiceRequest() *CreateServiceRequest {
 	return &CreateServiceRequest{}
 }
+
+// DescribeServiceRequest构造函数
+func NewDescribeServiceRequest() *DescribeServiceRequest {
+	return &DescribeServiceRequest{
+		DescribeType: DESCRIBE_BY_SERVICE_ID,
+	}
+}

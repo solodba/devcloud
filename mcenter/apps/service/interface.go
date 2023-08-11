@@ -14,3 +14,8 @@ type ServiceManager interface {
 	// 嵌套Service GRPC接口
 	RPCServer
 }
+
+// CreateServiceRequest构造函数
+func NewCreateServiceRequest() *CreateServiceRequest {
+	return &CreateServiceRequest{}
+}

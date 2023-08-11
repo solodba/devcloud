@@ -14,6 +14,7 @@ message CreateServiceRequest {
     // @gotags: bson:"namespace" json:"namespace"
     string namespace = 2;
     // @gotags: bson:"name" json:"name"
+    string name = 3;
 }
 
 // Service结构体

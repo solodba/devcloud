@@ -167,6 +167,8 @@ github.com/solodba/devcloud/mcenter v0.0.0-20230810160653-6b97e937675e h1:hUIkcN
 github.com/solodba/devcloud/mcenter v0.0.0-20230810160653-6b97e937675e/go.mod h1:HRqjnzKJersDf8sRA2DdR7/jRCr3+Zax2HNOGb6exZA=
 github.com/solodba/devcloud/mcenter v0.0.0-20230811090755-a2472ac3c9dc h1:ozwOEVcKBRhmuTuhZwEJITfX0SghXdjDAKhw1lZSL18=
 github.com/solodba/devcloud/mcenter v0.0.0-20230811090755-a2472ac3c9dc/go.mod h1:HRqjnzKJersDf8sRA2DdR7/jRCr3+Zax2HNOGb6exZA=
+github.com/solodba/devcloud/mcenter v0.0.0-20230811092122-1368115ee510 h1:YHqQQUg7xaJq38pkYsYAhj/GPiyIisw0SxzyBBiao0U=
+github.com/solodba/devcloud/mcenter v0.0.0-20230811092122-1368115ee510/go.mod h1:HRqjnzKJersDf8sRA2DdR7/jRCr3+Zax2HNOGb6exZA=
 github.com/solodba/mcube v1.0.3 h1:cKHt3xsTtFRdwnRKMV5RewXN/htCho+i+vRHO0FpXjA=
 github.com/solodba/mcube v1.0.3/go.mod h1:oFGfyiP6Hdr1iZ3GcC1PASfh8W177vR0cALUPowNzkY=
 github.com/spf13/cobra v1.7.0 h1:hyqWnYt1ZQShIddO5kBpj3vu05/++x6tJ6dg8EC572I=

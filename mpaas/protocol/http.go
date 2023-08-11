@@ -34,8 +34,11 @@ func NewHttpService() *HttpService {
 		Container:      r,
 	}
 	r.Filter(cors.Filter)
-	// 接入到mcenter认证中间
-	r.Filter(auth.NewHttpAuther(rpc.NewConfig()).AuthFunc)
+	// 接入到mcenter认证中间件, 提供grpc认证凭证
+	c := rpc.NewConfig()
+	c.ClientID = "cjauuq4fd1fkek1bmfq0"
+	c.ClientSecret = "cjauuq4fd1fkek1bmfqg"
+	r.Filter(auth.NewHttpAuther(c).AuthFunc)
 	srv := &http.Server{
 		Addr:              conf.C().App.Http.Addr(),
 		Handler:           r,

@@ -24,3 +24,12 @@ func NewCredential() *Credential {
 		ClientSecret: xid.New().String(),
 	}
 }
+
+// Service默认构造函数
+func NewDefaultService() *Service {
+	return &Service{
+		Meta:       meta.NewMeta(),
+		Spec:       NewCreateServiceRequest(),
+		Credential: NewCredential(),
+	}
+}

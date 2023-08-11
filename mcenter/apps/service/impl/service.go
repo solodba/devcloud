@@ -8,7 +8,12 @@ import (
 
 // 创建服务
 func (i *impl) CreateService(ctx context.Context, in *service.CreateServiceRequest) (*service.Service, error) {
-	return nil, nil
+	serviceIns := service.NewService(in)
+	_, err := i.col.InsertOne(ctx, serviceIns)
+	if err != nil {
+		return nil, err
+	}
+	return serviceIns, nil
 }
 
 // 查询服务

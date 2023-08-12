@@ -21,3 +21,11 @@ func NewEndpoint(req *CreateEndpointRequest) *Endpoint {
 		Spec: req,
 	}
 }
+
+// Endpoint默认构造函数
+func NewDefaultEndpoint() *Endpoint {
+	return &Endpoint{
+		Meta: meta.NewMeta(),
+		Spec: NewCreateEndpointRequest(),
+	}
+}

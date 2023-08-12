@@ -28,5 +28,27 @@ func (i *impl) RegistryEndpoint(ctx context.Context, in *endpoint.RegistryEndpoi
 
 // 查询Endpoint服务
 func (i *impl) QueryEndpoint(ctx context.Context, in *endpoint.QueryEndpointRequest) (*endpoint.EndpointSet, error) {
-	return nil, nil
+	es := endpoint.NewEndpointSet()
+	opts := &options.FindOptions{}
+	in.Page.ComputeOffSet()
+	opts.SetLimit(in.Page.PageSize)
+	opts.SetSkip(in.Page.Offset)
+	filter := bson.M{}
+	cursor, err := i.col.Find(ctx, filter, opts)
+	if err != nil {
+		return nil, err
+	}
+	for cursor.Next(ctx) {
+		ep := endpoint.NewDefaultEndpoint()
+		err = cursor.Decode(ep)
+		if err != nil {
+			return nil, err
+		}
+		es.AddItems(ep)
+	}
+	es.Total, err = i.col.CountDocuments(ctx, filter)
+	if err != nil {
+		return nil, err
+	}
+	return es, nil
 }

@@ -1,5 +1,7 @@
 package endpoint
 
+import "github.com/solodba/mcube/pb/page"
+
 // 模块名称
 const (
 	AppName = "endpoint"
@@ -26,4 +28,11 @@ func (r *RegistryEndpointRequest) AddItems(item ...*CreateEndpointRequest) {
 // CreateEndpointRequest构造函数
 func NewCreateEndpointRequest() *CreateEndpointRequest {
 	return &CreateEndpointRequest{}
+}
+
+// QueryEndpointRequest构造函数
+func NewQueryEndpointRequest() *QueryEndpointRequest {
+	return &QueryEndpointRequest{
+		Page: page.NewPageRequest(),
+	}
 }

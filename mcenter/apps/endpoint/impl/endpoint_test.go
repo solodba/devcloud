@@ -30,3 +30,14 @@ func TestRegistryEndpoint(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(es))
 }
+
+func TestQueryEndpoint(t *testing.T) {
+	req := endpoint.NewQueryEndpointRequest()
+	req.Page.PageNumber = 1
+	req.Page.PageSize = 1
+	es, err := svc.QueryEndpoint(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(es))
+}

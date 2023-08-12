@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package codehorse.mcenter.endpoint;
+
+option go_package = "github.com/solodba/devcloud/mcenter/apps/endpoint";
+
+// 导入外部包
+import "common/pb/github.com/solodba/mcube/pb/meta/meta.proto";
+
+// CreateEndpointRequest结构体
+message CreateEndpointRequest {
+    // @gotags: bson:"service_id" json:"service_id"
+    string service_id = 1;
+    // @gotags: bson:"method" json:"method"
+    string method = 2;
+    // @gotags: bson:"path" json:"path"
+    string path = 3;
+    // @gotags: bson:"operation" json:"operation"
+    string operation = 4;
+    // @gotags: bson:"auth" json:"auth"
+    bool auth = 5;
+    // @gotags: bson:"perm" json:"perm"
+    bool perm = 6;
+}
+
+// RegistryEndpointRequest结构体
+message RegistryEndpointRequest {
+    // @gotags: bson:",inline" json:"items"
+    repeated CreateEndpointRequest items = 1;
+}
+
+// Endpoint结构体
+message Endpoint {
+    // @gotags: bson:",inline" json:"meta"
+    codehorse.mcube.meta.Meta meta = 1;
+    // @gotags: bson:",inline" json:"spec"
+    CreateEndpointRequest spec = 2;
+}
+
+// EndpointSet结构体
+message EndpointSet {
+    // @gotags: bson:"total" json:"total"
+    int64 Total = 1;
+    // @gotags: bson:"items" json:"items"
+    repeated Endpoint items = 2;
+}

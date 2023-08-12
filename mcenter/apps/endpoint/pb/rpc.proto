@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package codehorse.mcenter.endpoint;
+
+option go_package = "github.com/solodba/devcloud/mcenter/apps/endpoint";
+
+// 导入外部包
+import "apps/endpoint/pb/endpoint.proto";
+import "common/pb/github.com/solodba/mcube/pb/page/page.proto";
+
+// Endpoint服务接口
+service RPC {
+    // 注册Endpoint服务
+    rpc RegistryEndpoint(RegistryEndpointRequest) returns(EndpointSet);
+    // 查询Endpoint服务
+    rpc QueryEndpoint(QueryEndpointRequest) returns(EndpointSet);
+}
+
+// QueryEndpointRequest结构体
+message QueryEndpointRequest {
+    // @gotags: bson:",inline" json:"page"
+    codehorse.mcube.page.PageRequest page = 1;
+}

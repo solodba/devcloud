@@ -17,7 +17,7 @@ func (i *impl) RegistryEndpoint(ctx context.Context, in *endpoint.RegistryEndpoi
 		createEp := in.Items[idx]
 		ep := endpoint.NewEndpoint(createEp)
 		// 插入到mongodb
-		_, err := i.col.UpdateOne(ctx, bson.M{"_id": ep.Meta.Id}, bson.M{"": ep})
+		_, err := i.col.UpdateOne(ctx, bson.M{"_id": ep.Meta.Id}, bson.M{"$set": ep}, opt)
 		if err != nil {
 			return nil, err
 		}

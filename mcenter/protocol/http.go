@@ -8,7 +8,9 @@ import (
 
 	restfulspec "github.com/emicklei/go-restful-openapi/v2"
 	"github.com/emicklei/go-restful/v3"
+	"github.com/solodba/devcloud/mcenter/apps/endpoint"
 	"github.com/solodba/devcloud/mcenter/conf"
+	"github.com/solodba/devcloud/mcenter/protocol/auth"
 	"github.com/solodba/mcube/apps"
 	"github.com/solodba/mcube/logger"
 	"github.com/solodba/mcube/swagger"
@@ -32,6 +34,8 @@ func NewHttpService() *HttpService {
 		Container:      r,
 	}
 	r.Filter(cors.Filter)
+	// 引入http中间件
+	r.Filter(auth.NewHttpAuther().AuthFunc)
 	srv := &http.Server{
 		Addr:              conf.C().App.Http.Addr(),
 		Handler:           r,
@@ -56,6 +60,26 @@ func (h *HttpService) PathPrefix() string {
 // Http服务启动方法 swagger文档对应每个模块
 func (s *HttpService) Start() error {
 	apps.InitRestfulApps(s.PathPrefix(), s.r)
+	// 获取路由信息
+	ws := s.r.RegisteredWebServices()
+	es := endpoint.NewEndpointSet()
+	for i := range ws {
+		routes := ws[i].Routes()
+		for j := range routes {
+			ep := endpoint.NewDefaultEndpoint()
+			ep.Spec.ServiceId = "cjauuq4fd1fkek1bmfpg"
+			ep.Spec.Method = routes[j].Method
+			ep.Spec.Operation = routes[j].Operation
+			ep.Spec.Path = routes[j].Path
+			ep.Spec.Perm = true
+			isAuth := routes[j].Metadata["auth"]
+			if isAuth != nil {
+				ep.Spec.Auth = isAuth.(bool)
+			}
+			es.AddItems(ep)
+		}
+	}
+	logger.L().Info().Msgf("%v", es)
 	config := restfulspec.Config{
 		WebServices:                   restful.RegisteredWebServices(),
 		APIPath:                       "/apidocs.json",

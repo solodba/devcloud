@@ -17,6 +17,7 @@ func TestLoadConfigFromToml(t *testing.T) {
 	t.Log(conf.C().MongoDB)
 	t.Log(conf.C().MongoDB.GetDB())
 	t.Log(conf.C().Mcenter)
+	t.Log(conf.C().GetServiceIdByClientId())
 }
 
 func TestLoadConfigFromEnv(t *testing.T) {

@@ -50,6 +50,10 @@ type MongoDB struct {
 	client     *mongo.Client
 }
 
+// mcenter grpc client配置
+type Mcenter struct {
+}
+
 // 全局配置结构体
 type Config struct {
 	App     *App     `toml:"app"`

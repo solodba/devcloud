@@ -18,7 +18,7 @@ type Client struct {
 }
 
 // GRPC客户端初始化函数
-func NewClient(conf *Config) *Client {
+func NewClient(conf *McenterGrpcClientConfig) *Client {
 	clientConn, err := grpc.DialContext(
 		context.Background(),
 		conf.Address,

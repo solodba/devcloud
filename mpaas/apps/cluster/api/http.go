@@ -34,6 +34,8 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.GET("/").
 		To(h.QueryCluster).
 		Doc("查询集群信息").
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
 		Metadata(restfulspec.KeyOpenAPITags, tags))
 }
 

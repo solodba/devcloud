@@ -16,7 +16,7 @@ type httpAuther struct {
 }
 
 // httpAuther结构体初始化函数
-func NewHttpAuther(conf *rpc.Config) *httpAuther {
+func NewHttpAuther(conf *rpc.McenterGrpcClientConfig) *httpAuther {
 	return &httpAuther{
 		client: rpc.NewClient(conf),
 	}

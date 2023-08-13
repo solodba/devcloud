@@ -14,7 +14,7 @@ var (
 
 // 初始化函数
 func init() {
-	conf := rpc.NewMcenterGrpcClientConfig()
+	conf := rpc.NewDefaultMcenterGrpcClientConfig()
 	conf.ClientID = "cjauuq4fd1fkek1bmfq0"
 	conf.ClientSecret = "cjauuq4fd1fkek1bmfqg"
 	c = rpc.NewClient(conf)

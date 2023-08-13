@@ -51,7 +51,7 @@ type MongoDB struct {
 }
 
 // mcenter grpc client配置
-type Mcenter struct {
+type McenterGrpcClientConfig struct {
 }
 
 // 全局配置结构体

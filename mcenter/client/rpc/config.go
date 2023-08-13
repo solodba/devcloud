@@ -11,7 +11,7 @@ type McenterGrpcClientConfig struct {
 }
 
 // Config结构体初始化函数
-func NewMcenterGrpcClientConfig() *McenterGrpcClientConfig {
+func NewDefaultMcenterGrpcClientConfig() *McenterGrpcClientConfig {
 	return &McenterGrpcClientConfig{
 		Address: "127.0.0.1:8881",
 	}

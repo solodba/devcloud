@@ -3,6 +3,8 @@ package rpc
 import (
 	"context"
 
+	"github.com/solodba/devcloud/mcenter/apps/endpoint"
+	"github.com/solodba/devcloud/mcenter/apps/service"
 	"github.com/solodba/devcloud/mcenter/apps/token"
 	"github.com/solodba/devcloud/mcenter/apps/user"
 	"github.com/solodba/mcube/logger"
@@ -39,4 +41,12 @@ func (c *Client) NewUserRPCClient() user.RPCClient {
 
 func (c *Client) NewTokenRPCClient() token.RPCClient {
 	return token.NewRPCClient(c.c)
+}
+
+func (c *Client) NewServiceRPCClient() service.RPCClient {
+	return service.NewRPCClient(c.c)
+}
+
+func (c *Client) NewEndpointRPCClient() endpoint.RPCClient {
+	return endpoint.NewRPCClient(c.c)
 }

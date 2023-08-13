@@ -38,3 +38,14 @@ func (i *impl) DescribeService(ctx context.Context, in *service.DescribeServiceR
 	}
 	return serviceIns, nil
 }
+
+// 通过服务名称找到service id
+func (i *impl) QueryServiceIdByName(ctx context.Context, in *service.QueryServiceIdByNameRequest) (*service.Service, error) {
+	serviceIns := service.NewDefaultService()
+	filter := bson.M{"name": in.Name}
+	err := i.col.FindOne(ctx, filter).Decode(serviceIns)
+	if err != nil {
+		return nil, err
+	}
+	return serviceIns, nil
+}

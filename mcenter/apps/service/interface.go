@@ -26,3 +26,10 @@ func NewDescribeServiceRequest() *DescribeServiceRequest {
 		DescribeType: DESCRIBE_BY_SERVICE_ID,
 	}
 }
+
+// QueryServiceIdByNameRequest构造函数
+func NewQueryServiceIdByNameRequest(name string) *QueryServiceIdByNameRequest {
+	return &QueryServiceIdByNameRequest{
+		Name: name,
+	}
+}

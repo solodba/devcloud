@@ -4,10 +4,10 @@ import "context"
 
 // 定义grpc参数结构体
 type McenterGrpcClientConfig struct {
-	Address string `json:"address" toml:"address" env:"MONGODB_USERNAME"`
+	Address string `json:"address" toml:"address" env:"MCENTER_GRPC_CLIENT_ADDRESS"`
 	// 添加grpc中间认证参数
-	ClientID     string
-	ClientSecret string
+	ClientID     string `json:"clientid" toml:"clientid" env:"MCENTER_GRPC_CLIENT_ID"`
+	ClientSecret string `json:"clientsecret" toml:"clientsecret" env:"MCENTER_GRPC_CLIENT_SECRET"`
 }
 
 // Config结构体初始化函数

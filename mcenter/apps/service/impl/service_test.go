@@ -32,9 +32,9 @@ func TestDescribeService(t *testing.T) {
 	t.Log(tools.MustToJson(serviceIns))
 }
 
-func TestQueryServiceIdByName(t *testing.T) {
-	req := service.NewQueryServiceIdByNameRequest("mpaas")
-	serviceIns, err := svc.QueryServiceIdByName(ctx, req)
+func TestQueryServiceIdByClientId(t *testing.T) {
+	req := service.NewQueryServiceIdByClientIdRequest("cjc4svkfd1fjd734ich0")
+	serviceIns, err := svc.QueryServiceIdByClientId(ctx, req)
 	if err != nil {
 		t.Fatal(err)
 	}

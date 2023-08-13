@@ -19,9 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	RPC_QueryService_FullMethodName         = "/codehorse.mcenter.service.RPC/QueryService"
-	RPC_DescribeService_FullMethodName      = "/codehorse.mcenter.service.RPC/DescribeService"
-	RPC_QueryServiceIdByName_FullMethodName = "/codehorse.mcenter.service.RPC/QueryServiceIdByName"
+	RPC_QueryService_FullMethodName             = "/codehorse.mcenter.service.RPC/QueryService"
+	RPC_DescribeService_FullMethodName          = "/codehorse.mcenter.service.RPC/DescribeService"
+	RPC_QueryServiceIdByClientId_FullMethodName = "/codehorse.mcenter.service.RPC/QueryServiceIdByClientId"
 )
 
 // RPCClient is the client API for RPC service.
@@ -34,8 +34,8 @@ type RPCClient interface {
 	QueryService(ctx context.Context, in *QueryServiceRequest, opts ...grpc.CallOption) (*ServiceSet, error)
 	// 查询服务详情
 	DescribeService(ctx context.Context, in *DescribeServiceRequest, opts ...grpc.CallOption) (*Service, error)
-	// 通过服务名称找到service id
-	QueryServiceIdByName(ctx context.Context, in *QueryServiceIdByNameRequest, opts ...grpc.CallOption) (*Service, error)
+	// 通过client id称找到service id
+	QueryServiceIdByClientId(ctx context.Context, in *QueryServiceIdByClientIdRequest, opts ...grpc.CallOption) (*Service, error)
 }
 
 type rPCClient struct {
@@ -64,9 +64,9 @@ func (c *rPCClient) DescribeService(ctx context.Context, in *DescribeServiceRequ
 	return out, nil
 }
 
-func (c *rPCClient) QueryServiceIdByName(ctx context.Context, in *QueryServiceIdByNameRequest, opts ...grpc.CallOption) (*Service, error) {
+func (c *rPCClient) QueryServiceIdByClientId(ctx context.Context, in *QueryServiceIdByClientIdRequest, opts ...grpc.CallOption) (*Service, error) {
 	out := new(Service)
-	err := c.cc.Invoke(ctx, RPC_QueryServiceIdByName_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, RPC_QueryServiceIdByClientId_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -83,8 +83,8 @@ type RPCServer interface {
 	QueryService(context.Context, *QueryServiceRequest) (*ServiceSet, error)
 	// 查询服务详情
 	DescribeService(context.Context, *DescribeServiceRequest) (*Service, error)
-	// 通过服务名称找到service id
-	QueryServiceIdByName(context.Context, *QueryServiceIdByNameRequest) (*Service, error)
+	// 通过client id称找到service id
+	QueryServiceIdByClientId(context.Context, *QueryServiceIdByClientIdRequest) (*Service, error)
 	mustEmbedUnimplementedRPCServer()
 }
 
@@ -98,8 +98,8 @@ func (UnimplementedRPCServer) QueryService(context.Context, *QueryServiceRequest
 func (UnimplementedRPCServer) DescribeService(context.Context, *DescribeServiceRequest) (*Service, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DescribeService not implemented")
 }
-func (UnimplementedRPCServer) QueryServiceIdByName(context.Context, *QueryServiceIdByNameRequest) (*Service, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method QueryServiceIdByName not implemented")
+func (UnimplementedRPCServer) QueryServiceIdByClientId(context.Context, *QueryServiceIdByClientIdRequest) (*Service, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryServiceIdByClientId not implemented")
 }
 func (UnimplementedRPCServer) mustEmbedUnimplementedRPCServer() {}
 
@@ -150,20 +150,20 @@ func _RPC_DescribeService_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RPC_QueryServiceIdByName_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryServiceIdByNameRequest)
+func _RPC_QueryServiceIdByClientId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryServiceIdByClientIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RPCServer).QueryServiceIdByName(ctx, in)
+		return srv.(RPCServer).QueryServiceIdByClientId(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: RPC_QueryServiceIdByName_FullMethodName,
+		FullMethod: RPC_QueryServiceIdByClientId_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RPCServer).QueryServiceIdByName(ctx, req.(*QueryServiceIdByNameRequest))
+		return srv.(RPCServer).QueryServiceIdByClientId(ctx, req.(*QueryServiceIdByClientIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -184,8 +184,8 @@ var RPC_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _RPC_DescribeService_Handler,
 		},
 		{
-			MethodName: "QueryServiceIdByName",
-			Handler:    _RPC_QueryServiceIdByName_Handler,
+			MethodName: "QueryServiceIdByClientId",
+			Handler:    _RPC_QueryServiceIdByClientId_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"sync"
 
+	"github.com/solodba/devcloud/mcenter/client/rpc"
 	"github.com/solodba/mcube/logger"
 	"go.mongodb.org/mongo-driver/mongo"
 )
@@ -50,14 +51,11 @@ type MongoDB struct {
 	client     *mongo.Client
 }
 
-// mcenter grpc client配置
-type McenterGrpcClientConfig struct {
-}
-
 // 全局配置结构体
 type Config struct {
-	App     *App     `toml:"app"`
-	MongoDB *MongoDB `toml:"mongodb"`
+	App     *App                         `toml:"app"`
+	MongoDB *MongoDB                     `toml:"mongodb"`
+	Mcenter *rpc.McenterGrpcClientConfig `toml:"mcenter"`
 }
 
 // Http初始化函数
@@ -99,6 +97,7 @@ func NewDefaultConfig() *Config {
 	return &Config{
 		App:     NewDefaultApp(),
 		MongoDB: NewDefaultMongoDB(),
+		Mcenter: rpc.NewDefaultMcenterGrpcClientConfig(),
 	}
 }
 

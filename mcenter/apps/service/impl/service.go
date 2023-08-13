@@ -40,9 +40,9 @@ func (i *impl) DescribeService(ctx context.Context, in *service.DescribeServiceR
 }
 
 // 通过服务名称找到service id
-func (i *impl) QueryServiceIdByName(ctx context.Context, in *service.QueryServiceIdByNameRequest) (*service.Service, error) {
+func (i *impl) QueryServiceIdByClientId(ctx context.Context, in *service.QueryServiceIdByClientIdRequest) (*service.Service, error) {
 	serviceIns := service.NewDefaultService()
-	filter := bson.M{"name": in.Name}
+	filter := bson.M{"client_id": in.ClientId}
 	err := i.col.FindOne(ctx, filter).Decode(serviceIns)
 	if err != nil {
 		return nil, err

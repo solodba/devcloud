@@ -27,9 +27,9 @@ func NewDescribeServiceRequest() *DescribeServiceRequest {
 	}
 }
 
-// QueryServiceIdByNameRequest构造函数
-func NewQueryServiceIdByNameRequest(name string) *QueryServiceIdByNameRequest {
-	return &QueryServiceIdByNameRequest{
-		Name: name,
+// QueryServiceIdByClientIdRequest构造函数
+func NewQueryServiceIdByClientIdRequest(clientid string) *QueryServiceIdByClientIdRequest {
+	return &QueryServiceIdByClientIdRequest{
+		ClientId: clientid,
 	}
 }

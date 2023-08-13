@@ -15,3 +15,8 @@ password = ""
 endpoints = ["192.168.1.130:27017"]
 database = "mpaas"
 authsource = "mpaas"
+
+[mcenter]
+address = "127.0.0.1:8881"
+clientid = "cjc4svkfd1fjd734ich0"
+clientsecret = "cjc4svkfd1fjd734ichg"

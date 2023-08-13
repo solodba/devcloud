@@ -16,8 +16,8 @@ service RPC {
     rpc QueryService(QueryServiceRequest) returns(ServiceSet);
     // 查询服务详情
     rpc DescribeService(DescribeServiceRequest) returns(Service);
-    // 通过服务名称找到service id
-    rpc QueryServiceIdByName(QueryServiceIdByNameRequest) returns(Service);
+    // 通过client id称找到service id
+    rpc QueryServiceIdByClientId(QueryServiceIdByClientIdRequest) returns(Service);
 }
 
 // QueryServiceRequest结构体
@@ -42,8 +42,8 @@ message DescribeServiceRequest {
     string describe_value = 2;
 }
 
-// QueryServiceIdByNameRequest结构体
-message QueryServiceIdByNameRequest {
-    // @gotags: bson:"name" json:"name"
-    string name = 1;
+// QueryServiceIdByClientIdRequest结构体
+message QueryServiceIdByClientIdRequest {
+    // @gotags: bson:"client_id" json:"client_id"
+    string client_id = 1;
 }

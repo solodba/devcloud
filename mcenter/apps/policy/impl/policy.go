@@ -8,7 +8,12 @@ import (
 
 // 创建Policy
 func (i *impl) CreatePolicy(ctx context.Context, in *policy.CreatePolicyRequest) (*policy.Policy, error) {
-	return nil, nil
+	policyIns := policy.NewPolicy(in)
+	_, err := i.col.InsertOne(ctx, policyIns)
+	if err != nil {
+		return nil, err
+	}
+	return policyIns, nil
 }
 
 // 查询Policy

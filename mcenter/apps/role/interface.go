@@ -1,6 +1,10 @@
 package role
 
-import context "context"
+import (
+	context "context"
+
+	"github.com/solodba/mcube/pb/page"
+)
 
 // 模块名称
 const (
@@ -30,4 +34,17 @@ func (req *CreateRoleRequest) AddItems(items ...*Feature) {
 // Feature构造方法
 func NewFeature() *Feature {
 	return &Feature{}
+}
+
+// QueryRoleRequest构造函数
+func NewQueryRoleRequest() *QueryRoleRequest {
+	return &QueryRoleRequest{
+		Page:    page.NewPageRequest(),
+		RoleIds: make([]string, 0),
+	}
+}
+
+// QueryRoleRequest添加方法
+func (req *QueryRoleRequest) AddItems(items ...string) {
+	req.RoleIds = append(req.RoleIds, items...)
 }

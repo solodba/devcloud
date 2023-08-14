@@ -25,3 +25,15 @@ func TestCreateRole(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(roleIns))
 }
+
+func TestQueryRole(t *testing.T) {
+	req := role.NewQueryRoleRequest()
+	// req.Page.PageNumber = 1
+	// req.Page.PageSize = 1
+	req.AddItems("cjd2b08eaqnhr91ir71g", "cjd2qs0eaqnjhu20sgqg")
+	roleSetIns, err := svc.QueryRole(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(roleSetIns))
+}

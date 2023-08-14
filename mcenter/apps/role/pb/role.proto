@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package codehorse.mcenter.role;
+
+option go_package = "github.com/solodba/devcloud/mcenter/apps/role";
+
+// 导入外部包
+import "common/pb/github.com/solodba/mcube/pb/meta/meta.proto";
+
+// CreateRoleRequest结构体
+message CreateRoleRequest {
+    // @gotags: bson:"name" json:"name"
+    string name = 1;
+    // @gotags: bson:"feature" json:"feature"
+    repeated Feature feature = 2;
+}
+
+// Feature结构体
+message Feature {
+    // @gotags: bson:"service_id" json:"service_id"
+    string service_id = 1;
+    // @gotags: bson:"http_method" json:"http_method"
+    string http_method = 2;
+    // @gotags: bson:"http_path" json:"http_path"
+    string http_path = 3;
+}
+
+// Role结构体
+message Role {
+    // @gotags: bson:",inline" json:"meta"
+    codehorse.mcube.meta.Meta meta = 1;
+    // @gotags: bson:",inline" json:"spec"
+    CreateRoleRequest spec = 2;
+}
+
+// RoleSet结构体
+message RoleSet {
+    // @gotags: bson:"total" json:"total"
+    int64 total = 1;
+    // @gotags: bson:"items" json:"items"
+    repeated Role items = 2;
+}

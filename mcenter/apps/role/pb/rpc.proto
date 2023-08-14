@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package codehorse.mcenter.role;
+
+option go_package = "github.com/solodba/devcloud/mcenter/apps/role";
+
+// 导入外部包
+import "common/pb/github.com/solodba/mcube/pb/page/page.proto";
+import "apps/role/pb/role.proto";
+
+// Role业务接口
+service RPC {
+    // 创建role
+    rpc CreateRole(CreateRoleRequest) returns(Role);
+    // 查询role
+    rpc QueryRole(QueryRoleRequest) returns(RoleSet);
+}
+
+// QueryRoleRequest结构体
+message QueryRoleRequest {
+    // @gotags: bson:",inline" json:"page"
+    codehorse.mcube.page.PageRequest page = 1;
+    // @gotags: bson:"role_ids" json:"role_ids"
+    repeated string role_ids = 2;
+}

@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v3.21.12
-// source: apps/endpoint/pb/rpc.proto
+// source: apps/role/pb/rpc.proto
 
-package endpoint
+package role
 
 import (
 	context "context"
@@ -19,18 +19,18 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	RPC_RegistryEndpoint_FullMethodName = "/codehorse.mcenter.endpoint.RPC/RegistryEndpoint"
-	RPC_QueryEndpoint_FullMethodName    = "/codehorse.mcenter.endpoint.RPC/QueryEndpoint"
+	RPC_CreateRole_FullMethodName = "/codehorse.mcenter.role.RPC/CreateRole"
+	RPC_QueryRole_FullMethodName  = "/codehorse.mcenter.role.RPC/QueryRole"
 )
 
 // RPCClient is the client API for RPC service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RPCClient interface {
-	// 注册Endpoint服务
-	RegistryEndpoint(ctx context.Context, in *RegistryEndpointRequest, opts ...grpc.CallOption) (*EndpointSet, error)
-	// 查询Endpoint服务
-	QueryEndpoint(ctx context.Context, in *QueryEndpointRequest, opts ...grpc.CallOption) (*EndpointSet, error)
+	// 创建role
+	CreateRole(ctx context.Context, in *CreateRoleRequest, opts ...grpc.CallOption) (*Role, error)
+	// 查询role
+	QueryRole(ctx context.Context, in *QueryRoleRequest, opts ...grpc.CallOption) (*RoleSet, error)
 }
 
 type rPCClient struct {
@@ -41,18 +41,18 @@ func NewRPCClient(cc grpc.ClientConnInterface) RPCClient {
 	return &rPCClient{cc}
 }
 
-func (c *rPCClient) RegistryEndpoint(ctx context.Context, in *RegistryEndpointRequest, opts ...grpc.CallOption) (*EndpointSet, error) {
-	out := new(EndpointSet)
-	err := c.cc.Invoke(ctx, RPC_RegistryEndpoint_FullMethodName, in, out, opts...)
+func (c *rPCClient) CreateRole(ctx context.Context, in *CreateRoleRequest, opts ...grpc.CallOption) (*Role, error) {
+	out := new(Role)
+	err := c.cc.Invoke(ctx, RPC_CreateRole_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *rPCClient) QueryEndpoint(ctx context.Context, in *QueryEndpointRequest, opts ...grpc.CallOption) (*EndpointSet, error) {
-	out := new(EndpointSet)
-	err := c.cc.Invoke(ctx, RPC_QueryEndpoint_FullMethodName, in, out, opts...)
+func (c *rPCClient) QueryRole(ctx context.Context, in *QueryRoleRequest, opts ...grpc.CallOption) (*RoleSet, error) {
+	out := new(RoleSet)
+	err := c.cc.Invoke(ctx, RPC_QueryRole_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -63,10 +63,10 @@ func (c *rPCClient) QueryEndpoint(ctx context.Context, in *QueryEndpointRequest,
 // All implementations must embed UnimplementedRPCServer
 // for forward compatibility
 type RPCServer interface {
-	// 注册Endpoint服务
-	RegistryEndpoint(context.Context, *RegistryEndpointRequest) (*EndpointSet, error)
-	// 查询Endpoint服务
-	QueryEndpoint(context.Context, *QueryEndpointRequest) (*EndpointSet, error)
+	// 创建role
+	CreateRole(context.Context, *CreateRoleRequest) (*Role, error)
+	// 查询role
+	QueryRole(context.Context, *QueryRoleRequest) (*RoleSet, error)
 	mustEmbedUnimplementedRPCServer()
 }
 
@@ -74,11 +74,11 @@ type RPCServer interface {
 type UnimplementedRPCServer struct {
 }
 
-func (UnimplementedRPCServer) RegistryEndpoint(context.Context, *RegistryEndpointRequest) (*EndpointSet, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RegistryEndpoint not implemented")
+func (UnimplementedRPCServer) CreateRole(context.Context, *CreateRoleRequest) (*Role, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateRole not implemented")
 }
-func (UnimplementedRPCServer) QueryEndpoint(context.Context, *QueryEndpointRequest) (*EndpointSet, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method QueryEndpoint not implemented")
+func (UnimplementedRPCServer) QueryRole(context.Context, *QueryRoleRequest) (*RoleSet, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryRole not implemented")
 }
 func (UnimplementedRPCServer) mustEmbedUnimplementedRPCServer() {}
 
@@ -93,38 +93,38 @@ func RegisterRPCServer(s grpc.ServiceRegistrar, srv RPCServer) {
 	s.RegisterService(&RPC_ServiceDesc, srv)
 }
 
-func _RPC_RegistryEndpoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RegistryEndpointRequest)
+func _RPC_CreateRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateRoleRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RPCServer).RegistryEndpoint(ctx, in)
+		return srv.(RPCServer).CreateRole(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: RPC_RegistryEndpoint_FullMethodName,
+		FullMethod: RPC_CreateRole_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RPCServer).RegistryEndpoint(ctx, req.(*RegistryEndpointRequest))
+		return srv.(RPCServer).CreateRole(ctx, req.(*CreateRoleRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RPC_QueryEndpoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryEndpointRequest)
+func _RPC_QueryRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryRoleRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RPCServer).QueryEndpoint(ctx, in)
+		return srv.(RPCServer).QueryRole(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: RPC_QueryEndpoint_FullMethodName,
+		FullMethod: RPC_QueryRole_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RPCServer).QueryEndpoint(ctx, req.(*QueryEndpointRequest))
+		return srv.(RPCServer).QueryRole(ctx, req.(*QueryRoleRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -133,18 +133,18 @@ func _RPC_QueryEndpoint_Handler(srv interface{}, ctx context.Context, dec func(i
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var RPC_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "codehorse.mcenter.endpoint.RPC",
+	ServiceName: "codehorse.mcenter.role.RPC",
 	HandlerType: (*RPCServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "RegistryEndpoint",
-			Handler:    _RPC_RegistryEndpoint_Handler,
+			MethodName: "CreateRole",
+			Handler:    _RPC_CreateRole_Handler,
 		},
 		{
-			MethodName: "QueryEndpoint",
-			Handler:    _RPC_QueryEndpoint_Handler,
+			MethodName: "QueryRole",
+			Handler:    _RPC_QueryRole_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "apps/endpoint/pb/rpc.proto",
+	Metadata: "apps/role/pb/rpc.proto",
 }

@@ -11,7 +11,7 @@ import "apps/role/pb/role.proto";
 // Role业务接口
 service RPC {
     // 创建role
-    rpc CreateRole(CreateRoleRequest) returns(Role);
+    // rpc CreateRole(CreateRoleRequest) returns(Role);
     // 查询role
     rpc QueryRole(QueryRoleRequest) returns(RoleSet);
 }

@@ -19,8 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	RPC_CreateRole_FullMethodName = "/codehorse.mcenter.role.RPC/CreateRole"
-	RPC_QueryRole_FullMethodName  = "/codehorse.mcenter.role.RPC/QueryRole"
+	RPC_QueryRole_FullMethodName = "/codehorse.mcenter.role.RPC/QueryRole"
 )
 
 // RPCClient is the client API for RPC service.
@@ -28,7 +27,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RPCClient interface {
 	// 创建role
-	CreateRole(ctx context.Context, in *CreateRoleRequest, opts ...grpc.CallOption) (*Role, error)
+	// rpc CreateRole(CreateRoleRequest) returns(Role);
 	// 查询role
 	QueryRole(ctx context.Context, in *QueryRoleRequest, opts ...grpc.CallOption) (*RoleSet, error)
 }
@@ -39,15 +38,6 @@ type rPCClient struct {
 
 func NewRPCClient(cc grpc.ClientConnInterface) RPCClient {
 	return &rPCClient{cc}
-}
-
-func (c *rPCClient) CreateRole(ctx context.Context, in *CreateRoleRequest, opts ...grpc.CallOption) (*Role, error) {
-	out := new(Role)
-	err := c.cc.Invoke(ctx, RPC_CreateRole_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *rPCClient) QueryRole(ctx context.Context, in *QueryRoleRequest, opts ...grpc.CallOption) (*RoleSet, error) {
@@ -64,7 +54,7 @@ func (c *rPCClient) QueryRole(ctx context.Context, in *QueryRoleRequest, opts ..
 // for forward compatibility
 type RPCServer interface {
 	// 创建role
-	CreateRole(context.Context, *CreateRoleRequest) (*Role, error)
+	// rpc CreateRole(CreateRoleRequest) returns(Role);
 	// 查询role
 	QueryRole(context.Context, *QueryRoleRequest) (*RoleSet, error)
 	mustEmbedUnimplementedRPCServer()
@@ -74,9 +64,6 @@ type RPCServer interface {
 type UnimplementedRPCServer struct {
 }
 
-func (UnimplementedRPCServer) CreateRole(context.Context, *CreateRoleRequest) (*Role, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateRole not implemented")
-}
 func (UnimplementedRPCServer) QueryRole(context.Context, *QueryRoleRequest) (*RoleSet, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QueryRole not implemented")
 }
@@ -91,24 +78,6 @@ type UnsafeRPCServer interface {
 
 func RegisterRPCServer(s grpc.ServiceRegistrar, srv RPCServer) {
 	s.RegisterService(&RPC_ServiceDesc, srv)
-}
-
-func _RPC_CreateRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateRoleRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(RPCServer).CreateRole(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: RPC_CreateRole_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RPCServer).CreateRole(ctx, req.(*CreateRoleRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _RPC_QueryRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -136,10 +105,6 @@ var RPC_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "codehorse.mcenter.role.RPC",
 	HandlerType: (*RPCServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "CreateRole",
-			Handler:    _RPC_CreateRole_Handler,
-		},
 		{
 			MethodName: "QueryRole",
 			Handler:    _RPC_QueryRole_Handler,

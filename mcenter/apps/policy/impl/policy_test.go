@@ -19,3 +19,15 @@ func TestCreatePolicy(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(policyIns))
 }
+
+func TestQueryPolicy(t *testing.T) {
+	req := policy.NewQueryPolicyRequest()
+	req.Namespace = namespace.DEFAULT_NAMESPACE
+	req.UserId = "cjd3dm0eaqnl1k6f5ctg"
+	req.WithRole = true
+	policySet, err := svc.QueryPolicy(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(policySet))
+}

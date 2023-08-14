@@ -2,6 +2,7 @@ package impl
 
 import (
 	"github.com/solodba/devcloud/mcenter/apps/policy"
+	"github.com/solodba/devcloud/mcenter/apps/role"
 	"github.com/solodba/devcloud/mcenter/conf"
 	"github.com/solodba/mcube/apps"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -16,6 +17,8 @@ var (
 type impl struct {
 	policy.UnimplementedRPCServer
 	col *mongo.Collection
+	// 引入role服务
+	svc role.Service
 }
 
 // 实现Ioc中心Name方法
@@ -30,6 +33,7 @@ func (i *impl) Conf() error {
 		return err
 	}
 	i.col = db.Collection("policys")
+	i.svc = apps.GetInternalApp(role.AppName).(role.Service)
 	return nil
 }
 

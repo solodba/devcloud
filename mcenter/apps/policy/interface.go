@@ -1,5 +1,7 @@
 package policy
 
+import "github.com/solodba/mcube/pb/page"
+
 // 模块名称
 const (
 	AppName = "policy"
@@ -14,4 +16,11 @@ type Service interface {
 // CreatePolicyRequest构造函数
 func NewCreatePolicyRequest() *CreatePolicyRequest {
 	return &CreatePolicyRequest{}
+}
+
+// QueryPolicyRequest构造函数
+func NewQueryPolicyRequest() *QueryPolicyRequest {
+	return &QueryPolicyRequest{
+		Page: page.NewPageRequest(),
+	}
 }

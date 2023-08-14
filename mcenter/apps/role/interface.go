@@ -14,3 +14,20 @@ type Service interface {
 	// 嵌套role grpc接口
 	RPCServer
 }
+
+// CreateRoleRequest构造函数
+func NewCreateRoleRequest() *CreateRoleRequest {
+	return &CreateRoleRequest{
+		Feature: make([]*Feature, 0),
+	}
+}
+
+// CreateRoleRequest添加方法
+func (req *CreateRoleRequest) AddItems(items ...*Feature) {
+	req.Feature = append(req.Feature, items...)
+}
+
+// Feature构造方法
+func NewFeature() *Feature {
+	return &Feature{}
+}

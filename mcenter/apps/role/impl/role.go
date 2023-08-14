@@ -8,7 +8,12 @@ import (
 
 // 创建role
 func (i *impl) CreateRole(ctx context.Context, in *role.CreateRoleRequest) (*role.Role, error) {
-	return nil, nil
+	roleIns := role.NewRole(in)
+	_, err := i.col.InsertOne(ctx, roleIns)
+	if err != nil {
+		return nil, err
+	}
+	return roleIns, nil
 }
 
 // 查询role

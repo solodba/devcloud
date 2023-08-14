@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package codehorse.mcenter.policy;
+
+option go_package = "github.com/solodba/devcloud/mcenter/apps/policy";
+
+// 导入外部包
+import "common/pb/github.com/solodba/mcube/pb/meta/meta.proto";
+import "apps/role/pb/role.proto";
+
+// CreatePolicyRequest结构体
+message CreatePolicyRequest {
+    // @gotags: bson:"user_id" json:"user_id"
+    string user_id = 1;
+    // @gotags: bson:"namespace" json:"namespace"
+    string namespace = 2;
+    // @gotags: bson:"role_id" json:"role_id"
+    string role_id = 3;
+}
+
+// Policy结构体
+message Policy {
+    // @gotags: bson:",inline" json:"meta"
+    codehorse.mcube.meta.Meta meta = 1;
+    // @gotags: bson:",inline" json:"spec"
+    CreatePolicyRequest spec = 2;
+    // @gotags: bson:",inline" json:"role"
+    role.Role role = 3;
+}
+
+// PolicySet结构体
+message PolicySet {
+    // @gotags: bson:"total" json:"total"
+    int64 Total = 1;
+    // @gotags: bson:"items" json:"items"
+    repeated Policy items = 2;
+}

@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package codehorse.mcenter.policy;
+
+option go_package = "github.com/solodba/devcloud/mcenter/apps/policy";
+
+// 导入外部包
+import "apps/policy/pb/policy.proto";
+import "common/pb/github.com/solodba/mcube/pb/page/page.proto";
+
+// Policy服务接口
+service RPC {
+    // 创建Policy
+    rpc CreatePolicy(CreatePolicyRequest) returns(Policy);
+    // 查询Policy
+    rpc QueryPolicy(QueryPolicyRequest) returns(PolicySet);
+}
+
+// QueryPolicyRequest结构体
+message QueryPolicyRequest {
+    // @gotags: bson:",inline" json:"page"
+    codehorse.mcube.page.PageRequest page = 1;
+    // @gotags: bson:"user_id" json:"user_id"
+    string user_id = 2;
+    // @gotags: bson:"namespace" json:"namespace"
+    string namespace = 3;
+    // @gotags: bson:"with_role" json:"with_role"
+    bool with_role = 4;
+}

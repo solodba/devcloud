@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/emicklei/go-restful/v3"
@@ -76,6 +77,7 @@ func (h *httpAuther) AuthFunc(r *restful.Request, w *restful.Response, next *res
 			checkReq.ServiceId = ep.Spec.ServiceId
 			checkReq.HttpMethod = ep.Spec.Method
 			checkReq.HttpPath = ep.Spec.Path
+			fmt.Println(checkReq)
 			permissionResp, err := h.client.NewPermissionRPCClient().CheckPermission(r.Request.Context(), checkReq)
 			if err != nil {
 				w.WriteEntity(response.NewFail(500, "权限校验失败!"))

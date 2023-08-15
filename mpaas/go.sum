@@ -146,6 +146,8 @@ github.com/rs/zerolog v1.30.0/go.mod h1:/tk+P47gFdPXq4QYjvCmT5/Gsug2nagsFWBWhAiS
 github.com/russross/blackfriday/v2 v2.1.0/go.mod h1:+Rmxgy9KzJVeS9/2gXHxylqXiyQDYRxCVz55jmeOWTM=
 github.com/solodba/devcloud/mcenter v0.0.0-20230813051122-47c69dd54b83 h1:3sBw/NJryiByumPpRfg77rAhiou+A/rlHVgqinm/myA=
 github.com/solodba/devcloud/mcenter v0.0.0-20230813051122-47c69dd54b83/go.mod h1:HRqjnzKJersDf8sRA2DdR7/jRCr3+Zax2HNOGb6exZA=
+github.com/solodba/devcloud/mcenter v0.0.0-20230815070443-15e145e2a7e6 h1:svdO0sF1iTvoyfi5QHWg3Kq6scirMQrB9lnVTvYBZ94=
+github.com/solodba/devcloud/mcenter v0.0.0-20230815070443-15e145e2a7e6/go.mod h1:HRqjnzKJersDf8sRA2DdR7/jRCr3+Zax2HNOGb6exZA=
 github.com/solodba/mcube v1.0.3 h1:cKHt3xsTtFRdwnRKMV5RewXN/htCho+i+vRHO0FpXjA=
 github.com/solodba/mcube v1.0.3/go.mod h1:oFGfyiP6Hdr1iZ3GcC1PASfh8W177vR0cALUPowNzkY=
 github.com/spf13/cobra v1.7.0 h1:hyqWnYt1ZQShIddO5kBpj3vu05/++x6tJ6dg8EC572I=
@@ -192,6 +194,7 @@ go.opentelemetry.io/otel/metric v1.16.0/go.mod h1:QE47cpOmkwipPiefDwo2wDzwJrlfxx
 go.opentelemetry.io/otel/sdk v1.16.0 h1:Z1Ok1YsijYL0CSJpHt4cS3wDDh7p572grzNrBMiMWgE=
 go.opentelemetry.io/otel/trace v1.16.0 h1:8JRpaObFoW0pxuVPapkgH8UhHQj+bJW8jJsCZEu5MQs=
 go.opentelemetry.io/otel/trace v1.16.0/go.mod h1:Yt9vYq1SdNz3xdjZZK7wcXv1qv2pwLkqr2QVwea0ef0=
+go.uber.org/atomic v1.7.0/go.mod h1:fEN4uk6kAWBTFdckzkM89CLk9XfWZrxpCo0nPH17wJc=
 go.uber.org/goleak v1.2.0 h1:xqgm/S+aQvhWFTtR0XK3Jvg7z8kGV8P4X14IzwN3Eqk=
 go.uber.org/multierr v1.11.0 h1:blXXJkSxSSfBVBlC76pxqeO+LN3aDfLQo+309xJstO0=
 go.uber.org/multierr v1.11.0/go.mod h1:20+QtiLqy0Nd6FdQB9TLXag12DsQkrbs3htMFfDN80Y=
@@ -252,6 +255,8 @@ golang.org/x/xerrors v0.0.0-20190717185122-a985d3407aa7/go.mod h1:I/5z698sn9Ka8T
 golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=
 google.golang.org/genproto/googleapis/rpc v0.0.0-20230807174057-1744710a1577 h1:wukfNtZmZUurLN/atp2hiIeTKn7QJWIQdHzqmsOnAOk=
 google.golang.org/genproto/googleapis/rpc v0.0.0-20230807174057-1744710a1577/go.mod h1:+Bk1OCOj40wS2hwAMA+aCW9ypzm63QTBBHp6lQ3p+9M=
+google.golang.org/genproto/googleapis/rpc v0.0.0-20230814215434-ca7cfce7776a h1:5rTPHLf5eLPfqGvw3fLpEmUpko2Ky91ft14LxGs5BZc=
+google.golang.org/genproto/googleapis/rpc v0.0.0-20230814215434-ca7cfce7776a/go.mod h1:+Bk1OCOj40wS2hwAMA+aCW9ypzm63QTBBHp6lQ3p+9M=
 google.golang.org/grpc v1.57.0 h1:kfzNeI/klCGD2YPMUlaGNT3pxvYfga7smW3Vth8Zsiw=
 google.golang.org/grpc v1.57.0/go.mod h1:Sd+9RMTACXwmub0zcNY2c4arhtrbBYD1AUHI/dt16Mo=
 google.golang.org/protobuf v1.26.0-rc.1/go.mod h1:jlhhOSvTdKEhbULTjvd4ARK9grFBp09yW+WbY/TyQbw=

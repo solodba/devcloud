@@ -9,7 +9,7 @@ require (
 	github.com/emicklei/go-restful-openapi/v2 v2.9.1
 	github.com/emicklei/go-restful/v3 v3.10.2
 	github.com/infraboard/mcube v1.9.18
-	github.com/solodba/devcloud/mcenter v0.0.0-20230813051122-47c69dd54b83
+	github.com/solodba/devcloud/mcenter v0.0.0-20230815070443-15e145e2a7e6
 	github.com/solodba/mcube v1.0.3
 	github.com/spf13/cobra v1.7.0
 	go.mongodb.org/mongo-driver v1.12.1
@@ -74,7 +74,7 @@ require (
 	golang.org/x/sync v0.3.0 // indirect
 	golang.org/x/sys v0.11.0 // indirect
 	golang.org/x/text v0.12.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20230807174057-1744710a1577 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20230814215434-ca7cfce7776a // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect

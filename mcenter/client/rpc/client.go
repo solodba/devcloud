@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/solodba/devcloud/mcenter/apps/endpoint"
+	"github.com/solodba/devcloud/mcenter/apps/permission"
 	"github.com/solodba/devcloud/mcenter/apps/service"
 	"github.com/solodba/devcloud/mcenter/apps/token"
 	"github.com/solodba/devcloud/mcenter/apps/user"
@@ -14,7 +15,8 @@ import (
 
 // GRPC客户端结构体
 type Client struct {
-	c *grpc.ClientConn
+	c    *grpc.ClientConn
+	Conf *McenterGrpcClientConfig
 }
 
 // GRPC客户端初始化函数
@@ -30,7 +32,8 @@ func NewClient(conf *McenterGrpcClientConfig) *Client {
 		logger.L().Panic().Msgf("grpc client dial error, err: %s", err.Error())
 	}
 	return &Client{
-		c: clientConn,
+		c:    clientConn,
+		Conf: conf,
 	}
 }
 
@@ -49,4 +52,8 @@ func (c *Client) NewServiceRPCClient() service.RPCClient {
 
 func (c *Client) NewEndpointRPCClient() endpoint.RPCClient {
 	return endpoint.NewRPCClient(c.c)
+}
+
+func (c *Client) NewPermissionRPCClient() permission.RPCClient {
+	return permission.NewRPCClient(c.c)
 }

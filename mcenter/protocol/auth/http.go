@@ -14,13 +14,15 @@ import (
 
 // httpAuther认证结构体
 type httpAuther struct {
-	tokenSvc token.Service
+	tokenSvc      token.Service
+	permissionSvc permission.Service
 }
 
 // httpAuther初始化函数
 func NewHttpAuther() *httpAuther {
 	return &httpAuther{
-		tokenSvc: apps.GetInternalApp(token.AppName).(token.Service),
+		tokenSvc:      apps.GetInternalApp(token.AppName).(token.Service),
+		permissionSvc: apps.GetInternalApp(permission.AppName).(permission.Service),
 	}
 }
 
@@ -65,8 +67,20 @@ func (a *httpAuther) AuthFunc(r *restful.Request, w *restful.Response, next *res
 		// 是否鉴权, 鉴权操作是在用户认证后开始
 		if ep.Spec.Perm {
 			checkReq := permission.NewCheckPermissionRequest()
+			checkReq.UserId = tk.UserId
+			checkReq.Namespace = tk.Namespace
 			checkReq.ServiceId = ep.Spec.ServiceId
-
+			checkReq.HttpMethod = ep.Spec.Method
+			checkReq.HttpPath = ep.Spec.Path
+			permissionResp, err := a.permissionSvc.CheckPermission(r.Request.Context(), checkReq)
+			if err != nil {
+				w.WriteEntity(response.NewFail(500, "权限校验失败!"))
+				return
+			}
+			if !permissionResp.HasPermission {
+				w.WriteEntity(response.NewFail(500, "权限校验失败!"))
+				return
+			}
 		}
 	}
 	next.ProcessFilter(r, w)

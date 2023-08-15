@@ -9,11 +9,11 @@ import (
 
 func TestCreateRole(t *testing.T) {
 	f1 := role.NewFeature()
-	f1.ServiceId = "cjd1nu0eaqnlb444u060"
+	f1.ServiceId = "cjdi9b8eaqnn2p5c8up0"
 	f1.HttpMethod = "POST"
 	f1.HttpPath = "/mpaas/api/v1/cluster"
 	f2 := role.NewFeature()
-	f2.ServiceId = "cjd1nu0eaqnlb444u060"
+	f2.ServiceId = "cjdi9b8eaqnn2p5c8up0"
 	f2.HttpMethod = "GET"
 	f2.HttpPath = "/mpaas/api/v1/cluster"
 	req := role.NewCreateRoleRequest()

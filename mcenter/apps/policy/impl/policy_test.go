@@ -11,7 +11,7 @@ import (
 func TestCreatePolicy(t *testing.T) {
 	req := policy.NewCreatePolicyRequest()
 	req.Namespace = namespace.DEFAULT_NAMESPACE
-	req.RoleId = "cjdg7s8eaqnleu0lidr0"
+	req.RoleId = "cjdiiboeaqnjfb39enj0"
 	req.UserId = "cjdfgs0eaqnmjv6mnb7g"
 	policyIns, err := svc.CreatePolicy(ctx, req)
 	if err != nil {

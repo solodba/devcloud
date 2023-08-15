@@ -79,6 +79,7 @@ func (h *httpAuther) AuthFunc(r *restful.Request, w *restful.Response, next *res
 			checkReq.HttpPath = ep.Spec.Path
 			fmt.Println(checkReq)
 			permissionResp, err := h.client.NewPermissionRPCClient().CheckPermission(r.Request.Context(), checkReq)
+			fmt.Println(permissionResp)
 			if err != nil {
 				w.WriteEntity(response.NewFail(500, "权限校验失败!"))
 				return

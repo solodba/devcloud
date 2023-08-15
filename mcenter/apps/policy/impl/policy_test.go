@@ -11,8 +11,8 @@ import (
 func TestCreatePolicy(t *testing.T) {
 	req := policy.NewCreatePolicyRequest()
 	req.Namespace = namespace.DEFAULT_NAMESPACE
-	req.RoleId = "cjd2b08eaqnhr91ir71g"
-	req.UserId = "cjd3dm0eaqnl1k6f5ctg"
+	req.RoleId = "cjdg7s8eaqnleu0lidr0"
+	req.UserId = "cjdfgs0eaqnmjv6mnb7g"
 	policyIns, err := svc.CreatePolicy(ctx, req)
 	if err != nil {
 		t.Fatal(err)
@@ -23,7 +23,7 @@ func TestCreatePolicy(t *testing.T) {
 func TestQueryPolicy(t *testing.T) {
 	req := policy.NewQueryPolicyRequest()
 	req.Namespace = namespace.DEFAULT_NAMESPACE
-	req.UserId = "cjd3dm0eaqnl1k6f5ctg"
+	req.UserId = "cjdfgs0eaqnmjv6mnb7g"
 	req.WithRole = true
 	policySet, err := svc.QueryPolicy(ctx, req)
 	if err != nil {

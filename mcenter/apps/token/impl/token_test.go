@@ -9,8 +9,8 @@ import (
 
 func TestIssueToken(t *testing.T) {
 	req := token.NewIssueTokenRequest()
-	req.Username = "test2"
-	req.Password = "123456"
+	req.Username = "admin"
+	req.Password = "admin"
 	tk, err := svc.IssueToken(ctx, req)
 	if err != nil {
 		t.Fatal(err)
@@ -19,7 +19,7 @@ func TestIssueToken(t *testing.T) {
 }
 
 func TestValidateToken(t *testing.T) {
-	req := token.NewValidateTokenRequest("cinv113jrq66s110li70")
+	req := token.NewValidateTokenRequest("cjdfh9oeaqnibn3428qg")
 	tk, err := svc.ValidateToken(ctx, req)
 	if err != nil {
 		t.Fatal(err)

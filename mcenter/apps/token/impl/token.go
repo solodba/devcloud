@@ -3,6 +3,7 @@ package impl
 import (
 	"context"
 
+	"github.com/solodba/devcloud/mcenter/apps/namespace"
 	"github.com/solodba/devcloud/mcenter/apps/token"
 	"github.com/solodba/devcloud/mcenter/apps/token/provider"
 	"go.mongodb.org/mongo-driver/bson"
@@ -15,6 +16,7 @@ func (i *impl) IssueToken(ctx context.Context, in *token.IssueTokenRequest) (*to
 	if err != nil {
 		return nil, err
 	}
+	tk.Namespace = namespace.DEFAULT_NAMESPACE
 	_, err = i.col.InsertOne(ctx, tk)
 	if err != nil {
 		return nil, err

@@ -20,14 +20,16 @@ message Token {
     GRANT_TYPE grant_type = 6;
     // @gotags: bson:"username" json:"username"
     string username = 7;
+    // @gotags: bson:"namespace" json:"namespace"
+    string namespace = 8;
     // @gotags: bson:"user_id" json:"user_id"
-    string user_id = 8;
+    string user_id = 9;
     // @gotags: bson:"type" json:"type"
-    TOKEN_TYPE type = 9;
+    TOKEN_TYPE type = 10;
     // @gotags: bson:",inline" json:"status"
-    Status status = 10;
+    Status status = 11;
     // @gotags: bson:"meta" json:"meta"
-    map<string,string> meta = 11;
+    map<string,string> meta = 12;
 
 }
 

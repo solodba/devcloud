@@ -38,6 +38,7 @@ func (i *issue) IssueToken(ctx context.Context, in *token.IssueTokenRequest) (*t
 		return nil, err
 	}
 	tk := token.NewToken()
+	tk.Username = in.Username
 	tk.AccessToken = xid.New().String()
 	tk.RefreshToken = xid.New().String()
 	return tk, nil

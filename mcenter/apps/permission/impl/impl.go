@@ -2,6 +2,7 @@ package impl
 
 import (
 	"github.com/solodba/devcloud/mcenter/apps/permission"
+	"github.com/solodba/devcloud/mcenter/apps/policy"
 	"github.com/solodba/devcloud/mcenter/conf"
 	"github.com/solodba/mcube/apps"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -16,6 +17,8 @@ var (
 type impl struct {
 	permission.UnimplementedRPCServer
 	col *mongo.Collection
+	// 引用policy服务
+	svc policy.Service
 }
 
 // 实现Ioc中心Name方法
@@ -30,6 +33,8 @@ func (i *impl) Conf() error {
 		return err
 	}
 	i.col = db.Collection("permissions")
+	// 初始化引用的policy service
+	i.svc = apps.GetInternalApp(policy.AppName).(policy.Service)
 	return nil
 }
 

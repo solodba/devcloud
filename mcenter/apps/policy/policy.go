@@ -57,3 +57,12 @@ func (p *PolicySet) SetRole(role *role.Role) {
 		}
 	}
 }
+
+// PolicySet获取Roles
+func (p *PolicySet) GetRoles() []*role.Role {
+	roles := make([]*role.Role, 0)
+	for _, item := range p.Items {
+		roles = append(roles, item.Role)
+	}
+	return roles
+}

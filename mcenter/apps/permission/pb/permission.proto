@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package codehorse.mcenter.permission;
+
+option go_package = "github.com/solodba/devcloud/mcenter/apps/permission";
+
+// 导入外部包
+import "apps/role/pb/role.proto";
+
+// CheckPermissionResponse结构体
+message CheckPermissionResponse {
+    // @gotags: bson:"has_permission" json:"has_permission"
+    bool has_permission = 1;
+    // @gotags: bson:"role" json:"role"
+    role.Role role = 2;
+}

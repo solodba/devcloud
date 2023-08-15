@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package codehorse.mcenter.permission;
+
+option go_package = "github.com/solodba/devcloud/mcenter/apps/permission";
+
+// 导入外部包
+import "apps/permission/pb/permission.proto";
+
+// Permission业务接口
+service RPC {
+    // 用户访问鉴权
+    rpc CheckPermission(CheckPermissionRequest) returns(CheckPermissionResponse);
+}
+
+// CheckPermissionRequest结构体
+message CheckPermissionRequest {
+    // @gotags: bson:"user_id" json:"user_id"
+    string user_id = 1;
+    // @gotags: bson:"namespace" json:"namespace"
+    string namespace = 2;
+    // @gotags: bson:"service_id" json:"service_id"
+    string service_id = 3;
+    // @gotags: bson:"http_method" json:"http_method"
+    string http_method = 4;
+    // @gotags: bson:"http_path" json:"http_path"
+    string http_path = 5;
+}

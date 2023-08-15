@@ -35,8 +35,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 		To(h.IssueToken).
 		Doc("颁发令牌").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
-		// 添加标记, 是否开启认证
+		// 路由装饰, 是否开启认证
 		Metadata("auth", false).
+		// 路由装饰, 是否开启鉴权
+		Metadata("perm", false).
 		Reads(token.IssueTokenRequest{}).
 		Writes(token.Token{}).
 		Returns(200, "OK", token.Token{}))

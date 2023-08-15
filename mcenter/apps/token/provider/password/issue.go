@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/rs/xid"
+	"github.com/solodba/devcloud/mcenter/apps/namespace"
 	"github.com/solodba/devcloud/mcenter/apps/token"
 	"github.com/solodba/devcloud/mcenter/apps/token/provider"
 	"github.com/solodba/devcloud/mcenter/apps/user"
@@ -38,7 +39,9 @@ func (i *issue) IssueToken(ctx context.Context, in *token.IssueTokenRequest) (*t
 		return nil, err
 	}
 	tk := token.NewToken()
-	tk.Username = in.Username
+	tk.Namespace = namespace.DEFAULT_NAMESPACE
+	tk.UserId = userIns.Meta.Id
+	tk.Username = userIns.Spec.Username
 	tk.AccessToken = xid.New().String()
 	tk.RefreshToken = xid.New().String()
 	return tk, nil

@@ -9,7 +9,7 @@ require (
 	github.com/emicklei/go-restful/v3 v3.10.2
 	github.com/infraboard/mcube v1.9.16
 	github.com/solodba/devcloud/mcenter v0.0.0-20230817133111-fce25095b95c
-	github.com/solodba/mcube v1.0.3
+	github.com/solodba/mcube v1.0.4
 	go.mongodb.org/mongo-driver v1.12.1
 	google.golang.org/grpc v1.56.2
 )

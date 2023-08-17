@@ -6,7 +6,6 @@ import (
 
 	"github.com/infraboard/mcube/grpc/middleware/recovery"
 	"github.com/solodba/devcloud/maudit/conf"
-	"github.com/solodba/devcloud/mcenter/protocol/auth"
 	"github.com/solodba/mcube/apps"
 	"github.com/solodba/mcube/logger"
 	"google.golang.org/grpc"
@@ -23,8 +22,7 @@ func NewGrpcService() *GrpcService {
 	// 添加grpc认证中间
 	rc := recovery.NewInterceptor(recovery.NewZapRecoveryHandler())
 	srv := grpc.NewServer(
-		grpc.ChainUnaryInterceptor(rc.UnaryServerInterceptor()),
-		grpc.ChainUnaryInterceptor(auth.NewGrpcAuther().AuthFunc))
+		grpc.ChainUnaryInterceptor(rc.UnaryServerInterceptor()))
 	return &GrpcService{
 		svr: srv,
 		c:   conf.C(),

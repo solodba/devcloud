@@ -28,3 +28,15 @@ func (a *AuditLog) LoadAuditLogFromJson(data []byte) error {
 	}
 	return nil
 }
+
+// AuditLogSet构造函数
+func NewAuditLogSet() *AuditLogSet {
+	return &AuditLogSet{
+		Items: make([]*AuditLog, 0),
+	}
+}
+
+// AuditLogSet添加方法
+func (a *AuditLogSet) AddItems(items ...*AuditLog) {
+	a.Items = append(a.Items, items...)
+}

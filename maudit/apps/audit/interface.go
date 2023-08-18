@@ -1,6 +1,10 @@
 package audit
 
-import context "context"
+import (
+	context "context"
+
+	"github.com/solodba/mcube/pb/page"
+)
 
 // 模块名称
 const (
@@ -15,4 +19,11 @@ type Service interface {
 	QueryAuditLog(context.Context, *QueryAuditLogRequest) (*AuditLogSet, error)
 	// 嵌套maudit grpc接口
 	RPCServer
+}
+
+// QueryAuditLogRequest构造函数
+func NewQueryAuditLogRequest() *QueryAuditLogRequest {
+	return &QueryAuditLogRequest{
+		Page: page.NewPageRequest(),
+	}
 }

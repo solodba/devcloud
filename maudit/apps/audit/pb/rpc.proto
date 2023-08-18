@@ -6,6 +6,7 @@ option go_package = "github.com/solodba/devcloud/maudit/apps/audit";
 
 // 导入外部包
 // import "apps/audit/pb/audit.proto";
+import "common/pb/github.com/solodba/mcube/pb/page/page.proto";
 
 // 用户审计功能接口
 service RPC {
@@ -17,4 +18,6 @@ service RPC {
 
 // QueryAuditLogRequest结构体
 message QueryAuditLogRequest {
+    // @gotags: bson:",inline" json:"page"
+    codehorse.mcube.page.PageRequest page = 1;
 }

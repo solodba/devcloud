@@ -21,3 +21,14 @@ func TestSaveAuditLog(t *testing.T) {
 	}
 	t.Log(tools.MustToJson(auditLogIns))
 }
+
+func TestQueryAuditLog(t *testing.T) {
+	req := audit.NewQueryAuditLogRequest()
+	// req.Page.PageNumber = 2
+	// req.Page.PageSize = 5
+	auditLogSet, err := svc.QueryAuditLog(ctx, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(tools.MustToJson(auditLogSet))
+}

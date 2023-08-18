@@ -2,7 +2,9 @@ package audit
 
 import (
 	context "context"
+	"strconv"
 
+	"github.com/emicklei/go-restful/v3"
 	"github.com/solodba/mcube/pb/page"
 )
 
@@ -25,5 +27,17 @@ type Service interface {
 func NewQueryAuditLogRequest() *QueryAuditLogRequest {
 	return &QueryAuditLogRequest{
 		Page: page.NewPageRequest(),
+	}
+}
+
+// 从restful解析分页参数构造结构体QueryAuditLogRequest
+func NewQueryAuditLogRequestFromRestful(r *restful.Request) *QueryAuditLogRequest {
+	pageReq := page.NewPageRequest()
+	pageNumber, _ := strconv.Atoi(r.QueryParameter("page_number"))
+	pageReq.PageNumber = int64(pageNumber)
+	pageSize, _ := strconv.Atoi(r.QueryParameter("page_size"))
+	pageReq.PageSize = int64(pageSize)
+	return &QueryAuditLogRequest{
+		Page: pageReq,
 	}
 }

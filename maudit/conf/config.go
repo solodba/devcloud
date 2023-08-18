@@ -50,10 +50,20 @@ type MongoDB struct {
 	client     *mongo.Client
 }
 
+// Kafka结构体
+type Kafka struct {
+	Endpoints     []string `toml:"endpoints" env:"KAFKA_ENDPOINTS" envSeparator:","`
+	Username      string   `toml:"username" env:"KAFKA_USERNAME"`
+	Password      string   `toml:"password" env:"KAFKA_PASSWORD"`
+	Topic         string   `toml:"topic" env:"KAFKA_TOPIC"`
+	ConsumerGroup string   `toml:"consumer_group" env:"KAFKA_CONSUMER_GROUP"`
+}
+
 // 全局配置结构体
 type Config struct {
 	App     *App     `toml:"app"`
 	MongoDB *MongoDB `toml:"mongodb"`
+	Kafka   *Kafka   `toml:"kafka"`
 }
 
 // Http初始化函数
@@ -90,11 +100,21 @@ func NewDefaultMongoDB() *MongoDB {
 	}
 }
 
+// Kafka默认构造函数
+func NewDefaultKafka() *Kafka {
+	return &Kafka{
+		Endpoints:     []string{"localhost:9092"},
+		Topic:         "maudit",
+		ConsumerGroup: "maudit",
+	}
+}
+
 // Config初始化函数
 func NewDefaultConfig() *Config {
 	return &Config{
 		App:     NewDefaultApp(),
 		MongoDB: NewDefaultMongoDB(),
+		Kafka:   NewDefaultKafka(),
 	}
 }
 

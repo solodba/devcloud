@@ -15,3 +15,10 @@ password = ""
 endpoints = ["192.168.1.130:27017"]
 database = "maudit"
 authsource = "maudit"
+
+[kafka]
+endpoints = ["192.168.1.130:9092"]
+username = ""
+password = ""
+topic = "audit_log"
+consumer_group = "audit_log_controller"

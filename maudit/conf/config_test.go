@@ -16,6 +16,7 @@ func TestLoadConfigFromToml(t *testing.T) {
 	t.Log(conf.C().App.Grpc)
 	t.Log(conf.C().MongoDB)
 	t.Log(conf.C().MongoDB.GetDB())
+	t.Log(conf.C().Kafka)
 }
 
 func TestLoadConfigFromEnv(t *testing.T) {
@@ -28,4 +29,5 @@ func TestLoadConfigFromEnv(t *testing.T) {
 	t.Log(conf.C().App.Grpc)
 	t.Log(conf.C().MongoDB)
 	t.Log(conf.C().MongoDB.GetDB())
+	t.Log(conf.C().Kafka)
 }

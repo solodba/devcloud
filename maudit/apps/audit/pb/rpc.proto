@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package codehorse.maudit.audit;
+
+option go_package = "github.com/solodba/devcloud/maudit/apps/audit";
+
+// 导入外部包
+// import "apps/audit/pb/audit.proto";
+
+// 用户审计功能接口
+service RPC {
+    // 保存审计日志
+    // rpc SaveAuditLog(AuditLog) returns(AuditLog);
+    // 查询审计日志
+    // rpc QueryAuditLog(QueryAuditLogRequest) returns(AuditLogSet);
+}
+
+// QueryAuditLogRequest结构体
+message QueryAuditLogRequest {
+}

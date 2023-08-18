@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package codehorse.maudit.audit;
+
+option go_package = "github.com/solodba/devcloud/maudit/apps/audit";
+
+// AuditLog结构体
+message AuditLog {
+    // @gotags: bson:"_id" json:"id"
+    string id = 1;
+    // @gotags: bson:"username" json:"username"
+    string username = 2;
+    // @gotags: bson:"time" json:"time"
+    int64 time = 3;
+    // @gotags: bson:"service_id" json:"service_id"
+    string service_id = 4;
+    // @gotags: bson:"operate" json:"operate"
+    string operate = 5;
+    // @gotags: bson:"request" json:"request"
+    string request = 6;
+}
+
+// AuditLogSet结构体
+message AuditLogSet {
+    // @gotags: bson:"total" json:"total"
+    int64 Total = 1;
+    // @gotags: bson:"items" json:"items"
+    repeated AuditLog items = 2;
+}

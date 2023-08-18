@@ -1,6 +1,6 @@
 package audit
 
-import "context"
+import context "context"
 
 // 模块名称
 const (
@@ -9,20 +9,10 @@ const (
 
 // 审计业务功能接口
 type Service interface {
+	// 保存审计日志
 	SaveAuditLog(context.Context, *AuditLog) (*AuditLog, error)
+	// 查询审计日志
 	QueryAuditLog(context.Context, *QueryAuditLogRequest) (*AuditLogSet, error)
-}
-
-// AuditLog结构体
-type AuditLog struct {
-	Id        string `json:"id"`
-	Username  string `json:"username"`
-	Time      int64  `json:"time"`
-	ServiceId string `json:"service_id"`
-	Operate   string `json:"operate"`
-	Request   string `json:"request"`
-}
-
-// QueryAuditLogRequest结构体
-type QueryAuditLogRequest struct {
+	// 嵌套maudit grpc接口
+	RPCServer
 }

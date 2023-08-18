@@ -1,7 +1,12 @@
 package start
 
 import (
+	"context"
+
+	"github.com/solodba/devcloud/maudit/conf"
+	"github.com/solodba/devcloud/maudit/controller"
 	"github.com/solodba/devcloud/maudit/protocol"
+	"github.com/solodba/mcube/logger"
 	"github.com/spf13/cobra"
 )
 
@@ -24,6 +29,8 @@ var Cmd = &cobra.Command{
 type Server struct {
 	GrpcService *protocol.GrpcService
 	HttpService *protocol.HttpService
+	// audit log controller
+	Controller *controller.AuditLogSaveController
 }
 
 // 服务结构体初始化函数
@@ -36,6 +43,13 @@ func NewServer() *Server {
 
 // Server服务启动方法
 func (s *Server) Start() error {
+	s.Controller = controller.NewAuditLogSaveController(
+		conf.C().Kafka.Endpoints,
+		conf.C().Kafka.ConsumerGroup,
+		conf.C().Kafka.Topic,
+	)
+	go s.Controller.Run(context.Background())
+	logger.L().Info().Msgf("start controller ok, consumer group: %s", conf.C().Kafka.ConsumerGroup)
 	go s.GrpcService.Start()
 	return s.HttpService.Start()
 }
@@ -47,6 +61,10 @@ func (s *Server) Stop() error {
 		return err
 	}
 	err = s.HttpService.Stop()
+	if err != nil {
+		return err
+	}
+	err = s.Controller.Stop()
 	if err != nil {
 		return err
 	}

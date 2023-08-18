@@ -39,7 +39,7 @@ func NewClient(brokerAddress, topicName string) *Client {
 func (c *Client) SendAuditLog(ctx context.Context, in *audit.AuditLog) error {
 	msg := kafka.Message{
 		Key:   []byte(in.ServiceId),
-		Value: []byte(in.MustToJson()),
+		Value: in.MustToJsonByte(),
 	}
 	return c.writer.WriteMessages(ctx, msg)
 }

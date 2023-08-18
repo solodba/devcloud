@@ -12,6 +12,5 @@ var (
 )
 
 func init() {
-	client := broker.NewClient("192.168.1.130:9092", broker.DEFAULT_TOPIC_NAME)
-	c = client
+	c = broker.NewClient("192.168.1.130:9092", broker.DEFAULT_TOPIC_NAME)
 }

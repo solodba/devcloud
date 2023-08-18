@@ -29,7 +29,7 @@ func (i *impl) Conf() error {
 	if err != nil {
 		return err
 	}
-	i.col = db.Collection("audit")
+	i.col = db.Collection("audits")
 	return nil
 }
 

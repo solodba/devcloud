@@ -8,6 +8,7 @@ require (
 	github.com/emicklei/go-restful-openapi/v2 v2.9.1
 	github.com/emicklei/go-restful/v3 v3.10.2
 	github.com/infraboard/mcube v1.9.18
+	github.com/rs/xid v1.5.0
 	github.com/segmentio/kafka-go v0.4.42
 	github.com/solodba/mcube v1.0.4
 	github.com/spf13/cobra v1.7.0

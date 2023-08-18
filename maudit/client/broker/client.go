@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	TOPIC_NAME = "topic-audit"
+	DEFAULT_TOPIC_NAME = "topic-audit"
 )
 
 // Producer客户端结构体
@@ -21,11 +21,11 @@ type Client struct {
 }
 
 // Producer客户端构造函数
-func NewClient(brokerAddress string) *Client {
+func NewClient(brokerAddress, topicName string) *Client {
 	address := strings.Split(brokerAddress, ",")
 	w := &kafka.Writer{
 		Addr:                   kafka.TCP(address...),
-		Topic:                  TOPIC_NAME,
+		Topic:                  topicName,
 		Balancer:               &kafka.LeastBytes{},
 		AllowAutoTopicCreation: false,
 	}
@@ -42,4 +42,9 @@ func (c *Client) SendAuditLog(ctx context.Context, in *audit.AuditLog) error {
 		Value: []byte(in.MustToJson()),
 	}
 	return c.writer.WriteMessages(ctx, msg)
+}
+
+// 停止客户端发送审计日志到kafka
+func (c *Client) StopSendAuditLog() error {
+	return c.writer.Close()
 }

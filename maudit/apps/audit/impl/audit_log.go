@@ -8,7 +8,11 @@ import (
 
 // 保存审计日志
 func (i *impl) SaveAuditLog(ctx context.Context, in *audit.AuditLog) (*audit.AuditLog, error) {
-	return nil, nil
+	_, err := i.col.InsertOne(ctx, in)
+	if err != nil {
+		return nil, err
+	}
+	return in, nil
 }
 
 // 查询审计日志

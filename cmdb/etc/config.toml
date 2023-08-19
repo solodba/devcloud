@@ -1,0 +1,26 @@
+[app]
+name = "cmdb"
+
+[app.http]
+host = "127.0.0.1"
+port = 8888
+
+[app.grpc]
+host = "127.0.0.1"
+port = 8889
+
+[MySQL]
+username = "root"
+password = "123456"
+host = "192.168.1.130"
+port = 3306
+db = "cmdb"
+max_open_conn = 50
+max_idle_conn = 10
+max_life_time = 600
+max_idle_time = 300
+
+[mcenter]
+address = "127.0.0.1:8881"
+clientid = "cjg8s7kfd1fif54vee4g"
+clientsecret = "cjg8s7kfd1fif54vee50"

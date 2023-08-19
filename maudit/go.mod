@@ -6,11 +6,11 @@ require (
 	github.com/BurntSushi/toml v1.3.2
 	github.com/caarlos0/env v3.5.0+incompatible
 	github.com/emicklei/go-restful-openapi/v2 v2.9.1
-	github.com/emicklei/go-restful/v3 v3.10.2
+	github.com/emicklei/go-restful/v3 v3.11.0
 	github.com/infraboard/mcube v1.9.18
 	github.com/rs/xid v1.5.0
 	github.com/segmentio/kafka-go v0.4.42
-	github.com/solodba/mcube v1.0.4
+	github.com/solodba/mcube v0.0.1
 	github.com/spf13/cobra v1.7.0
 	go.mongodb.org/mongo-driver v1.12.1
 	google.golang.org/grpc v1.57.0
@@ -33,7 +33,7 @@ require (
 	github.com/go-openapi/swag v0.22.4 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
-	github.com/go-playground/validator/v10 v10.15.0 // indirect
+	github.com/go-playground/validator/v10 v10.15.1 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/golang/snappy v0.0.4 // indirect

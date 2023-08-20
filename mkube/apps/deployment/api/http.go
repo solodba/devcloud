@@ -37,6 +37,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.POST("/").To(h.CreateDeployment).
 		Doc("创建Deployment").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(deployment.CreateDeploymentRequest{}).
 		Writes(deployment.Deployment{}).
 		Returns(200, "OK", deployment.Deployment{}))
@@ -45,6 +49,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.DELETE("/{namespace}/{name}").To(h.DeleteDeployment).
 		Doc("删除Deployment").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(deployment.DeleteDeploymentRequest{}).
 		Writes(deployment.CreateDeploymentRequest{}).
 		Returns(200, "OK", deployment.CreateDeploymentRequest{}))
@@ -53,6 +61,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.PUT("/").To(h.UpdateDeployment).
 		Doc("更新Deployment").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(deployment.UpdateDeploymentRequest{}).
 		Writes(deployment.Deployment{}).
 		Returns(200, "OK", deployment.Deployment{}))
@@ -61,6 +73,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.GET("/{namespace}").To(h.QueryOrDescribeDeployment).
 		Doc("查询Deployment").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(deployment.QueryDeploymentRequest{}).
 		Writes(deployment.DeploymentSet{}).
 		Returns(200, "OK", deployment.DeploymentSet{}).

@@ -36,47 +36,83 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	// 创建ServiceAccount
 	ws.Route(ws.POST("/sa").To(h.CreateOrUpdateServiceAccount).
 		Doc("创建ServiceAccount").
-		Metadata(restfulspec.KeyOpenAPITags, tags))
+		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true))
 
 	// 删除ServiceAccount
 	ws.Route(ws.DELETE("/sa/{namespace}/{name}").To(h.DeleteServiceAccount).
 		Doc("删除ServiceAccount").
-		Metadata(restfulspec.KeyOpenAPITags, tags))
+		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true))
 
 	// 查询ServiceAccount
 	ws.Route(ws.GET("/sa/{namespace}").To(h.GetServiceAccountList).
 		Doc("查询ServiceAccount").
-		Metadata(restfulspec.KeyOpenAPITags, tags))
+		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true))
 
 	// 创建Role
 	ws.Route(ws.POST("/role").To(h.CreateOrUpdateRole).
 		Doc("创建Role").
-		Metadata(restfulspec.KeyOpenAPITags, tags))
+		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true))
 
 	// 删除Role
 	ws.Route(ws.DELETE("/role").To(h.DeleteRole).
 		Doc("删除Role").
-		Metadata(restfulspec.KeyOpenAPITags, tags))
+		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true))
 
 	// 查询Role
 	ws.Route(ws.GET("/role").To(h.GetRoleDetailOrList).
 		Doc("查询Role").
-		Metadata(restfulspec.KeyOpenAPITags, tags))
+		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true))
 
 	// 创建RoleBinding
 	ws.Route(ws.POST("/rb").To(h.CreateOrUpdateRb).
 		Doc("创建RoleBinding").
-		Metadata(restfulspec.KeyOpenAPITags, tags))
+		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true))
 
 	// 删除RoleBinding
 	ws.Route(ws.DELETE("/rb").To(h.DeleteRb).
 		Doc("创建RoleBinding").
-		Metadata(restfulspec.KeyOpenAPITags, tags))
+		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true))
 
 	// 查询RoleBinding
 	ws.Route(ws.GET("/rb").To(h.GetRbDetailOrList).
 		Doc("查询RoleBinding").
-		Metadata(restfulspec.KeyOpenAPITags, tags))
+		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true))
 }
 
 // 初始化函数注册restful实例

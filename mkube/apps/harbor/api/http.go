@@ -37,6 +37,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.GET("/projects").To(h.QueryProjects).
 		Doc("查询Harbor Projects").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(harbor.QueryProjectsRequest{}).
 		Writes(harbor.Projects{}).
 		Returns(200, "OK", harbor.Projects{}))
@@ -45,6 +49,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.GET("/projects/{projectName}").To(h.QueryRepositories).
 		Doc("查询Harbor Repository").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(harbor.QueryRepositoriesRequest{}).
 		Writes(harbor.Repositories{}).
 		Returns(200, "OK", harbor.Repositories{}))
@@ -53,6 +61,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.GET("/projects/{projectName}/repositories/{repositoryName}").To(h.QueryArtifacts).
 		Doc("查询Harbor Artifacts").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(harbor.QueryArtifactsRequest{}).
 		Writes(harbor.Artifacts{}).
 		Returns(200, "OK", harbor.Artifacts{}))
@@ -61,6 +73,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.GET("/match").To(h.QueryMatchImages).
 		Doc("查询Harbor MatchImage").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(harbor.QueryMatchImagesRequest{}).
 		Writes(harbor.MatchImages{}).
 		Returns(200, "OK", harbor.MatchImages{}))

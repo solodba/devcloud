@@ -37,6 +37,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.POST("/").To(h.CreateIngress).
 		Doc("创建Ingress").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(ingress.CreateIngressRequest{}).
 		Writes(ingress.Ingress{}).
 		Returns(200, "OK", ingress.Ingress{}))
@@ -45,6 +49,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.DELETE("/{namespace}/{name}").To(h.DeleteIngress).
 		Doc("删除Ingress").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(ingress.DeleteIngressRequest{}).
 		Writes(ingress.CreateIngressRequest{}).
 		Returns(200, "OK", ingress.CreateIngressRequest{}))
@@ -53,6 +61,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.PUT("/").To(h.UpdateIngress).
 		Doc("更新Ingress").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(ingress.UpdateIngressRequest{}).
 		Writes(ingress.Ingress{}).
 		Returns(200, "OK", ingress.Ingress{}))
@@ -61,6 +73,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.GET("/{namespace}").To(h.QueryOrDescribeIngress).
 		Doc("查询Ingress").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(ingress.QueryIngressRequest{}).
 		Writes(ingress.IngressSet{}).
 		Returns(200, "OK", ingress.IngressSet{}).

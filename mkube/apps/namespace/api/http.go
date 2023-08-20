@@ -37,6 +37,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.GET("/").To(h.QueryNamespace).
 		Doc("查询Namespace").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(namespace.QueryNamespaceRequest{}).
 		Writes(namespace.NamespaceSet{}).
 		Returns(200, "OK", namespace.NamespaceSet{}))

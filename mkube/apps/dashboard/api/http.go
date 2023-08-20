@@ -42,6 +42,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.GET("/usage").To(h.QueryClusterUsage).
 		Doc("查询K8S集群使用情况").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(metrics.QueryClusterUsageRequest{}).
 		Writes(metrics.MetricSet{}).
 		Returns(200, "OK", metrics.MetricSet{}))
@@ -49,6 +53,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.GET("/cluster").To(h.QueryClusterInfo).
 		Doc("查询K8S集群信息").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(metrics.QueryClusterInfoRequest{}).
 		Writes(metrics.MetricSet{}).
 		Returns(200, "OK", metrics.MetricSet{}))
@@ -56,6 +64,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.GET("/resource").To(h.QueryResource).
 		Doc("查询K8S集群资源信息").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(metrics.QueryResourceRequest{}).
 		Writes(metrics.MetricSet{}).
 		Returns(200, "OK", metrics.MetricSet{}))

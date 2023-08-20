@@ -37,6 +37,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.POST("/").To(h.CreateDaemonSet).
 		Doc("创建DaemonSet").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(daemonset.CreateDaemonSetRequest{}).
 		Writes(daemonset.DaemonSet{}).
 		Returns(200, "OK", daemonset.DaemonSet{}))
@@ -45,6 +49,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.DELETE("/{namespace}/{name}").To(h.DeleteDaemonSet).
 		Doc("删除DaemonSet").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(daemonset.DeleteDaemonSetRequest{}).
 		Writes(daemonset.CreateDaemonSetRequest{}).
 		Returns(200, "OK", daemonset.CreateDaemonSetRequest{}))
@@ -53,6 +61,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.PUT("/").To(h.UpdateDaemonSet).
 		Doc("更新DaemonSet").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(daemonset.UpdateDaemonSetRequest{}).
 		Writes(daemonset.DaemonSet{}).
 		Returns(200, "OK", daemonset.DaemonSet{}))
@@ -61,6 +73,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.GET("/{namespace}").To(h.QueryOrDescribeDaemonSet).
 		Doc("查询DaemonSet").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(daemonset.QueryDaemonSetRequest{}).
 		Writes(daemonset.DaemonSetList{}).
 		Returns(200, "OK", daemonset.DaemonSetList{}).

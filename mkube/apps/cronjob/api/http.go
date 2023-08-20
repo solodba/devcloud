@@ -37,6 +37,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.POST("/").To(h.CreateCronJob).
 		Doc("创建CronJob").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(cronjob.CreateCronJobRequest{}).
 		Writes(cronjob.CronJob{}).
 		Returns(200, "OK", cronjob.CronJob{}))
@@ -45,6 +49,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.DELETE("/{namespace}/{name}").To(h.DeleteCronJob).
 		Doc("删除CronJob").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(cronjob.DeleteCronJobRequest{}).
 		Writes(cronjob.CreateCronJobRequest{}).
 		Returns(200, "OK", cronjob.CreateCronJobRequest{}))
@@ -53,6 +61,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.PUT("/").To(h.UpdateCronJob).
 		Doc("更新CronJob").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(cronjob.UpdateCronJobRequest{}).
 		Writes(cronjob.CronJob{}).
 		Returns(200, "OK", cronjob.CronJob{}))
@@ -61,6 +73,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.GET("/{namespace}").To(h.QueryOrDescribeCronJob).
 		Doc("查询CronJob").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(cronjob.QueryCronJobRequest{}).
 		Writes(cronjob.CronJobSet{}).
 		Returns(200, "OK", cronjob.CronJobSet{}).

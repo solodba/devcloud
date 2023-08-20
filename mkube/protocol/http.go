@@ -8,6 +8,8 @@ import (
 
 	restfulspec "github.com/emicklei/go-restful-openapi/v2"
 	"github.com/emicklei/go-restful/v3"
+	"github.com/solodba/devcloud/mcenter/apps/endpoint"
+	"github.com/solodba/devcloud/mcenter/client/rpc/middleware/auth"
 	"github.com/solodba/devcloud/mkube/conf"
 	"github.com/solodba/mcube/apps"
 	"github.com/solodba/mcube/logger"
@@ -32,8 +34,8 @@ func NewHttpService() *HttpService {
 		Container:      r,
 	}
 	r.Filter(cors.Filter)
-	// 中间件
-	// r.Filter(auth.NewHttpAuther(rpc.NewConfig()).AuthFunc)
+	// 接入到mcenter认证中间件, 提供grpc认证凭证
+	r.Filter(auth.NewHttpAuther(conf.C().Mcenter).AuthFunc)
 	srv := &http.Server{
 		Addr:              conf.C().App.Http.Addr(),
 		Handler:           r,
@@ -58,6 +60,35 @@ func (h *HttpService) PathPrefix() string {
 // Http服务启动方法
 func (s *HttpService) Start() error {
 	apps.InitRestfulApps(s.PathPrefix(), s.r)
+	// 通过grpc获取service id
+	serviceId, err := conf.C().GetServiceIdByClientId()
+	if err != nil {
+		return err
+	}
+	// 动态注册路由信息到mcenter
+	es := endpoint.NewEndpointSet()
+	ws := s.r.RegisteredWebServices()
+	for i := range ws {
+		routes := ws[i].Routes()
+		for j := range routes {
+			ep := endpoint.NewDefaultEndpoint()
+			ep.Spec.Method = routes[j].Method
+			ep.Spec.Path = routes[j].Path
+			ep.Spec.Operation = routes[j].Operation
+			ep.Spec.Perm = true
+			ep.Spec.ServiceId = serviceId
+			isAuth := routes[j].Metadata["auth"]
+			if isAuth != nil {
+				ep.Spec.Auth = isAuth.(bool)
+			}
+			es.AddItems(ep)
+		}
+	}
+	// 调用grpc把路由信息注册到mcenter中
+	err = conf.C().WriteEndpointSetToMcenter(es)
+	if err != nil {
+		return err
+	}
 	config := restfulspec.Config{
 		WebServices:                   restful.RegisteredWebServices(),
 		APIPath:                       "/apidocs.json",

@@ -42,6 +42,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.GET("/usageRange").To(h.QueryClusterUsageRange).
 		Doc("获取集群时间段变化Prometheus监控数据").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(prometheus.QueryClusterUsageRangeRequest{}).
 		Writes(metrics.MetricSet{}).
 		Returns(200, "ok", metrics.MetricSet{}))

@@ -37,6 +37,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.POST("/").To(h.CreateStatefulSet).
 		Doc("创建StatefulSet").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(statefulset.CreateStatefulSetRequest{}).
 		Writes(statefulset.StatefulSet{}).
 		Returns(200, "OK", statefulset.StatefulSet{}))
@@ -45,6 +49,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.DELETE("/{namespace}/{name}").To(h.DeleteStatefulSet).
 		Doc("删除StatefulSet").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(statefulset.DeleteStatefulSetRequest{}).
 		Writes(statefulset.CreateStatefulSetRequest{}).
 		Returns(200, "OK", statefulset.CreateStatefulSetRequest{}))
@@ -53,6 +61,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.PUT("/").To(h.UpdateStatefulSet).
 		Doc("更新StatefulSet").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(statefulset.UpdateStatefulSetRequest{}).
 		Writes(statefulset.StatefulSet{}).
 		Returns(200, "OK", statefulset.StatefulSet{}))
@@ -61,6 +73,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.GET("/{namespace}").To(h.QueryOrDescribeStatefulSet).
 		Doc("查询StatefulSet").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(statefulset.QueryStatefulSetRequest{}).
 		Writes(statefulset.StatefulSetSet{}).
 		Returns(200, "OK", statefulset.StatefulSetSet{}).

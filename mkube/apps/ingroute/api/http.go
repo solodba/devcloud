@@ -37,6 +37,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.POST("/").To(h.CreateIngressRoute).
 		Doc("创建IngressRoute").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(ingroute.CreateIngressRouteRequest{}).
 		Writes(ingroute.IngressRoute{}).
 		Returns(200, "OK", ingroute.IngressRoute{}))
@@ -45,6 +49,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.DELETE("/{namespace}/{name}").To(h.DeleteIngressRoute).
 		Doc("删除IngressRoute").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(ingroute.DeleteIngressRouteRequest{}).
 		Writes(ingroute.CreateIngressRouteRequest{}).
 		Returns(200, "OK", ingroute.CreateIngressRouteRequest{}))
@@ -53,6 +61,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.PUT("/").To(h.UpdateIngressRoute).
 		Doc("更新IngressRoute").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(ingroute.UpdateIngressRouteRequest{}).
 		Writes(ingroute.IngressRoute{}).
 		Returns(200, "OK", ingroute.IngressRoute{}))
@@ -61,6 +73,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.GET("/{namespace}").To(h.QueryOrDescribeIngressRoute).
 		Doc("查询IngressRoute").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(ingroute.QueryIngRouteMwRequest{}).
 		Writes(ingroute.IngressRouteSet{}).
 		Returns(200, "OK", ingroute.IngressRouteSet{}).
@@ -72,6 +88,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.GET("/ingroute/{namespace}/middleware").To(h.QueryIngRouteMiddlewareList).
 		Doc("查询IngressRoute Middleware List").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(ingroute.QueryIngRouteMwRequest{}).
 		Writes(ingroute.MiddlewareList{}).
 		Returns(200, "OK", ingroute.MiddlewareList{}))

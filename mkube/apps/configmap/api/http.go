@@ -37,6 +37,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.POST("/").To(h.CreateConfigMap).
 		Doc("创建ConfigMap").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(configmap.CreateConfigMapRequest{}).
 		Writes(configmap.ConfigMap{}).
 		Returns(200, "OK", configmap.ConfigMap{}))
@@ -45,6 +49,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.DELETE("/{namespace}/{name}").To(h.DeleteConfigMap).
 		Doc("删除ConfigMap").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(configmap.DeleteConfigMapRequest{}).
 		Writes(configmap.CreateConfigMapRequest{}).
 		Returns(200, "OK", configmap.CreateConfigMapRequest{}))
@@ -53,6 +61,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.PUT("/").To(h.UpdateConfigMap).
 		Doc("更新ConfigMap").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(configmap.UpdateConfigMapRequest{}).
 		Writes(configmap.ConfigMap{}).
 		Returns(200, "OK", configmap.ConfigMap{}))
@@ -61,6 +73,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.GET("/{namespace}").To(h.QueryOrDescribeConfigMap).
 		Doc("查询ConfigMap").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(configmap.QueryConfigMapRequest{}).
 		Writes(configmap.ConfigMapSet{}).
 		Returns(200, "OK", configmap.ConfigMapSet{}).

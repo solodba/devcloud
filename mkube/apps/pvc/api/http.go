@@ -37,6 +37,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.POST("/").To(h.CreatePVC).
 		Doc("创建PersistentVolumeClaim").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(pvc.CreatePVCRequest{}).
 		Writes(pvc.PVC{}).
 		Returns(200, "OK", pvc.PVC{}))
@@ -45,6 +49,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.DELETE("/{namespace}/{name}").To(h.DeletePVC).
 		Doc("删除PersistentVolumeClaim").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(pvc.DeletePVCRequest{}).
 		Writes(pvc.PVC{}).
 		Returns(200, "OK", pvc.PVC{}))
@@ -53,6 +61,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.GET("/{namespace}").To(h.QueryPVC).
 		Doc("查询PersistentVolumeClaim").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(pvc.QueryPVCRequest{}).
 		Writes(pvc.PVCSet{}).
 		Returns(200, "OK", pvc.PVCSet{}))

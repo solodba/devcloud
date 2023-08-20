@@ -6,6 +6,7 @@ import (
 	"sync"
 
 	promv1 "github.com/prometheus/client_golang/api/prometheus/v1"
+	"github.com/solodba/devcloud/mcenter/client/rpc"
 	"github.com/solodba/mcube/logger"
 	"go.mongodb.org/mongo-driver/mongo"
 	"k8s.io/client-go/kubernetes"
@@ -88,12 +89,13 @@ type Prometheus struct {
 
 // 全局配置结构体
 type Config struct {
-	App        *App        `toml:"app"`
-	MongoDB    *MongoDB    `toml:"mongodb"`
-	K8s        *K8s        `toml:"k8s"`
-	Plugin     *Plugin     `toml:"plugin"`
-	Harbor     *Harbor     `toml:"harbor"`
-	Prometheus *Prometheus `toml:"prometheus"`
+	App        *App                         `toml:"app"`
+	MongoDB    *MongoDB                     `toml:"mongodb"`
+	K8s        *K8s                         `toml:"k8s"`
+	Plugin     *Plugin                      `toml:"plugin"`
+	Harbor     *Harbor                      `toml:"harbor"`
+	Prometheus *Prometheus                  `toml:"prometheus"`
+	Mcenter    *rpc.McenterGrpcClientConfig `toml:"mcenter"`
 }
 
 // Http初始化函数
@@ -171,6 +173,7 @@ func NewDefaultConfig() *Config {
 		Plugin:     NewDefaultPlugin(),
 		Harbor:     NewDefaultHarbor(),
 		Prometheus: NewPrometheus(),
+		Mcenter:    rpc.NewDefaultMcenterGrpcClientConfig(),
 	}
 }
 

@@ -37,6 +37,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.GET("/").To(h.QueryOrDescribeNode).
 		Doc("查询Node").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(node.QueryNodeRequest{}).
 		Writes(node.NodeSet{}).
 		Returns(200, "OK", node.NodeSet{}).
@@ -48,6 +52,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.PUT("/label").To(h.UpdateNodeLabel).
 		Doc("更新节点标签").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(node.UpdatedLabelRequest{}).
 		Writes(node.UpdatedLabelResponse{}).
 		Returns(200, "OK", node.UpdatedLabelResponse{}))
@@ -56,6 +64,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	ws.Route(ws.PUT("/taint").To(h.UpdateNodeTaint).
 		Doc("更新节点污点").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Reads(node.UpdatedTaintRequest{}).
 		Writes(node.UpdatedTaintResponse{}).
 		Returns(200, "OK", node.UpdatedTaintResponse{}))

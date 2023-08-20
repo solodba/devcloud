@@ -34,7 +34,11 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	// 定义测试路由
 	ws.Route(ws.GET("/").To(h.QueryTest).
 		Doc("restful中间件测试").
-		Metadata(restfulspec.KeyOpenAPITags, tags))
+		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true))
 }
 
 // 初始化函数注册restful实例

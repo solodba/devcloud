@@ -40,6 +40,10 @@ func (h *handler) RegistryHandler(ws *restful.WebService) {
 	// webservice定义路由信息
 	ws.Route(ws.GET("/prometheus").To(h.GetMetrics).
 		Doc("prometheus采集器").
+		// 装饰路由, 是否开启权限认证
+		Metadata("auth", true).
+		// 装饰路由, 是否开启用户访问鉴权
+		Metadata("perm", true).
 		Metadata(restfulspec.KeyOpenAPITags, tags))
 }
 
